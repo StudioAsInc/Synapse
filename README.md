@@ -1,80 +1,67 @@
-Here's an updated version of your `README.md` file with the added information about your Telegram channel and the social media features of **Synapse**:
+Here's a suggested structure for your `README.md` for Synapse:
 
-```markdown
+---
+
 # Synapse
 
-**Synapse** is an Android social media application designed and developed using Java and Kotlin. Built for seamless connectivity, Synapse aims to provide users with an engaging platform to interact, share, and connect with others. With a focus on user experience and optimized performance, Synapse leverages the latest Android technologies for a smooth and responsive app.
-
----
-
-## Table of Contents
-
-- [Requirements](#requirements)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Support](#support)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
-## Requirements
-
-To build and run **Synapse** locally, you need:
-
-- **Android Studio** (latest version recommended)
-- **Java Development Kit (JDK) 8+**
-- **Android SDK** with minimum API level 21 (Android 5.0 Lollipop)
-- Internet connection for dependencies and updates
+**Synapse** is a social media application developed by StudioAs Inc., designed to provide users with an engaging and innovative social experience.
 
 ## Features
-
-- **Java and Kotlin Support**: Code is written in both Java and Kotlin for compatibility and versatility.
-- **Social Media Platform**: Connect, share, and engage with other users in a dynamic, interactive environment.
-- **User Profiles**: Customizable user profiles with bio, profile picture, and status updates.
-- **Messaging**: Real-time chat functionality to stay connected with friends.
-- **Media Sharing**: Share images, videos, and other multimedia content easily.
-- **User-Friendly Interface**: Modern, responsive UI designed for a smooth and engaging user experience.
-- **Performance Optimized**: Efficient use of resources to ensure high performance on a wide range of Android devices.
-- **Scalable Architecture**: Designed with a scalable architecture to support future updates and new features.
+- **User Profiles**: Create and customize profiles with photos, bio, and more.
+- **Messaging**: Real-time chat and messaging capabilities.
+- **Post Creation**: Share photos, videos, and thoughts with others.
+- **Notifications**: Stay updated with notifications for likes, comments, and more.
+- **Explore**: Discover trending posts and recommended content.
 
 ## Installation
-
-Clone the repository from GitHub:
-
-```bash
-git clone https://github.com/your-username/synapse.git
-```
-
-Open the project in **Android Studio** and sync Gradle dependencies. After syncing, build and run **Synapse** on an Android emulator or physical device.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/YourUsername/Synapse.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Synapse
+   ```
+3. Install necessary dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
 ## Usage
+1. Register or log in to your account.
+2. Create posts, message friends, and explore new content.
+3. Personalize your profile and interact with the community.
 
-1. Launch **Synapse** on your device.
-2. Sign up or log in to your account.
-3. Explore the platform: post updates, connect with others, and chat in real-time.
-4. Access user profiles, share media, and discover content.
-
-## Support
-
-For questions or support, reach out on our Telegram channel: [@studioasinc](https://t.me/studioasinc).
-
-**Synapse** is built using Java and Kotlin, offering support for a range of Android devices running API level 21 and above. If you encounter any issues, please check the [issues page](https://github.com/your-username/synapse/issues) on GitHub or open a new issue.
+## Tech Stack
+- **Frontend**: React, HTML5, CSS3
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Real-Time Messaging**: WebSocket
 
 ## Contributing
-
-We welcome contributions! To contribute:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/YourFeature`).
-3. Make your changes and commit (`git commit -m 'Add new feature'`).
-4. Push to your branch (`git push origin feature/YourFeature`).
-5. Open a Pull Request.
+Feel free to contribute to Synapse! To get started:
+1. Fork this repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Submit a pull request.
 
 ## License
+This project is licensed under the MIT License.
 
-Distributed under the MIT License. See `LICENSE` for more information.
-```
+---
 
-Replace `https://github.com/your-username/synapse` with the actual link to your GitHub repository, and feel free to modify the features list based on specific functionalities of **Synapse**!
+Adjust as needed based on specific details about Synapse or add additional sections (like screenshots) to enhance the README.
