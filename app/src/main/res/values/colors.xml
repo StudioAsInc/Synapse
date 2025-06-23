@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<resources>
+<color name="darkPrimaryBackground">#212121</color>
+<color name="darkSecondaryBackground">#424242</color>
+<color name="darkPrimaryText">#E0E0E0</color>
+<color name="darkSecondaryText">#B0B0B0</color>
+<color name="darkAccent">#009688</color>
+<color name="colorPrimary">#445E91</color>
+<color name="colorPrimaryDark">#445E91</color>
+<color name="colorControlHighlight">#445E91</color>
+<color name="colorControlNormal">#445E91</color>
+<color name="colorBackground">#FFFFFF</color>
+<color name="colorSurface">#FFFFFF</color>
+<color name="colorError">#B00020</color>
+<color name="colorOnPrimary">#FFFFFF</color>
+<color name="colorOnSecondary">#000000</color>
+<color name="colorOnBackground">#000000</color>
+<color name="colorOnSurface">#000000</color>
+<color name="colorOnError">#FFFFFF</color>
+<color name="design_dark_default_color_background">#FFFFFF</color>
+<color name="bars_colors">#F1F4FB</color>
+</resources>

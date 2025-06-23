@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Data & Storage - Synapse</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script>
+        // Configure Tailwind CSS
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], },
+                    colors: {
+                        primary: { DEFAULT: '#445E91', 50: '#E8EBF2', 100: '#D5DBE8', 200: '#B0BCD5', 300: '#8A9DC2', 400: '#657EAF', 500: '#445E91', 600: '#354873', 700: '#263255', 800: '#171D36', 900: '#080A18' },
+                        accent: { blue: '#3b82f6', purple: '#8b5cf6', green: '#22c55e', pink: '#ec4899', orange: '#f97316', red: '#ef4444' },
+                    },
+                    keyframes: {
+                        'sheet-in': { 'from': { transform: 'translateY(100%)' }, 'to': { transform: 'translateY(0)' } },
+                        'sheet-out': { 'from': { transform: 'translateY(0)' }, 'to': { transform: 'translateY(100%)' } },
+                        'fade-in': { 'from': { opacity: '0' }, 'to': { opacity: '1' } },
+                    },
+                    animation: {
+                        'sheet-in': 'sheet-in 0.35s cubic-bezier(0.32, 0.72, 0, 1) forwards',
+                        'sheet-out': 'sheet-out 0.3s ease-out forwards',
+                        'fade-in': 'fade-in 0.3s ease-in-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s ease, color 0.3s ease; overflow: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: -1; background-color: inherit; transition: background-color 0.3s ease-in-out; }
+        #appContainer { height: 100vh; overflow-y: auto; }
+        .section-content { padding-top: 64px; }
+        header { display: flex; align-items: center; justify-content: space-between; }
+        #headerTitle { flex-grow: 1; text-align: left; transform: translateX(calc(40px - 1rem)); }
+
+        .setting-item { transition: background-color 0.2s ease, transform 0.2s ease; }
+        .setting-item:active { transform: scale(0.98); }
+
+        .toggle-switch { width: 3.25rem; height: 1.75rem; padding: 0.25rem; background-color: #e5e7eb; transition: background-color 0.3s ease;}
+        .dark .toggle-switch { background-color: #4b5563; }
+        .toggle-dot { width: 1.25rem; height: 1.25rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .peer:checked ~ .toggle-switch { background-color: #445E91 !important; }
+        .peer:checked ~ .toggle-switch .toggle-dot { transform: translateX(1.5rem); }
+        
+        .accent-blue .peer:checked ~ .toggle-switch, .accent-blue input[type="range"]::-webkit-slider-thumb { background-color: #3b82f6 !important; }
+        .accent-purple .peer:checked ~ .toggle-switch, .accent-purple input[type="range"]::-webkit-slider-thumb { background-color: #8b5cf6 !important; }
+
+        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; background: #e5e7eb; }
+        .dark input[type="range"] { background: #4b5563; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; cursor: pointer; background: #445E91; box-shadow: 0 1px 3px rgba(0,0,0,0.2); transition: transform 0.1s ease, background-color 0.3s ease; }
+        input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.2); }
+        
+        .bottom-sheet-overlay { background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); transition: opacity 0.35s ease; }
+        .bottom-sheet { box-shadow: 0 -10px 30px -5px rgba(0,0,0,0.1); max-height: 70vh; overflow-y: auto; }
+        
+        .modal { transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
+        .modal-content { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; }
+        .modal.hidden .modal-content { transform: scale(0.95); opacity: 0; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <div id="loadingOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-300">
+        <i class="fa-solid fa-database text-4xl text-primary-500 animate-pulse"></i>
+    </div>
+
+    <div id="appContainer" class="max-w-xl mx-auto relative overflow-x-hidden bg-gray-100 dark:bg-gray-800 hidden">
+        <header class="fixed top-0 left-0 right-0 max-w-xl mx-auto h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm z-30 px-4">
+            <a href="SettingsActivity.html" id="backButton" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h1 id="headerTitle" class="text-lg font-bold text-gray-900 dark:text-gray-100 px-4 truncate">Data and Storage</h1>
+            <div class="w-10 h-10 shrink-0"></div>
+        </header>
+
+        <div id="dataSettings" class="section-content"></div>
+    </div>
+
+    <div id="modal-container"></div>
+    
+    <div id="templates" class="hidden">
+        <li class="setting-item flex items-center p-4 cursor-pointer">
+            <span class="flex-1 pr-2"><p class="font-medium setting-title truncate"></p></span>
+            <div class="setting-control flex-shrink-0 flex items-center gap-2">
+                <span class="font-medium text-gray-600 dark:text-gray-300 setting-value"></span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </li>
+        
+        <div id="autoDownloadTemplate" class="p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm space-y-4">
+            <div>
+                <div class="flex items-center justify-between">
+                    <span class="font-medium">On Wi-Fi</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" data-type="wifi" class="sr-only peer">
+                        <div class="toggle-switch rounded-full"><div class="toggle-dot bg-white rounded-full shadow-md"></div></div>
+                    </label>
+                </div>
+                <div class="mt-2 pl-1">
+                    <label class="text-xs text-gray-500">Max size: <span class="font-bold size-label">...</span></label>
+                    <input type="range" data-type="wifi" min="1" max="100" class="w-full">
+                </div>
+            </div>
+            <div class="border-t border-gray-100 dark:border-gray-700/50 pt-4">
+                <div class="flex items-center justify-between">
+                    <span class="font-medium">On Cellular</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" data-type="cellular" class="sr-only peer">
+                        <div class="toggle-switch rounded-full"><div class="toggle-dot bg-white rounded-full shadow-md"></div></div>
+                    </label>
+                </div>
+                <div class="mt-2 pl-1">
+                    <label class="text-xs text-gray-500">Max size: <span class="font-bold size-label">...</span></label>
+                    <input type="range" data-type="cellular" min="1" max="100" class="w-full">
+                </div>
+            </div>
+        </div>
+
+        <div id="bottomSheetTemplate" class="fixed inset-0 z-40 flex flex-col justify-end">
+            <div class="bottom-sheet-overlay absolute inset-0 opacity-0 animate-fade-in"></div>
+            <div class="bottom-sheet relative bg-white dark:bg-gray-800 rounded-t-2xl p-4 opacity-0 animate-sheet-in">
+                <div class="w-10 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-4"></div>
+                <h3 class="text-lg font-bold text-center mb-4 sheet-title"></h3>
+                <ul class="sheet-options-list space-y-1"></ul>
+            </div>
+        </div>
+        
+        <li class="bottom-sheet-option flex items-center p-3 rounded-lg cursor-pointer">
+            <span class="option-label flex-1 font-medium"></span>
+            <i class="fas fa-check text-primary-500 opacity-0"></i>
+        </li>
+        
+        <div id="storageCleanupModal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 opacity-0 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-xl">
+                <div class="text-center">
+                    <h3 class="text-lg font-bold">Storage Manager</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Clear cached files to free up space.</p>
+                </div>
+                <div class="calculating-view">
+                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div class="bg-primary-500 h-2.5 rounded-full animate-pulse"></div>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-2">Calculating...</p>
+                </div>
+                <div class="results-view hidden space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Photos Cache</span><span class="font-medium photos-size"></span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5"><div class="bg-pink-500 h-1.5 rounded-full photos-bar"></div></div>
+                        
+                        <div class="flex justify-between text-sm pt-2"><span class="text-gray-500">Videos Cache</span><span class="font-medium videos-size"></span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5"><div class="bg-purple-500 h-1.5 rounded-full videos-bar"></div></div>
+
+                        <div class="flex justify-between text-sm pt-2"><span class="text-gray-500">Documents Cache</span><span class="font-medium docs-size"></span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full docs-bar"></div></div>
+                    </div>
+                    <div class="pt-4 border-t border-gray-100 dark:border-gray-700 text-center">
+                        <p class="text-gray-500">Total cache size: <span class="font-bold text-lg text-gray-800 dark:text-gray-200 total-size"></span></p>
+                    </div>
+                    <button class="modal-confirm w-full mt-4 py-2 bg-red-500 text-white rounded-lg font-bold">Clear All Cache</button>
+                </div>
+                <button class="modal-cancel w-full mt-2 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseConfig = { apiKey: "AIzaSyCvefmiD5UjOo7ZkoUKhwNd0XGrnK52quE", authDomain: "synapse-social-sai.firebaseapp.com", databaseURL: "https://synapse-social-sai-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "synapse-social-sai", storageBucket: "synapse-social-sai.firebasestorage.app", appId: "1:269633434355:android:67b44261499ca8b0a3bd86" };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        const dom = {
+            html: document.documentElement,
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            appContainer: document.getElementById('appContainer'),
+            modalContainer: document.getElementById('modal-container'),
+            templates: document.getElementById('templates'),
+            dataSettings: document.getElementById('dataSettings'),
+        };
+
+        let currentUser = null, userSettings = {}, debounceTimer = null;
+
+        const defaultSettings = {
+            autoDownloadWifi: { enabled: true, maxSize: 50 },
+            autoDownloadCellular: { enabled: false, maxSize: 10 },
+            useLessDataForCalls: 'cellular_only',
+            theme: "system", accentColor: "primary",
+        };
+        
+        const settingsConfig = {
+            dataSettings: {
+                groups: [
+                    { title: 'Automatic Media Download', items: [ { key: 'autoDownload', type: 'custom' } ] },
+                    { title: 'Data Saving', items: [ { key: 'useLessDataForCalls', title: 'Use Less Data for Calls', type: 'sheet', options: { 'never': 'Never', 'cellular_only': 'On Cellular Only', 'always': 'Always' } } ] },
+                    { title: 'Storage Management', items: [ { key: 'storageUsage', title: 'Storage Usage', type: 'action', action: openStorageCleanupModal } ] }
+                ]
+            }
+        };
+        
+        function init() {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadSettings(user.uid);
+                    buildUI();
+                    setTimeout(() => {
+                        dom.loadingOverlay.classList.add('opacity-0');
+                        dom.appContainer.classList.remove('hidden');
+                        setTimeout(() => dom.loadingOverlay.classList.add('hidden'), 300);
+                    }, 200); // Small delay to prevent flash of unstyled content
+                } else { window.location.href = 'SettingsActivity.html'; }
+            });
+        }
+
+        async function loadSettings(uid) {
+            try {
+                const snapshot = await database.ref(`users/${uid}/settings`).once('value');
+                userSettings = { ...defaultSettings, ...snapshot.val() };
+            } catch (error) { userSettings = { ...defaultSettings }; }
+        }
+        
+        function updateSetting(key, value) {
+            userSettings[key] = value;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(saveSettingsToFirebase, 1000);
+        }
+
+        async function saveSettingsToFirebase() {
+            if (!currentUser) return;
+            try { await database.ref(`users/${currentUser.uid}/settings`).update(userSettings); } catch (error) { console.error("Error saving settings:", error); }
+        }
+        
+        function buildUI() {
+            buildDataStoragePage();
+            applyTheme();
+            updateAllControlValues();
+        }
+
+        function buildDataStoragePage() {
+            dom.dataSettings.innerHTML = '';
+            const content = document.createElement('div');
+            content.className = 'p-4 space-y-6 pb-24';
+            
+            settingsConfig.dataSettings.groups.forEach((group) => {
+                const groupEl = document.createElement('div');
+                const title = document.createElement('h3');
+                title.className = 'px-4 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase';
+                title.textContent = group.title;
+                groupEl.appendChild(title);
+                
+                const list = document.createElement('ul');
+                list.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+                
+                group.items.forEach((item) => {
+                    const listItem = buildSettingItem(item);
+                    // Custom items are not part of the UL
+                    if (item.type === 'custom') { groupEl.appendChild(listItem); }
+                    else { list.appendChild(listItem); }
+                });
+
+                if (list.hasChildNodes()) groupEl.appendChild(list);
+                content.appendChild(groupEl);
+            });
+            dom.dataSettings.appendChild(content);
+        }
+        
+        function buildSettingItem(itemConfig) {
+            if (itemConfig.type === 'custom') {
+                const control = dom.templates.querySelector('#autoDownloadTemplate').cloneNode(true);
+                control.dataset.settingKey = itemConfig.key;
+                control.querySelectorAll('input').forEach(input => {
+                    const eventType = input.type === 'range' ? 'input' : 'change';
+                    input.addEventListener(eventType, handleAutoDownloadChange);
+                });
+                return control;
+            }
+
+            const li = dom.templates.querySelector('.setting-item').cloneNode(true);
+            li.dataset.settingKey = itemConfig.key; // CRITICAL FIX
+            li.querySelector('.setting-title').textContent = itemConfig.title;
+            
+            li.addEventListener('click', () => {
+                if (itemConfig.type === 'sheet') {
+                    showBottomSheet(itemConfig.key, itemConfig.title, itemConfig.options, userSettings[itemConfig.key]);
+                } else if (itemConfig.action) {
+                    itemConfig.action();
+                }
+            });
+            return li;
+        }
+
+        function handleAutoDownloadChange(e) {
+            const type = e.target.dataset.type; // 'wifi' or 'cellular'
+            const key = type === 'wifi' ? 'autoDownloadWifi' : 'autoDownloadCellular';
+            const setting = { ...userSettings[key] }; // Create a new object to modify
+
+            if (e.target.type === 'checkbox') {
+                setting.enabled = e.target.checked;
+            } else if (e.target.type === 'range') {
+                setting.maxSize = Number(e.target.value);
+                // Update the UI label in real-time
+                const label = e.target.closest('div').querySelector('.size-label');
+                if (label) label.textContent = `${setting.maxSize} MB`;
+            }
+            updateSetting(key, setting);
+        }
+
+        function updateAllControlValues() {
+            settingsConfig.dataSettings.groups.flatMap(g => g.items).forEach(item => {
+                const li = dom.dataSettings.querySelector(`[data-setting-key="${item.key}"]`);
+                if (!li) return;
+                
+                if (item.type === 'sheet') {
+                    li.querySelector('.setting-value').textContent = item.options[userSettings[item.key]] || 'N/A';
+                } else if (item.type === 'custom') {
+                    ['wifi', 'cellular'].forEach(type => {
+                        const key = type === 'wifi' ? 'autoDownloadWifi' : 'autoDownloadCellular';
+                        const settingData = userSettings[key];
+                        const container = li.querySelector(`input[data-type="${type}"]`).closest('div');
+                        
+                        container.querySelector('input[type="checkbox"]').checked = settingData.enabled;
+                        const rangeInput = container.querySelector('input[type="range"]');
+                        rangeInput.value = settingData.maxSize;
+                        container.querySelector('.size-label').textContent = `${settingData.maxSize} MB`;
+                    });
+                }
+            });
+        }
+        
+        function showBottomSheet(settingKey, title, options, currentValue) {
+            const sheet = dom.templates.querySelector("#bottomSheetTemplate").cloneNode(true);
+            sheet.querySelector('.sheet-title').textContent = title;
+            const list = sheet.querySelector('.sheet-options-list');
+            const overlay = sheet.querySelector('.bottom-sheet-overlay');
+            const sheetContent = sheet.querySelector('.bottom-sheet');
+
+            Object.entries(options).forEach(([value, label]) => {
+                const item = dom.templates.querySelector('.bottom-sheet-option').cloneNode(true);
+                item.querySelector('.option-label').textContent = label;
+                if (value === currentValue) item.querySelector('.fa-check').classList.remove('opacity-0');
+                item.addEventListener('click', () => {
+                    updateSetting(settingKey, value);
+                    document.querySelector(`[data-setting-key="${settingKey}"] .setting-value`).textContent = label;
+                    closeSheet();
+                });
+                list.appendChild(item);
+            });
+            
+            const closeSheet = () => {
+                sheetContent.classList.replace('animate-sheet-in', 'animate-sheet-out');
+                overlay.style.opacity = 0;
+                setTimeout(() => sheet.remove(), 350);
+            };
+            overlay.addEventListener('click', closeSheet);
+            dom.modalContainer.appendChild(sheet);
+            setTimeout(() => {
+                overlay.style.opacity = 1;
+                sheetContent.style.opacity = 1;
+            }, 10);
+        }
+
+        function openStorageCleanupModal() {
+             const modal = dom.templates.querySelector('#storageCleanupModal').cloneNode(true);
+             const close = () => { modal.classList.add('opacity-0'); setTimeout(() => modal.remove(), 300); };
+             modal.querySelectorAll('.modal-cancel, .modal-confirm').forEach(btn => btn.addEventListener('click', close));
+             modal.addEventListener('click', e => { if (e.target === modal) close(); });
+             
+             setTimeout(() => {
+                modal.querySelector('.calculating-view').classList.add('hidden');
+                modal.querySelector('.results-view').classList.remove('hidden');
+                const sizes = { photos: 184.3, videos: 512.8, docs: 45.1 };
+                const total = Object.values(sizes).reduce((a, b) => a + b, 0);
+
+                Object.entries(sizes).forEach(([key, val]) => {
+                    modal.querySelector(`.${key}-size`).textContent = `${val.toFixed(1)} MB`;
+                    modal.querySelector(`.${key}-bar`).style.width = `${(val / total) * 100}%`;
+                });
+                modal.querySelector('.total-size').textContent = `${total.toFixed(1)} MB`;
+            }, 1500);
+
+            dom.modalContainer.appendChild(modal);
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+        
+        function applyTheme() {
+            const isDark = userSettings.theme === 'dark' || (userSettings.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            dom.html.classList.toggle('dark', isDark);
+            const accent = userSettings.accentColor || 'primary';
+            const bodyClasses = document.body.className.split(' ').filter(c => !c.startsWith('accent-'));
+            bodyClasses.push(`accent-${accent}`);
+            document.body.className = bodyClasses.join(' ');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

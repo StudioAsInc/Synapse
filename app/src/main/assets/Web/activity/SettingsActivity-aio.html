@@ -1,0 +1,1946 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Settings - Synapse</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script>
+        // Configure Tailwind CSS for Dark Mode and Customizations
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#445E91',
+                            50: '#E8EBF2',
+                            100: '#D5DBE8',
+                            200: '#B0BCD5',
+                            300: '#8A9DC2',
+                            400: '#657EAF',
+                            500: '#445E91',
+                            600: '#354873',
+                            700: '#263255',
+                            800: '#171D36',
+                            900: '#080A18',
+                        },
+                        accent: {
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6',
+                            green: '#22c55e',
+                            pink: '#ec4899',
+                            orange: '#f97316',
+                            red: '#ef4444'
+                        },
+                    },
+                    keyframes: {
+                        'fade-in': {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        'toast-in': {
+                            'from': { transform: 'translateY(20px) scale(0.9)', opacity: '0' },
+                            'to': { transform: 'translateY(0) scale(1)', opacity: '1' },
+                        },
+                        'toast-out': {
+                            'from': { transform: 'translateY(0) scale(1)', opacity: '1' },
+                            'to': { transform: 'translateY(20px) scale(0.9)', opacity: '0' },
+                        },
+                        'slide-in': {
+                            'from': { transform: 'translateX(100%)' },
+                            'to': { transform: 'translateX(0)' },
+                        },
+                        'slide-out': {
+                            'from': { transform: 'translateX(0)' },
+                            'to': { transform: 'translateX(100%)' },
+                        },
+                        'ripple': {
+                            '0%': { transform: 'scale(0.8)', opacity: '0.5' },
+                            '100%': { transform: 'scale(2.5)', opacity: '0' }
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fade-in 0.3s ease-out forwards',
+                        'toast': 'toast-in 0.5s cubic-bezier(0.25, 1, 0.5, 1), toast-out 0.5s 2.5s cubic-bezier(0.5, 0, 0.75, 0)',
+                        'slide-in': 'slide-in 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
+                        'slide-out': 'slide-out 0.35s cubic-bezier(0.25, 1, 0.5, 1)',
+                        'ripple': 'ripple 0.6s linear forwards'
+                    }
+                },
+            },
+        };
+    </script>
+
+    <style>
+        /* Base Styling & Global Overrides */
+        * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s ease, color 0.3s ease; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: -1; background-color: inherit; background-image: var(--chat-bg-image); background-size: var(--chat-bg-size, 'cover'); background-position: center; filter: var(--chat-bg-filter); transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out; }
+
+        /* Section Navigation Animations */
+        .section-container { position: absolute; width: 100%; top: 0; left: 0; min-height: 100vh; background-color: inherit; visibility: hidden; transform: translateX(100%); padding-top: 64px; opacity: 0; transition: opacity 0.3s ease, background-color 0.3s ease; }
+        .section-container.active { visibility: visible; animation: slide-in 0.35s cubic-bezier(0.25, 1, 0.5, 1); transform: translateX(0); opacity: 1; }
+        .section-container.exiting { animation: slide-out 0.35s cubic-bezier(0.25, 1, 0.5, 1); transform: translateX(100%); opacity: 0; }
+        #mainMenu { position: relative; transform: translateX(0); visibility: visible; min-height: auto; transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; }
+
+        /* Animated Search Bar */
+        #searchContainer { transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        #searchContainer.expanded { width: 12rem; background-color: #f3f4f6; }
+        .dark #searchContainer.expanded { background-color: #1f2937; }
+        #settingsSearchInput { transition: opacity 0.2s ease 0.1s; }
+        #searchContainer:not(.expanded) #settingsSearchInput { opacity: 0; pointer-events: none; }
+
+        /* Header Layout Fix */
+        header { display: flex; align-items: center; justify-content: space-between; }
+        #headerTitle { position: static; transform: none; flex-grow: 1; text-align: center; transition: all 0.3s ease; }
+        #headerTitle.pushed-left { text-align: left; transform: translateX(calc(40px - 1rem)); } /* Adjust based on back button size and padding */
+
+        /* Custom Toggle Switch */
+        .toggle-switch { width: 3.25rem; height: 1.75rem; padding: 0.25rem; background-color: #e5e7eb; transition: background-color 0.3s ease;}
+        .dark .toggle-switch { background-color: #4b5563; }
+        .toggle-dot { width: 1.25rem; height: 1.25rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .peer:checked ~ .toggle-switch { background-color: #445E91 !important; }
+        .peer:checked ~ .toggle-switch .toggle-dot { transform: translateX(1.5rem); }
+        
+        /* Toast Notifications */
+        #toast-container { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 100; }
+        .toast { animation: toast; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        
+        /* Modal Styles */
+        .modal { transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
+        .modal-content { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
+        .modal.hidden .modal-content { transform: scale(0.95); opacity: 0; }
+
+        /* Dynamic Accent Color Theming */
+        .accent-bg { background-color: #445E91 !important; }
+        .accent-text { color: #445E91 !important; }
+        .accent-ring:focus, .accent-ring:focus-within { --tw-ring-color: #445E91 !important; }
+        .dark .dark\:accent-bg { background-color: #5a75b1 !important; }
+        .accent-blue .accent-bg, .accent-blue .peer:checked ~ .toggle-switch { background-color: #3b82f6 !important; }
+        .accent-blue .accent-text { color: #3b82f6 !important; }
+        .accent-blue .accent-ring:focus, .accent-blue .accent-ring:focus-within { --tw-ring-color: #3b82f6 !important; }
+        .accent-purple .accent-bg, .accent-purple .peer:checked ~ .toggle-switch { background-color: #8b5cf6 !important; }
+        .accent-purple .accent-text { color: #8b5cf6 !important; }
+        .accent-purple .accent-ring:focus, .accent-purple .accent-ring:focus-within { --tw-ring-color: #8b5cf6 !important; }
+        .accent-green .accent-bg, .accent-green .peer:checked ~ .toggle-switch { background-color: #22c55e !important; }
+        .accent-green .accent-text { color: #22c55e !important; }
+        .accent-green .accent-ring:focus, .accent-green .accent-ring:focus-within { --tw-ring-color: #22c55e !important; }
+        .accent-pink .accent-bg, .accent-pink .peer:checked ~ .toggle-switch { background-color: #ec4899 !important; }
+        .accent-pink .accent-text { color: #ec4899 !important; }
+        .accent-pink .accent-ring:focus, .accent-pink .accent-ring:focus-within { --tw-ring-color: #ec4899 !important; }
+        .accent-orange .accent-bg, .accent-orange .peer:checked ~ .toggle-switch { background-color: #f97316 !important; }
+        .accent-orange .accent-text { color: #f97316 !important; }
+        .accent-orange .accent-ring:focus, .accent-orange .accent-ring:focus-within { --tw-ring-color: #f97316 !important; }
+        .accent-red .accent-bg, .accent-red .peer:checked ~ .toggle-switch { background-color: #ef4444 !important; }
+        .accent-red .accent-text { color: #ef4444 !important; }
+        .accent-red .accent-ring:focus, .accent-red .accent-ring:focus-within { --tw-ring-color: #ef4444 !important; }
+
+        /* Passcode input styling */
+        .passcode-dot { transition: all 0.2s ease; }
+        .passcode-dot.filled { transform: scale(1.1); }
+
+        /* Range Input Styling */
+        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; background: #e5e7eb; }
+        .dark input[type="range"] { background: #4b5563; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #445E91; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s ease, background-color 0.3s ease; }
+        .accent-blue input[type="range"]::-webkit-slider-thumb { background-color: #3b82f6 !important; }
+        .accent-purple input[type="range"]::-webkit-slider-thumb { background-color: #8b5cf6 !important; }
+        .accent-green input[type="range"]::-webkit-slider-thumb { background-color: #22c55e !important; }
+        .accent-pink input[type="range"]::-webkit-slider-thumb { background-color: #ec4899 !important; }
+        .accent-orange input[type="range"]::-webkit-slider-thumb { background-color: #f97316 !important; }
+        .accent-red input[type="range"]::-webkit-slider-thumb { background-color: #ef4444 !important; }
+        input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.2); }
+
+        /* Ripple Effect */
+        .ripple { position: relative; overflow: hidden; }
+        .ripple-effect { position: absolute; border-radius: 50%; background-color: rgba(255, 255, 255, 0.4); transform: scale(0); animation: ripple 0.6s linear; pointer-events: none; }
+
+        /* Smooth transitions for settings items */
+        .setting-item { transition: background-color 0.2s ease, transform 0.2s ease; }
+        .setting-item:active { transform: scale(0.98); }
+
+        /* Login Form Styling */
+        .login-form input { transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .login-form input:focus { box-shadow: 0 0 0 3px rgba(68, 94, 145, 0.2); }
+        
+        /* Chat Background Page Styles */
+        #chatBackgroundsPage .preview-container {
+            background-image: var(--preview-bg-image);
+            background-color: var(--preview-bg-color);
+            background-size: cover;
+            background-position: center;
+            transition: all 0.3s ease;
+        }
+        #chatBackgroundsPage .preview-message {
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        #chatBackgroundsPage .color-swatch, #chatBackgroundsPage .image-thumbnail {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #chatBackgroundsPage .color-swatch:hover, #chatBackgroundsPage .image-thumbnail:hover {
+            transform: scale(1.05);
+        }
+        #chatBackgroundsPage .color-swatch.selected, #chatBackgroundsPage .image-thumbnail.selected {
+            box-shadow: 0 0 0 3px white, 0 0 0 5px var(--tw-ring-color, #445E91);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-300">
+        <div class="flex flex-col items-center">
+            <div class="relative">
+                <i class="fa-solid fa-atom text-4xl accent-text opacity-20"></i>
+                <i class="fa-solid fa-atom text-4xl accent-text absolute inset-0 animate-spin" style="animation-duration: 3s;"></i>
+            </div>
+            <p id="loadingText" class="mt-4 text-gray-600 dark:text-gray-400 font-medium">Authenticating...</p>
+        </div>
+    </div>
+
+    <!-- Login Overlay (shown when not authenticated) -->
+    <div id="loginOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-40 hidden">
+        <div class="w-full max-w-xs p-6 animate__animated animate__fadeIn">
+            <div class="text-center mb-8">
+                <i class="fas fa-lock text-5xl accent-text mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Welcome to Synapse</h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Please sign in to access settings</p>
+            </div>
+            
+            <form id="loginForm" class="login-form space-y-4">
+                <div>
+                    <input type="email" id="loginEmail" placeholder="Email" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="password" id="loginPassword" placeholder="Password" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <button type="submit" id="loginButton"
+                    class="w-full h-12 flex items-center justify-center bg-primary-500 text-white font-bold rounded-lg ripple hover:bg-primary-600 active:bg-primary-700 transition-colors disabled:opacity-50">
+                    <span class="btn-text">Sign In</span>
+                    <i class="fas fa-spinner fa-spin hidden btn-spinner"></i>
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Don't have an account? 
+                    <a href="#" id="showRegister" class="accent-text font-medium">Register</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Overlay -->
+    <div id="registerOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-40 hidden">
+        <div class="w-full max-w-xs p-6 animate__animated animate__fadeIn">
+            <div class="text-center mb-8">
+                <i class="fas fa-user-plus text-5xl accent-text mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Create Account</h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Join the Synapse community</p>
+            </div>
+            
+            <form id="registerForm" class="login-form space-y-4">
+                <div>
+                    <input type="text" id="registerName" placeholder="Full Name" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="email" id="registerEmail" placeholder="Email" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="password" id="registerPassword" placeholder="Password" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <button type="submit" id="registerButton"
+                    class="w-full h-12 flex items-center justify-center bg-primary-500 text-white font-bold rounded-lg ripple hover:bg-primary-600 active:bg-primary-700 transition-colors disabled:opacity-50">
+                    <span class="btn-text">Create Account</span>
+                    <i class="fas fa-spinner fa-spin hidden btn-spinner"></i>
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Already have an account? 
+                    <a href="#" id="showLogin" class="accent-text font-medium">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="max-w-xl mx-auto relative overflow-x-hidden min-h-screen bg-gray-100 dark:bg-gray-900 hidden">
+        
+        <!-- Shared Fixed Header -->
+        <header class="fixed top-0 left-0 right-0 max-w-xl mx-auto h-16 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-sm z-30 px-4">
+            <button id="backButton" aria-label="Go back" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all opacity-0 pointer-events-none">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </button>
+            <h1 id="headerTitle" class="text-lg font-bold text-gray-900 dark:text-gray-100 px-4 truncate">
+                Settings
+            </h1>
+            <div id="searchContainer" class="w-10 h-10 rounded-full flex items-center justify-center relative cursor-pointer">
+                <i id="searchIcon" class="fas fa-search text-gray-600 dark:text-gray-300"></i>
+                <input type="search" id="settingsSearchInput" placeholder="Search..." class="absolute inset-0 w-full h-full bg-transparent border-none rounded-full pl-10 pr-4 text-sm focus:ring-0 focus:outline-none">
+            </div>
+        </header>
+
+        <!-- Main Menu (Entry Point) -->
+        <div id="mainMenu" class="section-container active">
+            <div class="p-4 space-y-8 pb-24">
+                <!-- User Profile Card -->
+                <div class="flex items-center space-x-4 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm animate__animated animate__fadeIn">
+                    <div class="relative">
+                        <img id="userAvatar" src="https://avatar.iran.liara.run/public/boy?username=synapse" alt="User Avatar" 
+                            class="w-16 h-16 rounded-full object-cover border-2 border-white dark:border-gray-700">
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-primary-500 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center">
+                            <i class="fas fa-cog text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 id="userNickname" class="text-xl font-bold">Synapse User</h2>
+                        <p id="userUsername" class="text-sm text-gray-500 dark:text-gray-400">@username</p>
+                    </div>
+                </div>
+
+                <!-- Settings Groups -->
+                <div class="space-y-6" id="mainMenuLinkContainer">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Dynamic Section Containers (Populated by JS) -->
+        <div id="accountSettings" class="section-container"></div>
+        <div id="privacySettings" class="section-container"></div>
+        <div id="notificationSettings" class="section-container"></div>
+        <div id="dataSettings" class="section-container"></div>
+        <div id="chatSettings" class="section-container"></div>
+        <div id="appearanceSettings" class="section-container"></div>
+        <div id="stickerSettings" class="section-container"></div>
+        <div id="languageSettings" class="section-container"></div>
+        <div id="advancedSettings" class="section-container"></div>
+        
+        <!-- Dedicated Sub-Pages -->
+        <div id="blockedUsersPage" class="section-container"></div>
+        <div id="activeSessionsPage" class="section-container"></div>
+        <div id="chatBackgroundsPage" class="section-container"></div>
+
+    </div>
+
+    <!-- Global Toast Notification Container -->
+    <div id="toast-container"></div>
+    <div id="modal-container"></div>
+    
+    <!-- =================================================================== -->
+    <!-- HIDDEN TEMPLATES FOR DYNAMIC CONTENT GENERATION -->
+    <!-- =================================================================== -->
+    <div id="templates" class="hidden">
+    
+        <!-- Base Setting Item -->
+        <li class="setting-item flex items-center p-4">
+            <span class="flex-1 overflow-hidden pr-2">
+                <p class="font-medium setting-title truncate"></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 setting-description truncate"></p>
+            </span>
+            <div class="setting-control flex-shrink-0"></div>
+        </li>
+
+        <!-- Blocked User Item Template -->
+        <li class="blocked-user-item flex items-center p-4">
+            <img src="https://avatar.iran.liara.run/public/boy" alt="User Avatar" class="w-12 h-12 rounded-full object-cover mr-4">
+            <span class="flex-1 font-medium truncate"></span>
+            <button class="unblock-btn ml-4 px-3 py-1 text-sm font-semibold text-white accent-bg rounded-full ripple">Unblock</button>
+        </li>
+        
+        <!-- Active Session Item Template -->
+        <li class="active-session-item flex items-center p-4">
+            <i class="session-icon fa-solid fa-desktop w-8 text-center text-2xl text-gray-500 dark:text-gray-400"></i>
+            <div class="flex-1 mx-4">
+                <p class="font-semibold session-device"></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 session-details"></p>
+            </div>
+            <button class="revoke-btn ml-4 px-3 py-1 text-sm font-semibold text-red-500 hover:bg-red-500/10 rounded-full ripple">Revoke</button>
+        </li>
+
+        <!-- General 'Empty State' or 'Loading' Template -->
+        <div class="placeholder-view flex flex-col items-center justify-center p-8 text-center">
+            <i class="placeholder-icon fas fa-spinner fa-spin text-4xl text-gray-400 dark:text-gray-500 mb-4"></i>
+            <p class="placeholder-text font-medium text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+
+        <!-- Chat Backgrounds Page Template -->
+        <div id="chat-backgrounds-content" class="p-4 space-y-6">
+            <div class="preview-container w-full h-64 rounded-2xl p-4 flex flex-col justify-end shadow-inner">
+                <div class="preview-message self-start bg-white dark:bg-gray-800 rounded-2xl rounded-bl-lg p-2 max-w-[70%]">
+                    <p class="text-sm">Hey, check out this new background! Looks great, right?</p>
+                </div>
+                <div class="preview-message self-end bg-green-200 dark:bg-green-800/70 rounded-2xl rounded-br-lg p-2 max-w-[70%] mt-2">
+                    <p class="text-sm">Wow, it's awesome! How did you set it?</p>
+                </div>
+            </div>
+
+            <div class="options-container">
+                <h3 class="px-4 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Set a color</h3>
+                <div id="color-selector" class="grid grid-cols-6 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl">
+                    <!-- Color swatches will be inserted here by JS -->
+                </div>
+            </div>
+
+            <div class="options-container">
+                <h3 class="px-4 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase">Upload a photo</h3>
+                 <div id="image-selector" class="grid grid-cols-3 gap-4 p-4 bg-white dark:bg-gray-800 rounded-2xl">
+                    <!-- Image thumbnails will be inserted here by JS -->
+                </div>
+            </div>
+            
+            <div class="p-4 bg-white dark:bg-gray-800 rounded-2xl">
+                <div class="flex justify-between items-center">
+                    <span class="font-medium">Pattern</span>
+                    <label class="toggle-control relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="patternToggle" class="sr-only peer">
+                        <div class="toggle-switch rounded-full transition-colors"><div class="toggle-dot bg-white rounded-full shadow-md"></div></div>
+                    </label>
+                </div>
+            </div>
+
+            <button id="set-background-btn" class="w-full mt-4 py-3 accent-bg text-white font-bold rounded-lg ripple">Set Background</button>
+        </div>
+
+        <!-- Control Templates -->
+        <label class="toggle-control relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only peer">
+            <div class="toggle-switch rounded-full transition-colors">
+                <div class="toggle-dot bg-white rounded-full shadow-md"></div>
+            </div>
+        </label>
+        
+        <select class="select-control bg-gray-100 dark:bg-gray-700 border-none rounded-md py-1 px-2 text-sm focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-900 focus:outline-none accent-ring"></select>
+
+        <span class="sub-label-control text-sm text-gray-500 dark:text-gray-400"></span>
+
+        <!-- Range Input Template -->
+        <div class="range-control w-full px-4 py-2">
+            <div class="flex justify-between items-center mb-2">
+                <span class="font-medium text-sm range-title"></span>
+                <span class="text-xs font-bold range-value"></span>
+            </div>
+            <input type="range" min="0" max="100" step="1" class="w-full">
+        </div>
+
+        <!-- Custom Control Templates -->
+        <div class="auto-download-control w-full p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <div class="flex items-center justify-between">
+                <span class="font-medium text-sm">On Wi-Fi</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" data-type="wifi" class="sr-only peer">
+                    <div class="toggle-switch rounded-full transition-colors">
+                        <div class="toggle-dot bg-white rounded-full shadow-md"></div>
+                    </div>
+                </label>
+            </div>
+            <div class="mt-2">
+                <label class="text-xs text-gray-500">Max size: <span class="font-bold size-label">...</span></label>
+                <input type="range" data-type="wifi" min="1" max="100" class="w-full">
+            </div>
+            <div class="mt-4 flex items-center justify-between">
+                <span class="font-medium text-sm">On Cellular</span>
+                 <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" data-type="cellular" class="sr-only peer">
+                    <div class="toggle-switch rounded-full transition-colors">
+                        <div class="toggle-dot bg-white rounded-full shadow-md"></div>
+                    </div>
+                </label>
+            </div>
+            <div class="mt-2">
+                 <label class="text-xs text-gray-500">Max size: <span class="font-bold size-label">...</span></label>
+                <input type="range" data-type="cellular" min="1" max="100" class="w-full">
+            </div>
+        </div>
+
+        <!-- Modal Templates -->
+        <div id="storageCleanupModal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-xl">
+                <div class="text-center">
+                    <h3 class="text-lg font-bold">Storage Manager</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Clear cached files to free up space.</p>
+                </div>
+                <div class="calculating-view">
+                     <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                        <div class="bg-primary-500 h-2.5 rounded-full animate-pulse"></div>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-2">Calculating...</p>
+                </div>
+                <div class="results-view hidden space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between text-sm"><span class="text-gray-500">Photos Cache</span><span class="font-medium photos-size">...</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5"><div class="bg-pink-500 h-1.5 rounded-full photos-bar"></div></div>
+                        
+                        <div class="flex justify-between text-sm pt-2"><span class="text-gray-500">Videos Cache</span><span class="font-medium videos-size">...</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5"><div class="bg-purple-500 h-1.5 rounded-full videos-bar"></div></div>
+
+                        <div class="flex justify-between text-sm pt-2"><span class="text-gray-500">Documents Cache</span><span class="font-medium docs-size">...</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5"><div class="bg-green-500 h-1.5 rounded-full docs-bar"></div></div>
+
+                         <div class="flex justify-between text-sm pt-2"><span class="text-gray-500">Other Cache</span><span class="font-medium other-size">...</span></div>
+                        <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5"><div class="bg-gray-400 h-1.5 rounded-full other-bar"></div></div>
+                    </div>
+                    <div class="pt-4 border-t border-gray-100 dark:border-gray-700 text-center">
+                        <p class="text-gray-500">Total cache size: <span class="font-bold text-lg text-gray-800 dark:text-gray-200 total-size">...</span></p>
+                    </div>
+                    <button class="modal-confirm w-full mt-4 py-2 bg-red-500 text-white rounded-lg font-bold ripple">Clear All Cache</button>
+                </div>
+                <button class="modal-cancel w-full mt-2 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg ripple">Close</button>
+            </div>
+        </div>
+
+        <div id="passcodeModal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-xs shadow-xl text-center">
+                <h3 class="text-lg font-bold modal-title">Enter Passcode</h3>
+                <div class="flex justify-center space-x-4 my-6">
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                </div>
+                <p class="error-message text-red-500 text-sm h-5"></p>
+                <div class="grid grid-cols-3 gap-4 mt-4">
+                    <!-- Numpad gets generated here -->
+                </div>
+                <button class="modal-cancel w-full mt-6 py-2 text-sm text-gray-500 dark:text-gray-400 ripple">Cancel</button>
+            </div>
+        </div>
+        
+        <div id="deleteAccountModal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-xl">
+                <div class="text-center">
+                    <i class="fa-solid fa-triangle-exclamation text-4xl text-red-500 mb-4"></i>
+                    <h3 class="text-lg font-bold">Delete Account</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 my-2">This is a permanent action. All your data, chats, and files will be erased forever.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Please type <strong class="text-red-500">DELETE</strong> to confirm.</p>
+                </div>
+                <input type="text" id="deleteConfirmInput" class="w-full text-center tracking-widest font-bold border border-gray-300 dark:border-gray-600 rounded-lg bg-transparent focus:outline-none focus:ring-2 accent-ring-red mb-4" placeholder="DELETE">
+                <button id="confirmDeleteBtn" class="w-full py-2 bg-red-600 text-white rounded-lg font-bold opacity-50 cursor-not-allowed ripple" disabled>Permanently Delete</button>
+                <button class="modal-cancel w-full mt-2 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg ripple">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- REAL FIREBASE SDKs -->
+    <!-- =================================================================== -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvefmiD5UjOo7ZkoUKhwNd0XGrnK52quE",
+            authDomain: "synapse-social-sai.firebaseapp.com",
+            databaseURL: "https://synapse-social-sai-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "synapse-social-sai",
+            storageBucket: "synapse-social-sai.firebasestorage.app",
+            appId: "1:269633434355:android:67b44261499ca8b0a3bd86"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // --- DOM Elements & State ---
+        const dom = {
+            html: document.documentElement,
+            body: document.body,
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            loadingText: document.getElementById('loadingText'),
+            loginOverlay: document.getElementById('loginOverlay'),
+            registerOverlay: document.getElementById('registerOverlay'),
+            loginForm: document.getElementById('loginForm'),
+            registerForm: document.getElementById('registerForm'),
+            showRegister: document.getElementById('showRegister'),
+            showLogin: document.getElementById('showLogin'),
+            loginButton: document.getElementById('loginButton'),
+            registerButton: document.getElementById('registerButton'),
+            appContainer: document.getElementById('appContainer'),
+            header: {
+                el: document.querySelector('header'),
+                title: document.getElementById('headerTitle'),
+                backButton: document.getElementById('backButton'),
+                searchContainer: document.getElementById('searchContainer'),
+                searchInput: document.getElementById('settingsSearchInput'),
+                searchIcon: document.getElementById('searchIcon'),
+            },
+            toastContainer: document.getElementById('toast-container'),
+            modalContainer: document.getElementById('modal-container'),
+            templates: document.getElementById('templates'),
+            user: {
+                avatar: document.getElementById('userAvatar'),
+                nickname: document.getElementById('userNickname'),
+                username: document.getElementById('userUsername'),
+            },
+            sections: {
+                mainMenu: document.getElementById('mainMenu'),
+                accountSettings: document.getElementById('accountSettings'),
+                privacySettings: document.getElementById('privacySettings'),
+                notificationSettings: document.getElementById('notificationSettings'),
+                dataSettings: document.getElementById('dataSettings'),
+                chatSettings: document.getElementById('chatSettings'),
+                appearanceSettings: document.getElementById('appearanceSettings'),
+                stickerSettings: document.getElementById('stickerSettings'),
+                languageSettings: document.getElementById('languageSettings'),
+                advancedSettings: document.getElementById('advancedSettings'),
+                blockedUsersPage: document.getElementById('blockedUsersPage'),
+                activeSessionsPage: document.getElementById('activeSessionsPage'),
+                chatBackgroundsPage: document.getElementById('chatBackgroundsPage'),
+            },
+        };
+
+        // --- Global State Variables ---
+        let currentUser = null;
+        let currentUserProfile = {};
+        let currentSection = dom.sections.mainMenu;
+        let userSettings = {};
+        let systemThemeWatcher = window.matchMedia('(prefers-color-scheme: dark)');
+        let debounceTimer = null;
+        let searchCollapseTimer = null;
+        let allSettingsFlat = []; // For global search
+
+        // --- Constants and Default Configurations ---
+        const defaultSettings = {
+            username: "synapse_user", bio: "Hey there! I am using Synapse.",
+            phoneNumber: "+1••• ••• ••••", twoStepVerification: false,
+            lastSeen: "followers", profilePhotoVisibility: "public", phoneNumberVisibility: "followers",
+            forwardedMessagesLink: true, callsPrivacy: "public", groupInvites: "public",
+            passcodeLock: false, passcode: null, autoLock: 300,
+            pushNotifications: true, messageNotifications: true, groupNotifications: true, channelNotifications: true,
+            inAppSounds: true, customTones: false, ledColor: "blue", vibrationPattern: "default", keepAliveService: true,
+            autoDownloadWifi: { photos: true, videos: false, files: false, maxSize: 50 },
+            autoDownloadCellular: { photos: true, videos: false, files: false, maxSize: 10 },
+            useLessDataForCalls: false,
+            textSize: 16, bubbleShape: "rounded", autoPlayGifs: true, autoPlayVideos: false,
+            linkPreviews: true, sendByEnter: false, chatFolders: true,
+            theme: "system", accentColor: "primary", appIcon: "default", chatListDensity: "default",
+            trendingStickers: true, stickerSuggestions: true, animatedEmoji: true, defaultReaction: "👍",
+            appLanguage: "en", showTranslateButton: true,
+            experimentalFeatures: false, useProxy: false, proxySettings: { host: "", port: "", user: "", pass: "" },
+            chatBackground: { type: 'color', value: '#e5e7eb', pattern: false },
+        };
+        
+        const languages = {
+            'en': 'English', 'zh': 'Chinese (Mandarin)', 'hi': 'Hindi', 'es': 'Spanish',
+            'fr': 'French', 'ar': 'Arabic', 'bn': 'Bengali', 'ru': 'Russian', 'pt': 'Portuguese',
+            'id': 'Indonesian', 'ur': 'Urdu', 'de': 'German', 'ja': 'Japanese', 'sw': 'Swahili',
+            'mr': 'Marathi', 'te': 'Telugu', 'tr': 'Turkish', 'ta': 'Tamil', 'vi': 'Vietnamese',
+            'ko': 'Korean', 'it': 'Italian', 'pl': 'Polish'
+        };
+
+        const chatBackgroundColors = ['#f3f4f6', '#fecaca', '#fed7aa', '#fef08a', '#d9f99d', '#bfdbfe', '#e9d5ff', '#fbcfe8'];
+        const chatBackgroundImages = [
+            "https://i.postimg.cc/L6RQt4Pv/39caa5bb-7666-470c-9058-5f2a790ab995.jpg",
+            "https://i.postimg.cc/xCMgmBTW/4b524eca-eee9-4a86-aedd-4a8e897855e4.jpg",
+            "https://i.postimg.cc/DwpC3qMY/965cb1c4-d4ca-4625-aa89-a4fe42b2afc7.jpg",
+            "https://i.postimg.cc/wjjWrW0m/messenger-wallpaper.jpg",
+            "https://i.postimg.cc/GhQ7q0JR/Telegram-Back-Ground-Phone-Wallpaper.jpg",
+            "https://i.postimg.cc/Bv8mSjWZ/Stories.jpg"
+        ];
+        
+        // --- SETTINGS CONFIGURATION OBJECT ---
+        const settingsConfig = {
+            mainMenu: [
+                { title: 'Account', icon: 'fa-solid fa-user-gear', key: 'accountSettings' },
+                { title: 'Privacy & Security', icon: 'fa-solid fa-shield-halved', key: 'privacySettings' },
+                { title: 'Notifications & Sounds', icon: 'fa-solid fa-bell', key: 'notificationSettings' },
+                { title: 'Data & Storage', icon: 'fa-solid fa-database', key: 'dataSettings' },
+                { title: 'Chat Settings', icon: 'fa-solid fa-comments', key: 'chatSettings' },
+                { title: 'Appearance', icon: 'fa-solid fa-palette', key: 'appearanceSettings' },
+                { title: 'Stickers & Emoji', icon: 'fa-solid fa-face-smile', key: 'stickerSettings' },
+                { title: 'Language', icon: 'fa-solid fa-globe', key: 'languageSettings' },
+                { title: 'Advanced', icon: 'fa-solid fa-code-branch', key: 'advancedSettings' },
+            ],
+            accountSettings: { title: 'Account', groups: [
+                { items: [
+                    { key: 'phoneNumber', title: 'Phone Number', desc: 'Your registered phone number', type: 'sub-label', action: () => showToast('This is for display only.', 'info') },
+                    { key: 'username', title: 'Username', desc: 'Your unique Synapse username', type: 'sub-label', action: () => showToast('Edit this from your main profile page.', 'info') },
+                    { key: 'bio', title: 'Bio', desc: 'A short description about you', type: 'sub-label', action: () => showToast('Edit this from your main profile page.', 'info') },
+                ]},
+                { title: 'Security', items: [
+                    { key: 'twoStepVerification', title: 'Two-Step Verification', desc: 'Add a password to your account for extra security', type: 'toggle' },
+                    { key: 'deleteAccount', title: 'Delete My Account', desc: 'Permanently remove your account and all data', type: 'action', isDanger: true, action: openDeleteAccountModal },
+                ]}
+            ]},
+            privacySettings: { title: 'Privacy & Security', groups: [
+                { title: 'Privacy', items: [
+                    { key: 'lastSeen', title: 'Last Seen & Online', desc: 'Control who can see your online status', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'profilePhotoVisibility', title: 'Profile Photo', desc: 'Control who can see your avatar', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'phoneNumberVisibility', title: 'Phone Number', desc: 'Control who can find you by your phone number', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'forwardedMessagesLink', title: 'Forwarded Messages', desc: 'Allow linking to your account when your messages are forwarded', type: 'toggle' },
+                    { key: 'callsPrivacy', title: 'Calls', desc: 'Control who can call you', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'groupInvites', title: 'Groups & Channels', desc: 'Control who can add you to groups', type: 'select', options: { public: 'Everyone', followers: 'Followers' } },
+                ]},
+                { title: 'Security', items: [
+                    { key: 'blockedUsers', title: 'Blocked Users', desc: 'View and manage users you have blocked', type: 'action', action: openBlockedUsersPage },
+                    { key: 'activeSessions', title: 'Active Sessions', desc: 'Manage devices logged into your account', type: 'action', action: openActiveSessionsPage },
+                    { key: 'passcodeLock', title: 'Passcode Lock', desc: 'Secure the app with a 4-digit code', type: 'action', action: openPasscodeModal },
+                    { key: 'autoLock', title: 'Auto-Lock', desc: 'If inactive for a period of time', type: 'select', options: { 60: '1 Minute', 300: '5 Minutes', 3600: '1 Hour' }, dependsOn: 'passcodeLock' },
+                ]}
+            ]},
+            notificationSettings: { title: 'Notifications & Sounds', groups: [
+                { title: 'Notifications For Chats', items: [
+                    { key: 'messageNotifications', title: 'Private Messages', desc: 'Alerts for one-on-one chats', type: 'toggle' },
+                    { key: 'groupNotifications', title: 'Group Chats', desc: 'Alerts for group conversations', type: 'toggle' },
+                    { key: 'channelNotifications', title: 'Channels', desc: 'Alerts for channel updates', type: 'toggle' },
+                ]},
+                { title: 'In-App', items: [
+                    { key: 'inAppSounds', title: 'In-App Sounds', desc: 'Play sounds for actions inside the app', type: 'toggle' },
+                    { key: 'vibrationPattern', title: 'Vibration', desc: 'In-app haptic feedback', type: 'select', options: { 'default': 'Default', 'short': 'Short', 'long': 'Long', 'none': 'Disabled' } },
+                ]}
+            ]},
+            dataSettings: { title: 'Data & Storage', groups: [
+                { title: 'Automatic Media Download', items: [
+                    { key: 'autoDownload', title: 'Auto-Download Settings', type: 'custom', controlType: 'autoDownload' }
+                ]},
+                { title: 'Data Saving', items: [
+                    { key: 'useLessDataForCalls', title: 'Use Less Data for Calls', desc: 'Reduces data consumption during calls with lower quality', type: 'select', options: { 0: 'Never', 1: 'On Cellular', 2: 'Always' } },
+                ]},
+                { title: 'Storage Management', items: [
+                    { key: 'storageUsage', title: 'Storage Usage', desc: 'View detailed usage and clear cache', type: 'action', action: openStorageCleanupModal },
+                ]}
+            ]},
+            chatSettings: { title: 'Chat Settings', groups: [
+                { items: [
+                    { key: 'textSize', title: 'Message Text Size', desc: 'Adjust the font size in chats', type: 'range', min: 12, max: 30, unit: 'px' },
+                    { key: 'bubbleShape', title: 'Message Corners', desc: 'Change the shape of message bubbles', type: 'select', options: { 'rounded': 'Slightly Rounded', 'sharp': 'Sharp', 'round-full': 'Very Rounded' } },
+                    { key: 'chatFolders', title: 'Enable Chat Folders', desc: 'Organize chats into tabs for better management', type: 'toggle' },
+                    { key: 'chatBackgrounds', title: 'Chat Background', desc: 'Choose your chat wallpaper', type: 'action', action: openChatBackgroundsPage },
+                ]},
+                { title: 'Behavior', items: [
+                    { key: 'autoPlayGifs', title: 'Auto-Play GIFs', desc: 'Automatically play GIF animations in chats', type: 'toggle' },
+                    { key: 'autoPlayVideos', title: 'Auto-Play Videos', desc: 'Automatically play videos in chats', type: 'toggle' },
+                    { key: 'linkPreviews', title: 'Generate Link Previews', desc: 'Show a preview for links shared in messages', type: 'toggle' },
+                    { key: 'sendByEnter', title: 'Send by Enter', desc: 'The Enter key on your keyboard will send your message', type: 'toggle' },
+                ]}
+            ]},
+            appearanceSettings: { title: 'Appearance', groups: [
+                 { items: [
+                    { key: 'theme', title: 'Color Theme', desc: 'Choose between light, dark, or system default theme', type: 'select', options: { 'system': 'System', 'light': 'Light', 'dark': 'Dark' } },
+                    { key: 'accentColor', title: 'Accent Color', desc: 'Customize the main color of UI elements', type: 'select', options: { 'primary': 'Synapse Blue', 'blue': 'Blue', 'purple': 'Purple', 'green': 'Green', 'pink': 'Pink', 'orange': 'Orange', 'red': 'Red' } },
+                ]}
+            ]},
+            stickerSettings: { title: 'Stickers & Emoji', groups: [
+                { items: [
+                    { key: 'trendingStickers', title: 'Show Trending Stickers', desc: 'Display popular stickers in the sticker panel', type: 'toggle' },
+                    { key: 'stickerSuggestions', title: 'Suggest Stickers by Emoji', desc: 'Show relevant stickers when you type an emoji', type: 'toggle' },
+                    { key: 'animatedEmoji', title: 'Loop Animated Emoji', desc: 'Play animated emoji on a continuous loop', type: 'toggle' },
+                ]}
+            ]},
+            languageSettings: { title: 'Language', groups: [
+                 { items: [
+                    { key: 'appLanguage', title: 'Language', desc: 'Change the language of the application', type: 'select', options: languages },
+                    { key: 'showTranslateButton', title: 'Show Translate Button', desc: 'Offer to translate messages in other languages', type: 'toggle' },
+                ]}
+            ]},
+            advancedSettings: { title: 'Advanced', groups: [
+                { items: [
+                    { key: 'experimentalFeatures', title: 'Enable Experimental Features', desc: 'Access new features that are still in development. May cause instability.', type: 'toggle' },
+                ]},
+                { title: 'Diagnostics', items: [
+                    { key: 'debugInfo', title: 'Send Debug Info', desc: 'Help us fix issues on your device by sending anonymous logs', type: 'action', action: () => showToast('Sending debug logs...', 'info') },
+                ]}
+            ]},
+            // Page configurations for titles
+            blockedUsersPage: { title: 'Blocked Users' },
+            activeSessionsPage: { title: 'Active Sessions' },
+            chatBackgroundsPage: { title: 'Chat Background' },
+        };
+        
+        // --- Core Application Flow & Initialization ---
+
+        /**
+         * Initializes the application. This is the main entry point.
+         * It sets up an authentication listener to determine whether to show the login screen or the main app.
+         * @returns {void}
+         */
+        function init() {
+            auth.onAuthStateChanged(async (user) => {
+                dom.appContainer.classList.add('hidden');
+                dom.loginOverlay.classList.add('hidden');
+                dom.registerOverlay.classList.add('hidden');
+                
+                if (user) {
+                    currentUser = user;
+                    dom.loadingText.textContent = 'Loading Settings...';
+                    dom.loadingOverlay.classList.remove('hidden', 'opacity-0');
+                    await initializeUserSettings(user.uid);
+                    
+                    setTimeout(() => {
+                        dom.loadingOverlay.classList.add('opacity-0');
+                        dom.appContainer.classList.remove('hidden');
+                        dom.appContainer.classList.add('animate__animated', 'animate__fadeIn');
+                        setTimeout(() => dom.loadingOverlay.classList.add('hidden'), 300);
+                    }, 500);
+
+                } else {
+                    currentUser = null;
+                    currentUserProfile = {};
+                    userSettings = {};
+                    dom.loadingOverlay.classList.add('hidden');
+                    dom.loginOverlay.classList.remove('hidden');
+                }
+            });
+            
+            setupAuthFormListeners();
+        }
+
+        /**
+         * Sets up event listeners for the login, registration, and search UI elements.
+         * @returns {void}
+         */
+        function setupAuthFormListeners() {
+            dom.showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                dom.loginOverlay.classList.add('hidden');
+                dom.registerOverlay.classList.remove('hidden');
+            });
+            
+            dom.showLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                dom.registerOverlay.classList.add('hidden');
+                dom.loginOverlay.classList.remove('hidden');
+            });
+
+            const toggleButtonLoading = (button, isLoading) => {
+                const btnText = button.querySelector('.btn-text');
+                const btnSpinner = button.querySelector('.btn-spinner');
+                button.disabled = isLoading;
+                if (btnText) btnText.classList.toggle('hidden', isLoading);
+                if (btnSpinner) btnSpinner.classList.toggle('hidden', !isLoading);
+            };
+            
+            dom.loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                toggleButtonLoading(dom.loginButton, true);
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                try {
+                    await auth.signInWithEmailAndPassword(email, password);
+                } catch (error) {
+                    showToast(error.message, 'error');
+                } finally {
+                    toggleButtonLoading(dom.loginButton, false);
+                }
+            });
+            
+            dom.registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                toggleButtonLoading(dom.registerButton, true);
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                try {
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    const newUser = {
+                        nickname: name,
+                        username: email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, ''),
+                        avatar: `https://avatar.iran.liara.run/public/boy?username=${encodeURIComponent(name)}`,
+                        biography: 'Hey there! I am using Synapse.',
+                        phone: ''
+                    };
+                    await database.ref(`skyline/users/${userCredential.user.uid}`).set(newUser);
+                    await database.ref(`users/${userCredential.user.uid}/settings`).set(defaultSettings);
+
+                } catch (error) {
+                    showToast(error.message, 'error');
+                } finally {
+                    toggleButtonLoading(dom.registerButton, false);
+                }
+            });
+        }
+        
+        /**
+         * Orchestrates the setup for a logged-in user, loading data, building UI, and setting listeners.
+         * @param {string} uid - The user's unique ID.
+         * @returns {Promise<void>}
+         */
+        async function initializeUserSettings(uid) {
+            await Promise.all([
+                loadSettings(uid),
+                loadUserProfile(uid),
+                createMockData(uid) // For testing Active Sessions
+            ]);
+            buildUI();
+            initEventListeners();
+        }
+
+        /**
+         * Creates mock data for features that don't have a backend implementation yet (for demonstration).
+         * @param {string} uid - The user's unique ID.
+         * @returns {Promise<void>}
+         */
+        async function createMockData(uid) {
+            const sessionsRef = database.ref(`users/${uid}/sessions`);
+            const snapshot = await sessionsRef.once('value');
+            if (!snapshot.exists()) {
+                console.log("Creating mock session data...");
+                const mockSessions = {
+                    "session1": { device: "Chrome on Windows", location: "New York, USA", lastActive: Date.now() - 86400000, icon: "fa-desktop" },
+                    "session2": { device: "Safari on iPhone 15", location: "London, UK", lastActive: Date.now() - 3600000, icon: "fa-mobile-screen-button" },
+                    "session3": { device: "Firefox on Linux", location: "Berlin, Germany", lastActive: Date.now(), icon: "fa-desktop" }
+                };
+                await sessionsRef.set(mockSessions);
+            }
+        }
+        
+        // --- Data Handling Functions ---
+
+        /**
+         * Loads all user-specific settings from Firebase.
+         * @param {string} uid - The user's unique ID.
+         * @returns {Promise<void>}
+         */
+        async function loadSettings(uid) {
+            const path = `users/${uid}/settings`;
+            try {
+                const snapshot = await database.ref(path).once('value');
+                const dbSettings = snapshot.val();
+                userSettings = { ...defaultSettings, ...dbSettings };
+            } catch (error) {
+                console.error("Failed to load settings:", error);
+                showToast("Could not load settings. Using defaults.", "error");
+                userSettings = { ...defaultSettings };
+            }
+        }
+
+        /**
+         * Loads the user's public profile information and stores it globally.
+         * @param {string} uid - The user's unique ID.
+         * @returns {Promise<void>}
+         */
+        async function loadUserProfile(uid) {
+            const path = `skyline/users/${uid}`;
+            try {
+                const snapshot = await database.ref(path).once('value');
+                const profile = snapshot.val();
+                if (profile) {
+                    currentUserProfile = profile; // Store globally
+                    dom.user.nickname.textContent = profile.nickname || 'Synapse User';
+                    dom.user.username.textContent = `@${profile.username || 'username'}`;
+                    if (profile.avatar && profile.avatar !== 'null') {
+                        dom.user.avatar.src = profile.avatar;
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to load user profile:", error);
+                currentUserProfile = {}; // Reset on error
+            }
+        }
+        
+        /**
+         * Updates a setting locally and debounces the save to Firebase.
+         * @param {string} key - The setting key to update.
+         * @param {*} value - The new value for the setting.
+         * @returns {void}
+         */
+        function updateLocalSetting(key, value) {
+            if (JSON.stringify(userSettings[key]) === JSON.stringify(value)) return;
+            
+            userSettings[key] = value;
+            console.log(`Setting changed: ${key} =`, value);
+
+            // Apply theme-related changes instantly
+            if (['theme', 'accentColor', 'textSize', 'chatBackground'].includes(key)) {
+                applyTheme();
+            }
+
+            // Handle dependent settings visibility
+            const dependentControls = document.querySelectorAll(`[data-depends-on="${key}"]`);
+            dependentControls.forEach(control => {
+                control.closest('.setting-item, .auto-download-control')?.classList.toggle('hidden', !value);
+            });
+            
+            // Debounce saving to Firebase to avoid rapid writes
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => saveSettingsToFirebase(), 1000);
+        }
+
+        /**
+         * Saves the current `userSettings` object to Firebase.
+         * @returns {Promise<void>}
+         */
+        async function saveSettingsToFirebase() {
+            if (!currentUser) return;
+            try {
+                await database.ref(`users/${currentUser.uid}/settings`).update(userSettings);
+                showToast("Settings auto-saved", "success");
+            } catch (error) {
+                console.error("Error saving settings:", error);
+                showToast("Error saving settings", "error");
+            }
+        }
+        
+        // --- UI Building & Rendering ---
+
+        /**
+         * Builds the entire UI, including menus and sections, and applies themes.
+         * @returns {void}
+         */
+        function buildUI() {
+            flattenSettingsForSearch();
+            buildMainMenu();
+            buildAllSections();
+            updateAllControlValues();
+            applyTheme();
+        }
+
+        /**
+         * Sets up global event listeners for the application's interactive elements.
+         * @returns {void}
+         */
+        function initEventListeners() {
+            dom.header.backButton.addEventListener('click', () => showSection(dom.sections.mainMenu));
+            dom.header.searchInput.addEventListener('input', handleSearchInput);
+            dom.header.searchIcon.addEventListener('click', () => dom.header.searchContainer.classList.add('expanded'));
+            dom.header.searchInput.addEventListener('focus', () => dom.header.searchContainer.classList.add('expanded'));
+            dom.header.searchInput.addEventListener('blur', () => {
+                clearTimeout(searchCollapseTimer);
+                searchCollapseTimer = setTimeout(() => {
+                    if (dom.header.searchInput.value === '') {
+                        dom.header.searchContainer.classList.remove('expanded');
+                    }
+                }, 3000);
+            });
+            document.addEventListener('click', (e) => {
+                if (!dom.header.searchContainer.contains(e.target)) {
+                    if (dom.header.searchInput.value === '') {
+                       dom.header.searchContainer.classList.remove('expanded');
+                    }
+                }
+            });
+            
+            systemThemeWatcher.addEventListener('change', () => {
+                if(userSettings.theme === 'system') applyTheme();
+            });
+        }
+
+        /**
+         * Creates a flat array of all settings for easier searching.
+         * This is called once during UI build.
+         * @returns {void}
+         */
+        function flattenSettingsForSearch() {
+            allSettingsFlat = [];
+            Object.entries(settingsConfig).forEach(([mainKey, mainValue]) => {
+                if(mainValue.groups) {
+                    mainValue.groups.forEach(group => {
+                        group.items.forEach(item => {
+                            allSettingsFlat.push({
+                                ...item,
+                                parentKey: mainKey, // e.g., 'privacySettings'
+                                parentTitle: mainValue.title // e.g., 'Privacy & Security'
+                            });
+                        });
+                    });
+                }
+            });
+        }
+
+        /**
+         * Builds the main navigation menu from the `settingsConfig`.
+         * @returns {void}
+         */
+        function buildMainMenu() {
+            const container = document.getElementById('mainMenuLinkContainer');
+            container.innerHTML = '';
+            
+            const list = document.createElement('ul');
+            list.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+
+            settingsConfig.mainMenu.forEach((item) => {
+                const listItem = document.createElement('li');
+                listItem.className = 'setting-item flex items-center p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors';
+                listItem.dataset.key = item.key; // For search filtering
+                listItem.innerHTML = `
+                    <i class="${item.icon} w-6 text-center accent-text"></i>
+                    <span class="ml-4 flex-1 font-medium">${item.title}</span>
+                    <i class="fas fa-chevron-right text-gray-400"></i>`;
+                listItem.addEventListener('click', () => {
+                    // Jump to specific setting if search result is clicked
+                    if (listItem.dataset.jumpToKey) {
+                        showSection(dom.sections[item.key], listItem.dataset.jumpToKey);
+                    } else {
+                        showSection(dom.sections[item.key]);
+                    }
+                });
+                list.appendChild(listItem);
+            });
+            container.appendChild(list);
+        }
+
+        /**
+         * Builds the content for all subsection pages based on `settingsConfig`.
+         * @returns {void}
+         */
+        function buildAllSections() {
+            Object.keys(dom.sections).forEach(key => {
+                // Skip special pages which have their own build functions
+                if (key === 'mainMenu' || key.endsWith('Page')) return;
+                const config = settingsConfig[key];
+                if (!config) return;
+
+                const sectionEl = dom.sections[key];
+                sectionEl.innerHTML = ''; // Clear previous content
+                const content = document.createElement('div');
+                content.className = 'p-4 space-y-6 pb-24';
+                
+                config.groups.forEach((group) => {
+                    const groupEl = document.createElement('div');
+                    
+                    if(group.title) {
+                        const title = document.createElement('h3');
+                        title.className = 'px-4 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase';
+                        title.textContent = group.title;
+                        groupEl.appendChild(title);
+                    }
+                    
+                    const list = document.createElement('ul');
+                    list.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+                    
+                    group.items.forEach((item) => {
+                        const listItem = buildSettingItem(item);
+                        listItem.dataset.settingKey = item.key;
+                        list.appendChild(listItem);
+                    });
+                    
+                    groupEl.appendChild(list);
+                    content.appendChild(groupEl);
+                });
+                sectionEl.appendChild(content);
+            });
+        }
+        
+        /**
+         * Builds a single setting list item based on its configuration.
+         * @param {object} itemConfig - The configuration for the setting item.
+         * @returns {HTMLElement} The generated list item element.
+         */
+        function buildSettingItem(itemConfig) {
+            // Handle special custom controls
+            if (itemConfig.type === 'custom' && itemConfig.controlType === 'autoDownload') {
+                const control = dom.templates.querySelector('.auto-download-control').cloneNode(true);
+                control.id = itemConfig.key;
+                control.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.addEventListener('change', (e) => handleAutoDownloadChange(e, itemConfig));
+                });
+                control.querySelectorAll('input[type="range"]').forEach(range => {
+                    range.addEventListener('input', (e) => handleAutoDownloadChange(e, itemConfig));
+                });
+                return control;
+            }
+
+            // Handle range slider controls
+            if (itemConfig.type === 'range') {
+                const rangeControl = dom.templates.querySelector('.range-control').cloneNode(true);
+                rangeControl.id = itemConfig.key;
+                const rangeInput = rangeControl.querySelector('input[type="range"]');
+                rangeInput.min = itemConfig.min;
+                rangeInput.max = itemConfig.max;
+                rangeInput.step = itemConfig.step || 1;
+                rangeInput.value = userSettings[itemConfig.key] || itemConfig.min;
+                
+                const rangeTitle = rangeControl.querySelector('.range-title');
+                rangeTitle.textContent = itemConfig.title;
+                
+                const rangeValue = rangeControl.querySelector('.range-value');
+                rangeValue.textContent = `${rangeInput.value}${itemConfig.unit || ''}`;
+                
+                rangeInput.addEventListener('input', (e) => {
+                    rangeValue.textContent = `${e.target.value}${itemConfig.unit || ''}`;
+                    if (itemConfig.key === 'textSize') {
+                         dom.body.style.fontSize = `${e.target.value}px`;
+                    }
+                });
+
+                rangeInput.addEventListener('change', (e) => {
+                     updateLocalSetting(itemConfig.key, Number(e.target.value));
+                });
+                
+                return rangeControl;
+            }
+
+            // Handle all other standard list item types
+            const li = dom.templates.querySelector('.setting-item').cloneNode(true);
+            li.querySelector('.setting-title').textContent = itemConfig.title;
+            const descEl = li.querySelector('.setting-description');
+            if(itemConfig.desc) {
+                descEl.textContent = itemConfig.desc;
+            } else {
+                descEl.remove();
+            }
+
+            const controlContainer = li.querySelector('.setting-control');
+
+            if (itemConfig.type === 'toggle') {
+                const toggle = dom.templates.querySelector('.toggle-control').cloneNode(true);
+                toggle.querySelector('input').id = itemConfig.key;
+                controlContainer.appendChild(toggle);
+            } else if (itemConfig.type === 'select') {
+                const select = dom.templates.querySelector('.select-control').cloneNode(true);
+                select.id = itemConfig.key;
+                Object.entries(itemConfig.options).forEach(([value, text]) => {
+                    select.innerHTML += `<option value="${value}">${text}</option>`;
+                });
+                controlContainer.appendChild(select);
+            } else if (itemConfig.type === 'sub-label') {
+                const subLabel = dom.templates.querySelector('.sub-label-control').cloneNode(true);
+                subLabel.id = `${itemConfig.key}-label`;
+                controlContainer.appendChild(subLabel);
+                li.classList.add('cursor-pointer', 'hover:bg-gray-50', 'dark:hover:bg-gray-700/50');
+                const chevron = document.createElement('i');
+                chevron.className = 'fas fa-chevron-right text-gray-400 ml-2';
+                controlContainer.appendChild(chevron);
+            } else if (itemConfig.type === 'action') {
+                li.classList.add('cursor-pointer', 'hover:bg-gray-50', 'dark:hover:bg-gray-700/50');
+                controlContainer.innerHTML = `<i class="fas fa-chevron-right text-gray-400"></i>`;
+                if (itemConfig.isDanger) {
+                    li.querySelector('.setting-title').classList.add('text-red-500');
+                }
+            }
+            
+            const control = controlContainer.querySelector('input, select') || li;
+            const eventType = (control.tagName === 'SELECT' || control.type === 'checkbox') ? 'change' : 'click';
+            control.addEventListener(eventType, (e) => handleInteraction(e, itemConfig));
+
+            return li;
+        }
+
+        /**
+         * Populates all UI controls with the current values from `userSettings` and `currentUserProfile`.
+         * @returns {void}
+         */
+        function updateAllControlValues() {
+            // Update settings from userSettings object
+            Object.entries(userSettings).forEach(([key, value]) => {
+                const control = document.getElementById(key);
+                if (control) {
+                    if (control.type === 'checkbox') control.checked = value;
+                    else if (control.tagName === 'SELECT') control.value = value;
+                    else if (control.type === 'range') {
+                        control.value = value;
+                        const rangeValueEl = control.closest('.range-control').querySelector('.range-value');
+                        if(rangeValueEl) rangeValueEl.textContent = `${value}px`;
+                    }
+                }
+            });
+
+            // Update real account info from currentUserProfile
+            const usernameLabel = document.getElementById('username-label');
+            if(usernameLabel) usernameLabel.textContent = currentUserProfile.username || 'Not set';
+            
+            const phoneLabel = document.getElementById('phoneNumber-label');
+            if(phoneLabel) phoneLabel.textContent = currentUserProfile.phone || 'Not set';
+
+            const bioLabel = document.getElementById('bio-label');
+            if(bioLabel) bioLabel.textContent = currentUserProfile.biography || 'Not set';
+
+            // Update custom auto-download control
+            const autoDownloadControl = document.getElementById('autoDownload');
+            if (autoDownloadControl) {
+                ['wifi', 'cellular'].forEach(type => {
+                    const settingsKey = type === 'wifi' ? 'autoDownloadWifi' : 'autoDownloadCellular';
+                    const settings = userSettings[settingsKey];
+                    const container = autoDownloadControl.querySelector(`input[data-type="${type}"]`).closest('div');
+                    container.querySelector('input[type="checkbox"]').checked = settings.photos;
+                    const rangeInput = container.nextElementSibling.querySelector('input[type="range"]');
+                    rangeInput.value = settings.maxSize;
+                    container.nextElementSibling.querySelector('.size-label').textContent = `${settings.maxSize} MB`;
+                });
+            }
+
+            // Update visibility of dependent controls
+            document.querySelectorAll('[data-depends-on]').forEach(el => {
+                const key = el.dataset.dependsOn;
+                el.closest('.setting-item')?.classList.toggle('hidden', !userSettings[key]);
+            });
+        }
+        
+        /**
+         * Applies the current color theme, accent color, font size, and chat background to the app.
+         * @returns {void}
+         */
+        function applyTheme() {
+            // Light/Dark mode
+            if (userSettings.theme === 'dark' || (userSettings.theme === 'system' && systemThemeWatcher.matches)) {
+                dom.html.classList.add('dark');
+            } else {
+                dom.html.classList.remove('dark');
+            }
+            // Accent color
+            const themeClasses = ['primary', 'blue', 'purple', 'green', 'pink', 'orange', 'red'].map(c => `accent-${c}`);
+            dom.body.classList.remove(...themeClasses);
+            dom.body.classList.add(`accent-${userSettings.accentColor}`);
+            // Font size
+            dom.body.style.fontSize = `${userSettings.textSize}px`;
+            
+            // Chat Background
+            const bg = userSettings.chatBackground || defaultSettings.chatBackground;
+            const body = document.body;
+            if (bg.type === 'image') {
+                body.style.setProperty('--chat-bg-image', `url(${bg.value})`);
+                body.style.setProperty('--chat-bg-size', 'cover');
+                dom.appContainer.style.backgroundColor = 'transparent';
+            } else { // color
+                const patternUrl = bg.pattern ? `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><g fill-rule="evenodd"><g fill="%239CA3AF" fill-opacity="0.2"><path d="M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z"/></g></g></svg>')` : 'none';
+                body.style.setProperty('--chat-bg-image', patternUrl);
+                body.style.setProperty('--chat-bg-size', 'auto');
+                dom.appContainer.style.backgroundColor = bg.value;
+            }
+        }
+        
+        // --- Navigation & Interaction Handlers ---
+
+        /**
+         * Handles navigation between different sections of the settings app.
+         * @param {HTMLElement} sectionToShow - The section element to display.
+         * @param {string} [focusKey=null] - Optional key of a setting to scroll to and highlight.
+         * @returns {void}
+         */
+        function showSection(sectionToShow, focusKey = null) {
+            const sectionToHide = currentSection;
+            if (sectionToHide === sectionToShow && !focusKey) return;
+            
+            // Bug Fix: Reset scroll position on navigation
+            window.scrollTo(0, 0);
+
+            const isNavigatingBack = (sectionToShow === dom.sections.mainMenu);
+            const configKey = Object.keys(dom.sections).find(k => dom.sections[k] === sectionToShow) || 'mainMenu';
+            const title = settingsConfig[configKey]?.title || 'Settings';
+            
+            sectionToHide.classList.add('exiting');
+            sectionToShow.classList.add('active');
+            
+            // Handle header and search bar visibility
+            dom.header.title.textContent = title;
+            dom.header.title.classList.toggle('pushed-left', !isNavigatingBack);
+            dom.header.backButton.classList.toggle('opacity-0', isNavigatingBack);
+            dom.header.backButton.classList.toggle('pointer-events-none', isNavigatingBack);
+            dom.header.searchContainer.classList.toggle('hidden', !isNavigatingBack);
+            if(!isNavigatingBack) {
+                dom.header.searchInput.value = '';
+                dom.header.searchContainer.classList.remove('expanded');
+            }
+
+
+            setTimeout(() => {
+                sectionToHide.classList.remove('active', 'exiting');
+                 // Scroll to and highlight a specific setting if requested
+                if (focusKey) {
+                    const targetEl = sectionToShow.querySelector(`[data-setting-key="${focusKey}"]`);
+                    if (targetEl) {
+                        targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        targetEl.classList.add('bg-primary-50', 'dark:bg-primary-900', 'transition-all', 'duration-1000');
+                        setTimeout(() => targetEl.classList.remove('bg-primary-50', 'dark:bg-primary-900'), 1500);
+                    }
+                }
+            }, 350);
+
+            currentSection = sectionToShow;
+        }
+
+        /**
+         * Displays a toast notification at the bottom of the screen.
+         * @param {string} message - The message to display.
+         * @param {'info'|'success'|'error'} [type='info'] - The type of toast.
+         * @returns {void}
+         */
+        function showToast(message, type = 'info') {
+            const colors = {
+                info: 'bg-gray-800 dark:bg-gray-200 text-white dark:text-black',
+                success: 'bg-green-600 text-white',
+                error: 'bg-red-600 text-white',
+            };
+            const toast = document.createElement('div');
+            toast.className = `toast mb-2 py-2 px-4 rounded-full shadow-lg text-sm font-medium ${colors[type]}`;
+            toast.textContent = message;
+            dom.toastContainer.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        /**
+         * Displays a modal overlay.
+         * @param {string} templateId - The ID of the modal template in the HTML.
+         * @param {function(HTMLElement):void} [setupFn] - A function to run to set up the modal's content and listeners.
+         * @returns {void}
+         */
+        function showModal(templateId, setupFn) {
+            const template = dom.templates.querySelector(`#${templateId}`);
+            if (!template) return;
+            
+            const modal = template.cloneNode(true);
+            modal.id = `active-${templateId}`;
+            
+            const close = () => {
+                modal.classList.add('opacity-0');
+                setTimeout(() => modal.remove(), 300);
+            };
+
+            modal.querySelectorAll('.modal-cancel').forEach(btn => btn.addEventListener('click', close));
+            modal.addEventListener('click', (e) => { if(e.target === modal) close(); });
+            
+            if (setupFn) setupFn(modal);
+
+            dom.modalContainer.appendChild(modal);
+            setTimeout(() => modal.classList.remove('hidden', 'opacity-0'), 10);
+        }
+        
+        /**
+         * Generic handler for user interactions with setting controls.
+         * @param {Event} e - The event object.
+         * @param {object} config - The configuration for the interacted item.
+         * @returns {void}
+         */
+        function handleInteraction(e, config) {
+            let value;
+            if (e.target.type === 'checkbox') {
+                value = e.target.checked;
+                if (window.navigator.vibrate) window.navigator.vibrate(50);
+            } else if (e.target.tagName === 'SELECT') {
+                value = e.target.value;
+                if (typeof defaultSettings[config.key] === 'number') {
+                    value = Number(value);
+                }
+            } else if (config.type === 'action' || config.type === 'sub-label') {
+                if (config.action) config.action();
+                return;
+            }
+            updateLocalSetting(config.key, value);
+        }
+
+        /**
+         * Specific handler for the custom auto-download control.
+         * @param {Event} e - The event object.
+         * @param {object} config - The configuration for the auto-download setting.
+         * @returns {void}
+         */
+        function handleAutoDownloadChange(e, config) {
+            const type = e.target.dataset.type === 'wifi' ? 'autoDownloadWifi' : 'autoDownloadCellular';
+            const currentValues = { ...userSettings[type] };
+
+            if (e.target.type === 'checkbox') {
+                currentValues.photos = e.target.checked;
+            } else if (e.target.type === 'range') {
+                currentValues.maxSize = Number(e.target.value);
+                e.target.closest('div').querySelector('.size-label').textContent = `${e.target.value} MB`;
+            }
+            updateLocalSetting(type, currentValues);
+        }
+
+        // --- Feature-Specific Page Handlers & Modals ---
+        
+        /**
+         * Opens and populates the Storage Cleanup modal.
+         * @returns {void}
+         */
+        function openStorageCleanupModal() {
+             showModal('storageCleanupModal', (modal) => {
+                const resultsView = modal.querySelector('.results-view');
+                const calculatingView = modal.querySelector('.calculating-view');
+                
+                setTimeout(() => {
+                    calculatingView.classList.add('hidden');
+                    resultsView.classList.remove('hidden');
+                    
+                    // Mock data for demonstration
+                    const sizes = { photos: 184.3, videos: 512.8, docs: 45.1, other: 21.7 };
+                    const total = Object.values(sizes).reduce((a, b) => a + b, 0);
+
+                    modal.querySelector('.photos-size').textContent = `${sizes.photos.toFixed(1)} MB`;
+                    modal.querySelector('.videos-size').textContent = `${sizes.videos.toFixed(1)} MB`;
+                    modal.querySelector('.docs-size').textContent = `${sizes.docs.toFixed(1)} MB`;
+                    modal.querySelector('.other-size').textContent = `${sizes.other.toFixed(1)} MB`;
+                    modal.querySelector('.total-size').textContent = `${total.toFixed(1)} MB`;
+
+                    modal.querySelector('.photos-bar').style.width = `${(sizes.photos/total)*100}%`;
+                    modal.querySelector('.videos-bar').style.width = `${(sizes.videos/total)*100}%`;
+                    modal.querySelector('.docs-bar').style.width = `${(sizes.docs/total)*100}%`;
+                    modal.querySelector('.other-bar').style.width = `${(sizes.other/total)*100}%`;
+                    
+                    modal.querySelector('.modal-confirm').onclick = () => {
+                        showToast('Cache cleared!', 'success');
+                        modal.querySelector('.modal-cancel').click();
+                    };
+                }, 1500);
+            });
+        }
+        
+        /**
+         * Opens the Passcode management modal and handles its internal logic.
+         * Refactored for clarity.
+         * @returns {void}
+         */
+        function openPasscodeModal() {
+            showModal('passcodeModal', (modal) => {
+                const state = {
+                    input: "",
+                    mode: userSettings.passcodeLock ? "enter" : "set_new",
+                    newPasscode: ""
+                };
+
+                const elements = {
+                    dots: modal.querySelectorAll('.passcode-dot'),
+                    title: modal.querySelector('.modal-title'),
+                    errorMsg: modal.querySelector('.error-message'),
+                    numpadContainer: modal.querySelector('.grid')
+                };
+
+                const updateDots = () => elements.dots.forEach((dot, i) => {
+                    dot.classList.toggle('accent-bg', i < state.input.length);
+                    dot.classList.toggle('bg-gray-300', i >= state.input.length);
+                    dot.classList.toggle('dark:bg-gray-600', i >= state.input.length);
+                    if (i === state.input.length - 1) {
+                         dot.classList.add('filled'); setTimeout(() => dot.classList.remove('filled'), 100);
+                    }
+                });
+                
+                const resetInput = (message = "") => {
+                    state.input = "";
+                    elements.errorMsg.textContent = message;
+                    updateDots();
+                };
+
+                const processEnterMode = () => {
+                    if (state.input === userSettings.passcode) {
+                        showToast('Passcode disabled.', 'success');
+                        updateLocalSetting('passcodeLock', false);
+                        updateLocalSetting('passcode', null);
+                        modal.querySelector('.modal-cancel').click();
+                    } else {
+                        resetInput('Incorrect Passcode');
+                    }
+                };
+                
+                const processSetNewMode = () => {
+                    state.newPasscode = state.input;
+                    state.mode = 'set_confirm';
+                    elements.title.textContent = 'Confirm Passcode';
+                    resetInput();
+                };
+
+                const processConfirmMode = () => {
+                    if (state.input === state.newPasscode) {
+                        showToast('Passcode set!', 'success');
+                        updateLocalSetting('passcodeLock', true);
+                        updateLocalSetting('passcode', state.newPasscode);
+                        modal.querySelector('.modal-cancel').click();
+                    } else {
+                        state.mode = 'set_new';
+                        elements.title.textContent = 'Set New Passcode';
+                        resetInput('Passcodes did not match. Try again.');
+                    }
+                };
+
+                const handleInput = (digit) => {
+                    if (state.input.length >= 4) return;
+                    state.input += digit;
+                    updateDots();
+
+                    if (state.input.length === 4) {
+                        setTimeout(() => {
+                            if (state.mode === 'enter') processEnterMode();
+                            else if (state.mode === 'set_new') processSetNewMode();
+                            else if (state.mode === 'set_confirm') processConfirmMode();
+                        }, 200);
+                    }
+                };
+                
+                // Build Numpad
+                elements.numpadContainer.innerHTML = '';
+                [1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, 'del'].forEach(val => {
+                    const btn = document.createElement('button');
+                    btn.className = "h-16 rounded-full text-2xl font-light flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-700 transition-colors ripple";
+                    if(typeof val === 'number') {
+                        btn.textContent = val; btn.onclick = () => handleInput(val);
+                    } else if (val === 'del') {
+                        btn.innerHTML = '<i class="fas fa-delete-left"></i>';
+                        btn.onclick = () => { state.input = state.input.slice(0, -1); updateDots(); };
+                    }
+                    elements.numpadContainer.appendChild(btn);
+                });
+
+                elements.title.textContent = userSettings.passcodeLock ? 'Enter Passcode to Disable' : 'Set New Passcode';
+            });
+        }
+        
+        /**
+         * Opens the account deletion confirmation modal.
+         * @returns {void}
+         */
+        function openDeleteAccountModal() {
+            showModal('deleteAccountModal', (modal) => {
+                const confirmInput = modal.querySelector('#deleteConfirmInput');
+                const deleteBtn = modal.querySelector('#confirmDeleteBtn');
+                
+                confirmInput.addEventListener('input', () => {
+                    const isConfirmed = (confirmInput.value === 'DELETE');
+                    deleteBtn.disabled = !isConfirmed;
+                    deleteBtn.classList.toggle('opacity-50', !isConfirmed);
+                    deleteBtn.classList.toggle('cursor-not-allowed', !isConfirmed);
+                });
+
+                deleteBtn.addEventListener('click', async () => {
+                    deleteBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+                    deleteBtn.disabled = true;
+
+                    try {
+                        const uid = currentUser.uid;
+                        await database.ref(`users/${uid}`).remove();
+                        await database.ref(`skyline/users/${uid}`).remove();
+                        await auth.currentUser.delete();
+                        showToast('Account deleted successfully.', 'success');
+                        // No need to click cancel, the auth state change will handle the redirect.
+                    } catch (error) {
+                        console.error("Account Deletion Error:", error);
+                        showToast(`Error: ${error.message}`, 'error');
+                        deleteBtn.innerHTML = 'Permanently Delete';
+                        deleteBtn.disabled = false;
+                    }
+                });
+            });
+        }
+
+        // --- NEWLY IMPLEMENTED FEATURE PAGES ---
+
+        /**
+         * Opens the Blocked Users page, fetches, and displays the list of blocked users.
+         * @returns {Promise<void>}
+         */
+        async function openBlockedUsersPage() {
+            const page = dom.sections.blockedUsersPage;
+            showSection(page);
+            
+            const placeholder = dom.templates.querySelector('.placeholder-view').cloneNode(true);
+            page.innerHTML = '';
+            page.appendChild(placeholder);
+
+            try {
+                const blocklistRef = database.ref(`skyline/blocklist/${currentUser.uid}`);
+                const snapshot = await blocklistRef.once('value');
+                const blockedUids = snapshot.val();
+
+                if (!blockedUids) {
+                    placeholder.querySelector('.placeholder-icon').className = 'placeholder-icon fas fa-check-circle text-4xl text-green-500 mb-4';
+                    placeholder.querySelector('.placeholder-text').textContent = "You haven't blocked anyone.";
+                    return;
+                }
+
+                const list = document.createElement('ul');
+                list.className = 'p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+
+                const userPromises = Object.keys(blockedUids).map(uid => 
+                    database.ref(`skyline/users/${uid}`).once('value')
+                );
+                
+                const userSnapshots = await Promise.all(userPromises);
+                
+                userSnapshots.forEach(userSnapshot => {
+                    const userProfile = userSnapshot.val();
+                    if(userProfile) {
+                        const listItem = dom.templates.querySelector('.blocked-user-item').cloneNode(true);
+                        listItem.querySelector('img').src = userProfile.avatar && userProfile.avatar !== 'null' ? userProfile.avatar : 'https://avatar.iran.liara.run/public/boy';
+                        listItem.querySelector('span').textContent = userProfile.nickname || 'Unknown User';
+                        
+                        const unblockBtn = listItem.querySelector('.unblock-btn');
+                        unblockBtn.dataset.uid = userProfile.uid;
+
+                        unblockBtn.addEventListener('click', async (e) => {
+                            const btn = e.currentTarget;
+                            const uidToUnblock = btn.dataset.uid;
+                            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+                            btn.disabled = true;
+
+                            try {
+                                await database.ref(`skyline/blocklist/${currentUser.uid}/${uidToUnblock}`).remove();
+                                listItem.classList.add('animate__animated', 'animate__fadeOutLeft');
+                                setTimeout(() => {
+                                    listItem.remove();
+                                    if(list.children.length === 0) {
+                                         placeholder.querySelector('.placeholder-icon').className = 'placeholder-icon fas fa-check-circle text-4xl text-green-500 mb-4';
+                                         placeholder.querySelector('.placeholder-text').textContent = "You haven't blocked anyone.";
+                                         page.innerHTML = '';
+                                         page.appendChild(placeholder);
+                                    }
+                                }, 500);
+                                showToast(`${userProfile.nickname} has been unblocked.`, 'success');
+                            } catch (error) {
+                                showToast(`Failed to unblock: ${error.message}`, 'error');
+                                btn.textContent = 'Unblock';
+                                btn.disabled = false;
+                            }
+                        });
+
+                        list.appendChild(listItem);
+                    }
+                });
+
+                page.innerHTML = '';
+                page.appendChild(list);
+
+            } catch(error) {
+                console.error("Error fetching blocked users:", error);
+                placeholder.querySelector('.placeholder-icon').className = 'placeholder-icon fas fa-exclamation-triangle text-4xl text-red-500 mb-4';
+                placeholder.querySelector('.placeholder-text').textContent = "Could not load blocked users.";
+            }
+        }
+
+        /**
+         * Opens the Active Sessions page, fetches, and displays the list of sessions.
+         * @returns {Promise<void>}
+         */
+        async function openActiveSessionsPage() {
+            const page = dom.sections.activeSessionsPage;
+            showSection(page);
+            
+            const placeholder = dom.templates.querySelector('.placeholder-view').cloneNode(true);
+            page.innerHTML = '';
+            page.appendChild(placeholder);
+
+            try {
+                const sessionsRef = database.ref(`users/${currentUser.uid}/sessions`);
+                const snapshot = await sessionsRef.once('value');
+                const sessions = snapshot.val();
+
+                if (!sessions) {
+                    placeholder.querySelector('.placeholder-icon').className = 'placeholder-icon fas fa-power-off text-4xl text-gray-400 dark:text-gray-500 mb-4';
+                    placeholder.querySelector('.placeholder-text').textContent = "No other active sessions found.";
+                    return;
+                }
+
+                const list = document.createElement('ul');
+                list.className = 'p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+                
+                Object.entries(sessions).forEach(([key, sessionData]) => {
+                    const listItem = dom.templates.querySelector('.active-session-item').cloneNode(true);
+                    
+                    listItem.querySelector('.session-icon').className = `session-icon fa-solid ${sessionData.icon || 'fa-desktop'} w-8 text-center text-2xl text-gray-500 dark:text-gray-400`;
+                    listItem.querySelector('.session-device').textContent = sessionData.device;
+                    const lastActiveDate = new Date(sessionData.lastActive);
+                    listItem.querySelector('.session-details').textContent = `${sessionData.location} - Last active: ${lastActiveDate.toLocaleString()}`;
+                    
+                    const revokeBtn = listItem.querySelector('.revoke-btn');
+                    revokeBtn.dataset.key = key;
+
+                    revokeBtn.addEventListener('click', async (e) => {
+                        const btn = e.currentTarget;
+                        const sessionKey = btn.dataset.key;
+                        btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+                        btn.disabled = true;
+
+                        try {
+                            await database.ref(`users/${currentUser.uid}/sessions/${sessionKey}`).remove();
+                            listItem.classList.add('animate__animated', 'animate__fadeOutLeft');
+                            setTimeout(() => listItem.remove(), 500);
+                            showToast(`Session revoked.`, 'success');
+                        } catch (error) {
+                            showToast(`Failed to revoke: ${error.message}`, 'error');
+                            btn.textContent = 'Revoke';
+                            btn.disabled = false;
+                        }
+                    });
+
+                    list.appendChild(listItem);
+                });
+
+                page.innerHTML = '';
+                page.appendChild(list);
+
+            } catch (error) {
+                 console.error("Error fetching active sessions:", error);
+                 placeholder.querySelector('.placeholder-icon').className = 'placeholder-icon fas fa-exclamation-triangle text-4xl text-red-500 mb-4';
+                 placeholder.querySelector('.placeholder-text').textContent = "Could not load active sessions.";
+            }
+        }
+
+        /**
+         * Opens the Chat Backgrounds settings page and initializes its interactive elements.
+         * @returns {void}
+         */
+        function openChatBackgroundsPage() {
+            const page = dom.sections.chatBackgroundsPage;
+            showSection(page);
+            page.innerHTML = ''; // Clear previous content
+
+            const content = dom.templates.querySelector('#chat-backgrounds-content').cloneNode(true);
+            page.appendChild(content);
+
+            const preview = content.querySelector('.preview-container');
+            const colorSelector = content.querySelector('#color-selector');
+            const imageSelector = content.querySelector('#image-selector');
+            const patternToggle = content.querySelector('#patternToggle');
+            const setBtn = content.querySelector('#set-background-btn');
+            
+            let currentSelection = { ...(userSettings.chatBackground || defaultSettings.chatBackground) };
+
+            const updatePreview = () => {
+                if(currentSelection.type === 'image') {
+                    preview.style.setProperty('--preview-bg-image', `url(${currentSelection.value})`);
+                    preview.style.setProperty('--preview-bg-color', 'transparent');
+                } else { // color
+                    const patternImage = currentSelection.pattern ? `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><g fill-rule="evenodd"><g fill="%239CA3AF" fill-opacity="0.2"><path d="M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z"/></g></g></svg>')` : 'none';
+                    preview.style.setProperty('--preview-bg-image', patternImage);
+                    preview.style.setProperty('--preview-bg-color', currentSelection.value);
+                }
+            };
+            
+            const updateSelections = () => {
+                // Update color swatches
+                colorSelector.querySelectorAll('.color-swatch').forEach(swatch => {
+                    const isSelected = currentSelection.type === 'color' && swatch.dataset.color === currentSelection.value;
+                    swatch.classList.toggle('selected', isSelected);
+                });
+                // Update image thumbnails
+                imageSelector.querySelectorAll('.image-thumbnail').forEach(thumb => {
+                    const isSelected = currentSelection.type === 'image' && thumb.dataset.url === currentSelection.value;
+                    thumb.classList.toggle('selected', isSelected);
+                });
+                // Update pattern toggle
+                patternToggle.checked = currentSelection.pattern || false;
+                patternToggle.closest('.flex').classList.toggle('opacity-50', currentSelection.type === 'image');
+                patternToggle.disabled = currentSelection.type === 'image';
+            };
+
+            // Build color selector
+            chatBackgroundColors.forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.className = 'color-swatch w-12 h-12 rounded-full accent-ring';
+                swatch.style.backgroundColor = color;
+                swatch.dataset.color = color;
+                swatch.addEventListener('click', () => {
+                    currentSelection.type = 'color';
+                    currentSelection.value = color;
+                    updatePreview();
+                    updateSelections();
+                });
+                colorSelector.appendChild(swatch);
+            });
+
+            // Build image selector
+            chatBackgroundImages.forEach(url => {
+                const thumb = document.createElement('img');
+                thumb.className = 'image-thumbnail w-full h-24 object-cover rounded-lg accent-ring';
+                thumb.src = url;
+                thumb.dataset.url = url;
+                thumb.addEventListener('click', () => {
+                    currentSelection.type = 'image';
+                    currentSelection.value = url;
+                    updatePreview();
+                    updateSelections();
+                });
+                imageSelector.appendChild(thumb);
+            });
+            
+            // Add listener for pattern toggle
+            patternToggle.addEventListener('change', (e) => {
+                if (currentSelection.type === 'color') {
+                    currentSelection.pattern = e.target.checked;
+                    updatePreview();
+                }
+            });
+
+            // Add listener for set button
+            setBtn.addEventListener('click', () => {
+                updateLocalSetting('chatBackground', currentSelection);
+                showToast('Background set successfully!', 'success');
+                dom.header.backButton.click(); // Go back
+            });
+
+            // Initial state
+            updatePreview();
+            updateSelections();
+        }
+
+        /**
+         * Handles the real-time search input for filtering settings.
+         * @param {Event} e - The input event object.
+         * @returns {void}
+         */
+        function handleSearchInput(e) {
+            clearTimeout(searchCollapseTimer);
+            const query = e.target.value.toLowerCase().trim();
+            const mainMenuContainer = document.getElementById('mainMenuLinkContainer');
+            const listItems = mainMenuContainer.querySelectorAll('li[data-key]');
+            
+            if (!query) {
+                // If query is empty, show all items and reset them
+                listItems.forEach(li => {
+                    li.classList.remove('hidden');
+                    const originalConfig = settingsConfig.mainMenu.find(item => item.key === li.dataset.key);
+                    li.querySelector('span').textContent = originalConfig.title;
+                    li.querySelector('.setting-item > i:first-child').className = `${originalConfig.icon} w-6 text-center accent-text`;
+                    delete li.dataset.jumpToKey;
+                });
+                return;
+            }
+
+            // Global search through all settings
+            const matchedItems = allSettingsFlat.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                (item.desc && item.desc.toLowerCase().includes(query))
+            );
+
+            // Group results by their main parent category
+            const resultsByParent = matchedItems.reduce((acc, item) => {
+                if (!acc[item.parentKey]) {
+                    acc[item.parentKey] = {
+                        parentTitle: item.parentTitle,
+                        parentIcon: settingsConfig.mainMenu.find(m => m.key === item.parentKey)?.icon,
+                        matches: []
+                    };
+                }
+                acc[item.parentKey].matches.push(item);
+                return acc;
+            }, {});
+
+            // Hide all items initially
+            listItems.forEach(li => li.classList.add('hidden'));
+
+            // Show and update only the items that have matching sub-settings
+            Object.entries(resultsByParent).forEach(([parentKey, data]) => {
+                const li = mainMenuContainer.querySelector(`li[data-key="${parentKey}"]`);
+                if (li) {
+                    li.classList.remove('hidden');
+                    // Show specific match if there's only one, otherwise show category name
+                    if(data.matches.length === 1) {
+                        const match = data.matches[0];
+                        li.querySelector('span').innerHTML = `${data.parentTitle} <i class="fas fa-chevron-right text-xs mx-1"></i> <span class="font-normal text-gray-500">${match.title}</span>`;
+                        li.dataset.jumpToKey = match.key;
+                    } else {
+                        li.querySelector('span').textContent = data.parentTitle;
+                        delete li.dataset.jumpToKey;
+                    }
+                }
+            });
+        }
+
+        // --- START THE APP ---
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

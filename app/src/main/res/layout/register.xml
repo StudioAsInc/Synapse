@@ -1,0 +1,102 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:id="@+id/body"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="16dp"
+		android:background="#FFFFFF"
+		android:orientation="vertical">
+		<ImageView
+			android:id="@+id/back"
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_marginBottom="8dp"
+			android:padding="12dp"
+			android:src="@drawable/ic_arrow_back_black"
+			android:scaleType="fitCenter" />
+		<TextView
+			android:id="@+id/title"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="4dp"
+			android:text="Create an account 🎉"
+			android:textSize="30sp"
+			android:textStyle="bold"
+			android:textColor="#000000" />
+		<TextView
+			android:id="@+id/subtitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="24dp"
+			android:text="@string/join_skyline_community"
+			android:textSize="16sp"
+			android:textColor="#757575" />
+		<EditText
+			android:id="@+id/email_input"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:padding="16dp"
+			android:background="#F5F5F5"
+			android:textSize="18sp"
+			android:textColor="#000000"
+			android:textColorHint="#757575"
+			android:singleLine="true"
+			android:imeOptions="actionNext"
+			tools:replace="android:hint"
+			android:hint="@string/email"
+			android:digits="0123456789abcdefghijklmnopqrstuvwxyz@.-_" />
+		<EditText
+			android:id="@+id/password_input"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="16dp"
+			android:background="#F5F5F5"
+			android:textSize="18sp"
+			android:textColor="#000000"
+			android:textColorHint="#757575"
+			android:singleLine="true"
+			android:imeOptions="actionDone"
+			tools:replace="android:hint"
+			android:hint="@string/password" />
+		<LinearLayout
+			android:id="@+id/spc"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			android:layout_marginBottom="16dp"
+			android:padding="8dp"
+			android:orientation="horizontal"
+			android:layout_weight="1" />
+		<LinearLayout
+			android:id="@+id/register_button"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="12dp"
+			android:paddingBottom="12dp"
+			android:background="#445E91"
+			android:gravity="center_horizontal|center_vertical"
+			android:orientation="horizontal">
+			<TextView
+				android:id="@+id/register_button_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="18sp"
+				android:textColor="#FFFFFF"
+				tools:replace="android:text"
+				android:text="@string/continue_button" />
+			<ProgressBar
+				android:id="@+id/register_button_loader_bar"
+				android:layout_width="22dp"
+				android:layout_height="22dp"
+				android:indeterminate="false"
+				style="?android:progressBarStyle" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

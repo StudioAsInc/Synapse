@@ -1,0 +1,42 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:id="@+id/body"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="8dp"
+		android:gravity="center_horizontal|center_vertical"
+		android:orientation="vertical">
+		<LinearLayout
+			android:id="@+id/loading_bar_layout"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:padding="10dp"
+			android:background="@android:color/transparent"
+			android:gravity="center_horizontal|center_vertical"
+			android:orientation="vertical">
+			<ProgressBar
+				android:id="@+id/loading_bar"
+				android:focusable="false"
+				android:layout_width="0dp"
+				android:layout_height="0dp"
+				android:indeterminate="false"
+				style="?android:progressBarStyle" />
+			<com.airbnb.lottie.LottieAnimationView
+				android:id="@+id/lottie1"
+				android:layout_width="70dp"
+				android:layout_height="70dp"
+				android:padding="8dp"
+				android:scaleType="fitCenter"
+				android:layout_centerInParent="true"
+				app:lottie_fileName="loading.json"
+				app:lottie_loop="true"
+				app:lottie_autoPlay="true" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

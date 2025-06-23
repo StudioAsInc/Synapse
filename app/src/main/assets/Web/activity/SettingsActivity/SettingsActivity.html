@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Settings | Synapse</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script>
+        // Configure Tailwind CSS for Dark Mode and Customizations
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#445E91',
+                            50: '#E8EBF2',
+                            100: '#D5DBE8',
+                            200: '#B0BCD5',
+                            300: '#8A9DC2',
+                            400: '#657EAF',
+                            500: '#445E91',
+                            600: '#354873',
+                            700: '#263255',
+                            800: '#171D36',
+                            900: '#080A18',
+                        },
+                        accent: {
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6',
+                            green: '#22c55e',
+                            pink: '#ec4899',
+                            orange: '#f97316',
+                            red: '#ef4444'
+                        },
+                    },
+                    keyframes: {
+                        'fade-in': {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        'toast-in': {
+                            'from': { transform: 'translateY(20px) scale(0.9)', opacity: '0' },
+                            'to': { transform: 'translateY(0) scale(1)', opacity: '1' },
+                        },
+                        'toast-out': {
+                            'from': { transform: 'translateY(0) scale(1)', opacity: '1' },
+                            'to': { transform: 'translateY(20px) scale(0.9)', opacity: '0' },
+                        },
+                        'ripple': {
+                            '0%': { transform: 'scale(0.8)', opacity: '0.5' },
+                            '100%': { transform: 'scale(2.5)', opacity: '0' }
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fade-in 0.3s ease-out forwards',
+                        'toast': 'toast-in 0.5s cubic-bezier(0.25, 1, 0.5, 1), toast-out 0.5s 2.5s cubic-bezier(0.5, 0, 0.75, 0)',
+                        'ripple': 'ripple 0.6s linear forwards'
+                    }
+                },
+            },
+        };
+    </script>
+
+    <style>
+        /* Base Styling & Global Overrides */
+        * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s ease, color 0.3s ease; overflow: hidden; } /* Prevent body scroll */
+        body::before { content: ''; position: fixed; inset: 0; z-index: -1; background-color: inherit; background-image: var(--chat-bg-image); background-size: var(--chat-bg-size, 'cover'); background-position: center; filter: var(--chat-bg-filter); transition: background-image 0.3s ease-in-out, background-color 0.3s ease-in-out; }
+
+        /* Main container handles scrolling */
+        #appContainer { height: 100vh; overflow-y: auto; }
+        
+        /* Content sections need padding to not be obscured by the fixed header */
+        .section-content { padding-top: 64px; } /* 64px = h-16 of header */
+
+        /* Animated Search Bar */
+        #searchContainer { transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+        #searchContainer.expanded { width: 12rem; background-color: #f3f4f6; }
+        .dark #searchContainer.expanded { background-color: #1f2937; }
+        #searchIcon { transition: opacity 0.2s ease; }
+        #searchContainer.expanded #searchIcon { opacity: 0; pointer-events: none; }
+        #settingsSearchInput { transition: opacity 0.2s ease 0.1s; }
+        #searchContainer:not(.expanded) #settingsSearchInput { opacity: 0; pointer-events: none; }
+
+        /* Header Layout Fix */
+        header { display: flex; align-items: center; justify-content: space-between; }
+        #headerTitle { position: static; transform: none; flex-grow: 1; text-align: center; }
+
+        /* Custom Toggle Switch */
+        .toggle-switch { width: 3.25rem; height: 1.75rem; padding: 0.25rem; background-color: #e5e7eb; transition: background-color 0.3s ease;}
+        .dark .toggle-switch { background-color: #4b5563; }
+        .toggle-dot { width: 1.25rem; height: 1.25rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .peer:checked ~ .toggle-switch { background-color: #445E91 !important; }
+        .peer:checked ~ .toggle-switch .toggle-dot { transform: translateX(1.5rem); }
+        
+        /* Toast Notifications */
+        #toast-container { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 100; }
+        .toast { animation: toast; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        
+        /* Modal Styles */
+        .modal { transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
+        .modal-content { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); }
+        .modal.hidden .modal-content { transform: scale(0.95); opacity: 0; }
+
+        /* Dynamic Accent Color Theming */
+        .accent-bg { background-color: #445E91 !important; }
+        .accent-text { color: #445E91 !important; }
+        .accent-ring:focus, .accent-ring:focus-within { --tw-ring-color: #445E91 !important; }
+        .dark .dark\:accent-bg { background-color: #5a75b1 !important; }
+        .accent-blue .accent-bg, .accent-blue .peer:checked ~ .toggle-switch { background-color: #3b82f6 !important; }
+        .accent-blue .accent-text { color: #3b82f6 !important; }
+        .accent-blue .accent-ring:focus, .accent-blue .accent-ring:focus-within { --tw-ring-color: #3b82f6 !important; }
+        .accent-purple .accent-bg, .accent-purple .peer:checked ~ .toggle-switch { background-color: #8b5cf6 !important; }
+        .accent-purple .accent-text { color: #8b5cf6 !important; }
+        .accent-purple .accent-ring:focus, .accent-purple .accent-ring:focus-within { --tw-ring-color: #8b5cf6 !important; }
+        .accent-green .accent-bg, .accent-green .peer:checked ~ .toggle-switch { background-color: #22c55e !important; }
+        .accent-green .accent-text { color: #22c55e !important; }
+        .accent-green .accent-ring:focus, .accent-green .accent-ring:focus-within { --tw-ring-color: #22c55e !important; }
+        .accent-pink .accent-bg, .accent-pink .peer:checked ~ .toggle-switch { background-color: #ec4899 !important; }
+        .accent-pink .accent-text { color: #ec4899 !important; }
+        .accent-pink .accent-ring:focus, .accent-pink .accent-ring:focus-within { --tw-ring-color: #ec4899 !important; }
+        .accent-orange .accent-bg, .accent-orange .peer:checked ~ .toggle-switch { background-color: #f97316 !important; }
+        .accent-orange .accent-text { color: #f97316 !important; }
+        .accent-orange .accent-ring:focus, .accent-orange .accent-ring:focus-within { --tw-ring-color: #f97316 !important; }
+        .accent-red .accent-bg, .accent-red .peer:checked ~ .toggle-switch { background-color: #ef4444 !important; }
+        .accent-red .accent-text { color: #ef4444 !important; }
+        .accent-red .accent-ring:focus, .accent-red .accent-ring:focus-within { --tw-ring-color: #ef4444 !important; }
+
+        /* Ripple Effect */
+        .ripple { position: relative; overflow: hidden; }
+        .ripple-effect { position: absolute; border-radius: 50%; background-color: rgba(255, 255, 255, 0.4); transform: scale(0); animation: ripple 0.6s linear; pointer-events: none; }
+
+        /* Smooth transitions for settings items */
+        .setting-item { transition: background-color 0.2s ease, transform 0.2s ease; }
+        .setting-item:active { transform: scale(0.98); }
+
+        /* Login Form Styling */
+        .login-form input { transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .login-form input:focus { box-shadow: 0 0 0 3px rgba(68, 94, 145, 0.2); }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-300">
+        <div class="flex flex-col items-center">
+            <div class="relative">
+                <i class="fa-solid fa-atom text-4xl accent-text opacity-20"></i>
+                <i class="fa-solid fa-atom text-4xl accent-text absolute inset-0 animate-spin" style="animation-duration: 3s;"></i>
+            </div>
+            <p id="loadingText" class="mt-4 text-gray-600 dark:text-gray-400 font-medium">Authenticating...</p>
+        </div>
+    </div>
+
+    <!-- Login Overlay (shown when not authenticated) -->
+    <div id="loginOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-40 hidden">
+        <div class="w-full max-w-xs p-6 animate__animated animate__fadeIn">
+            <div class="text-center mb-8">
+                <i class="fas fa-lock text-5xl accent-text mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Welcome to Synapse</h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Please sign in to access settings</p>
+            </div>
+            
+            <form id="loginForm" class="login-form space-y-4">
+                <div>
+                    <input type="email" id="loginEmail" placeholder="Email" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="password" id="loginPassword" placeholder="Password" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <button type="submit" id="loginButton"
+                    class="w-full h-12 flex items-center justify-center bg-primary-500 text-white font-bold rounded-lg ripple hover:bg-primary-600 active:bg-primary-700 transition-colors disabled:opacity-50">
+                    <span class="btn-text">Sign In</span>
+                    <i class="fas fa-spinner fa-spin hidden btn-spinner"></i>
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Don't have an account? 
+                    <a href="#" id="showRegister" class="accent-text font-medium">Register</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Overlay -->
+    <div id="registerOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-40 hidden">
+        <div class="w-full max-w-xs p-6 animate__animated animate__fadeIn">
+            <div class="text-center mb-8">
+                <i class="fas fa-user-plus text-5xl accent-text mb-4"></i>
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Create Account</h2>
+                <p class="text-gray-500 dark:text-gray-400 mt-2">Join the Synapse community</p>
+            </div>
+            
+            <form id="registerForm" class="login-form space-y-4">
+                <div>
+                    <input type="text" id="registerName" placeholder="Full Name" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="email" id="registerEmail" placeholder="Email" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <div>
+                    <input type="password" id="registerPassword" placeholder="Password" required
+                        class="w-full px-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 focus:border-primary-500 focus:outline-none">
+                </div>
+                <button type="submit" id="registerButton"
+                    class="w-full h-12 flex items-center justify-center bg-primary-500 text-white font-bold rounded-lg ripple hover:bg-primary-600 active:bg-primary-700 transition-colors disabled:opacity-50">
+                    <span class="btn-text">Create Account</span>
+                    <i class="fas fa-spinner fa-spin hidden btn-spinner"></i>
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400">Already have an account? 
+                    <a href="#" id="showLogin" class="accent-text font-medium">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="max-w-xl mx-auto relative overflow-x-hidden bg-gray-100 dark:bg-gray-900 hidden">
+        
+        <!-- Shared Fixed Header -->
+        <header class="fixed top-0 left-0 right-0 max-w-xl mx-auto h-16 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm shadow-sm z-30 px-4">
+            <button id="backButton" aria-label="Go back" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all opacity-0 pointer-events-none">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </button>
+            <h1 id="headerTitle" class="text-lg font-bold text-gray-900 dark:text-gray-100 px-4 truncate">
+                Settings
+            </h1>
+            <div id="searchContainer" class="w-10 h-10 rounded-full flex items-center justify-center relative cursor-pointer">
+                <i id="searchIcon" class="fas fa-search text-gray-600 dark:text-gray-300"></i>
+                <input type="search" id="settingsSearchInput" placeholder="Search..." class="absolute inset-0 w-full h-full bg-transparent border-none rounded-full pl-10 pr-4 text-sm focus:ring-0 focus:outline-none">
+            </div>
+        </header>
+
+        <!-- Main Menu (Entry Point) -->
+        <div id="mainMenu" class="section-content">
+            <div class="p-4 space-y-8 pb-24">
+                <!-- User Profile Card -->
+                <div class="flex items-center space-x-4 p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm animate__animated animate__fadeIn">
+                    <div class="relative">
+                        <img id="userAvatar" src="https://avatar.iran.liara.run/public/boy?username=synapse" alt="User Avatar" 
+                            class="w-16 h-16 rounded-full object-cover border-2 border-white dark:border-gray-700">
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-primary-500 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center">
+                            <i class="fas fa-cog text-white text-xs"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h2 id="userNickname" class="text-xl font-bold">Synapse User</h2>
+                        <p id="userUsername" class="text-sm text-gray-500 dark:text-gray-400">@username</p>
+                    </div>
+                </div>
+
+                <!-- Settings Groups -->
+                <div class="space-y-6" id="mainMenuLinkContainer">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Toast Notification Container -->
+    <div id="toast-container"></div>
+    <div id="modal-container"></div>
+    
+    <!-- =================================================================== -->
+    <!-- HIDDEN TEMPLATES FOR DYNAMIC CONTENT GENERATION -->
+    <!-- Note: These are kept for potential use by modals or other dynamic JS on this page -->
+    <!-- =================================================================== -->
+    <div id="templates" class="hidden">
+        <li class="setting-item flex items-center p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+            <i class="w-6 text-center accent-text"></i>
+            <span class="ml-4 flex-1 font-medium"></span>
+            <i class="fas fa-chevron-right text-gray-400"></i>
+        </li>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- REAL FIREBASE SDKs -->
+    <!-- =================================================================== -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvefmiD5UjOo7ZkoUKhwNd0XGrnK52quE",
+            authDomain: "synapse-social-sai.firebaseapp.com",
+            databaseURL: "https://synapse-social-sai-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "synapse-social-sai",
+            storageBucket: "synapse-social-sai.firebasestorage.app",
+            appId: "1:269633434355:android:67b44261499ca8b0a3bd86"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // --- DOM Elements & State ---
+        const dom = {
+            html: document.documentElement,
+            body: document.body,
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            loadingText: document.getElementById('loadingText'),
+            loginOverlay: document.getElementById('loginOverlay'),
+            registerOverlay: document.getElementById('registerOverlay'),
+            loginForm: document.getElementById('loginForm'),
+            registerForm: document.getElementById('registerForm'),
+            showRegister: document.getElementById('showRegister'),
+            showLogin: document.getElementById('showLogin'),
+            loginButton: document.getElementById('loginButton'),
+            registerButton: document.getElementById('registerButton'),
+            appContainer: document.getElementById('appContainer'),
+            header: {
+                el: document.querySelector('header'),
+                title: document.getElementById('headerTitle'),
+                backButton: document.getElementById('backButton'),
+                searchContainer: document.getElementById('searchContainer'),
+                searchInput: document.getElementById('settingsSearchInput'),
+                searchIcon: document.getElementById('searchIcon'),
+            },
+            toastContainer: document.getElementById('toast-container'),
+            modalContainer: document.getElementById('modal-container'),
+            templates: document.getElementById('templates'),
+            user: {
+                avatar: document.getElementById('userAvatar'),
+                nickname: document.getElementById('userNickname'),
+                username: document.getElementById('userUsername'),
+            },
+            sections: {
+                mainMenu: document.getElementById('mainMenu'),
+            },
+        };
+
+        // --- Global State Variables ---
+        let currentUser = null;
+        let currentUserProfile = {};
+        let userSettings = {};
+        let systemThemeWatcher = window.matchMedia('(prefers-color-scheme: dark)');
+        let debounceTimer = null;
+        let searchCollapseTimer = null;
+        let allSettingsFlat = []; // For global search
+
+        // --- Constants and Default Configurations ---
+        const defaultSettings = {
+            username: "synapse_user", bio: "Hey there! I am using Synapse.",
+            phoneNumber: "+1••• ••• ••••", twoStepVerification: false,
+            lastSeen: "followers", profilePhotoVisibility: "public", phoneNumberVisibility: "followers",
+            forwardedMessagesLink: true, callsPrivacy: "public", groupInvites: "public",
+            passcodeLock: false, passcode: null, autoLock: 300,
+            pushNotifications: true, messageNotifications: true, groupNotifications: true, channelNotifications: true,
+            inAppSounds: true, customTones: false, ledColor: "blue", vibrationPattern: "default", keepAliveService: true,
+            autoDownloadWifi: { photos: true, videos: false, files: false, maxSize: 50 },
+            autoDownloadCellular: { photos: true, videos: false, files: false, maxSize: 10 },
+            useLessDataForCalls: false,
+            textSize: 16, bubbleShape: "rounded", autoPlayGifs: true, autoPlayVideos: false,
+            linkPreviews: true, sendByEnter: false, chatFolders: true,
+            theme: "system", accentColor: "primary", appIcon: "default", chatListDensity: "default",
+            trendingStickers: true, stickerSuggestions: true, animatedEmoji: true, defaultReaction: "👍",
+            appLanguage: "en", showTranslateButton: true,
+            experimentalFeatures: false, useProxy: false, proxySettings: { host: "", port: "", user: "", pass: "" },
+            chatBackground: { type: 'color', value: '#e5e7eb', pattern: false },
+        };
+        
+        const languages = {
+            'en': 'English', 'zh': 'Chinese (Mandarin)', 'hi': 'Hindi', 'es': 'Spanish',
+            'fr': 'French', 'ar': 'Arabic', 'bn': 'Bengali', 'ru': 'Russian', 'pt': 'Portuguese',
+            'id': 'Indonesian', 'ur': 'Urdu', 'de': 'German', 'ja': 'Japanese', 'sw': 'Swahili',
+            'mr': 'Marathi', 'te': 'Telugu', 'tr': 'Turkish', 'ta': 'Tamil', 'vi': 'Vietnamese',
+            'ko': 'Korean', 'it': 'Italian', 'pl': 'Polish'
+        };
+        
+        // --- SETTINGS CONFIGURATION OBJECT ---
+        const settingsConfig = {
+            mainMenu: [
+                { title: 'Account', icon: 'fa-solid fa-user-gear', key: 'accountSettings' },
+                { title: 'Privacy & Security', icon: 'fa-solid fa-shield-halved', key: 'privacySettings' },
+                { title: 'Notifications & Sounds', icon: 'fa-solid fa-bell', key: 'notificationSettings' },
+                { title: 'Data & Storage', icon: 'fa-solid fa-database', key: 'dataSettings' },
+                { title: 'Chat Settings', icon: 'fa-solid fa-comments', key: 'chatSettings' },
+                { title: 'Appearance', icon: 'fa-solid fa-palette', key: 'appearanceSettings' },
+                { title: 'Stickers & Emoji', icon: 'fa-solid fa-face-smile', key: 'stickerSettings' },
+                { title: 'Language', icon: 'fa-solid fa-globe', key: 'languageSettings' },
+                { title: 'Advanced', icon: 'fa-solid fa-code-branch', key: 'advancedSettings' },
+            ],
+            accountSettings: { title: 'Account', groups: [
+                { items: [
+                    { key: 'phoneNumber', title: 'Phone Number', desc: 'Your registered phone number', type: 'sub-label' },
+                    { key: 'username', title: 'Username', desc: 'Your unique Synapse username', type: 'sub-label' },
+                    { key: 'bio', title: 'Bio', desc: 'A short description about you', type: 'sub-label' },
+                ]},
+                { title: 'Security', items: [
+                    { key: 'twoStepVerification', title: 'Two-Step Verification', desc: 'Add a password to your account for extra security', type: 'toggle' },
+                    { key: 'deleteAccount', title: 'Delete My Account', desc: 'Permanently remove your account and all data', type: 'action', isDanger: true },
+                ]}
+            ]},
+            privacySettings: { title: 'Privacy & Security', groups: [
+                { title: 'Privacy', items: [
+                    { key: 'lastSeen', title: 'Last Seen & Online', desc: 'Control who can see your online status', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'profilePhotoVisibility', title: 'Profile Photo', desc: 'Control who can see your avatar', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'phoneNumberVisibility', title: 'Phone Number', desc: 'Control who can find you by your phone number', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'forwardedMessagesLink', title: 'Forwarded Messages', desc: 'Allow linking to your account when your messages are forwarded', type: 'toggle' },
+                    { key: 'callsPrivacy', title: 'Calls', desc: 'Control who can call you', type: 'select', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                    { key: 'groupInvites', title: 'Groups & Channels', desc: 'Control who can add you to groups', type: 'select', options: { public: 'Everyone', followers: 'Followers' } },
+                ]},
+                { title: 'Security', items: [
+                    { key: 'blockedUsers', title: 'Blocked Users', desc: 'View and manage users you have blocked', type: 'action' },
+                    { key: 'activeSessions', title: 'Active Sessions', desc: 'Manage devices logged into your account', type: 'action' },
+                    { key: 'passcodeLock', title: 'Passcode Lock', desc: 'Secure the app with a 4-digit code', type: 'action' },
+                    { key: 'autoLock', title: 'Auto-Lock', desc: 'If inactive for a period of time', type: 'select', options: { 60: '1 Minute', 300: '5 Minutes', 3600: '1 Hour' }, dependsOn: 'passcodeLock' },
+                ]}
+            ]},
+            // ... (Other full settings configs are kept for the search functionality)
+             notificationSettings: { title: 'Notifications & Sounds', groups: [
+                { title: 'Notifications For Chats', items: [
+                    { key: 'messageNotifications', title: 'Private Messages', desc: 'Alerts for one-on-one chats', type: 'toggle' },
+                    { key: 'groupNotifications', title: 'Group Chats', desc: 'Alerts for group conversations', type: 'toggle' },
+                    { key: 'channelNotifications', title: 'Channels', desc: 'Alerts for channel updates', type: 'toggle' },
+                ]},
+                { title: 'In-App', items: [
+                    { key: 'inAppSounds', title: 'In-App Sounds', desc: 'Play sounds for actions inside the app', type: 'toggle' },
+                    { key: 'vibrationPattern', title: 'Vibration', desc: 'In-app haptic feedback', type: 'select', options: { 'default': 'Default', 'short': 'Short', 'long': 'Long', 'none': 'Disabled' } },
+                ]}
+            ]},
+            dataSettings: { title: 'Data & Storage', groups: [
+                { title: 'Automatic Media Download', items: [
+                    { key: 'autoDownload', title: 'Auto-Download Settings', type: 'custom' }
+                ]},
+                { title: 'Data Saving', items: [
+                    { key: 'useLessDataForCalls', title: 'Use Less Data for Calls', desc: 'Reduces data consumption during calls with lower quality', type: 'select', options: { 0: 'Never', 1: 'On Cellular', 2: 'Always' } },
+                ]},
+                { title: 'Storage Management', items: [
+                    { key: 'storageUsage', title: 'Storage Usage', desc: 'View detailed usage and clear cache', type: 'action' },
+                ]}
+            ]},
+            chatSettings: { title: 'Chat Settings', groups: [
+                { items: [
+                    { key: 'textSize', title: 'Message Text Size', desc: 'Adjust the font size in chats', type: 'range', min: 12, max: 30, unit: 'px' },
+                    { key: 'bubbleShape', title: 'Message Corners', desc: 'Change the shape of message bubbles', type: 'select', options: { 'rounded': 'Slightly Rounded', 'sharp': 'Sharp', 'round-full': 'Very Rounded' } },
+                    { key: 'chatFolders', title: 'Enable Chat Folders', desc: 'Organize chats into tabs for better management', type: 'toggle' },
+                    { key: 'chatBackgrounds', title: 'Chat Background', desc: 'Choose your chat wallpaper', type: 'action' },
+                ]},
+            ]},
+            appearanceSettings: { title: 'Appearance', groups: [
+                 { items: [
+                    { key: 'theme', title: 'Color Theme', desc: 'Choose between light, dark, or system default theme', type: 'select', options: { 'system': 'System', 'light': 'Light', 'dark': 'Dark' } },
+                    { key: 'accentColor', title: 'Accent Color', desc: 'Customize the main color of UI elements', type: 'select', options: { 'primary': 'Synapse Blue', 'blue': 'Blue', 'purple': 'Purple', 'green': 'Green', 'pink': 'Pink', 'orange': 'Orange', 'red': 'Red' } },
+                ]}
+            ]},
+            stickerSettings: { title: 'Stickers & Emoji', groups: [
+                { items: [
+                    { key: 'trendingStickers', title: 'Show Trending Stickers', desc: 'Display popular stickers in the sticker panel', type: 'toggle' },
+                    { key: 'stickerSuggestions', title: 'Suggest Stickers by Emoji', desc: 'Show relevant stickers when you type an emoji', type: 'toggle' },
+                    { key: 'animatedEmoji', title: 'Loop Animated Emoji', desc: 'Play animated emoji on a continuous loop', type: 'toggle' },
+                ]}
+            ]},
+            languageSettings: { title: 'Language', groups: [
+                 { items: [
+                    { key: 'appLanguage', title: 'Language', desc: 'Change the language of the application', type: 'select', options: languages },
+                    { key: 'showTranslateButton', title: 'Show Translate Button', desc: 'Offer to translate messages in other languages', type: 'toggle' },
+                ]}
+            ]},
+            advancedSettings: { title: 'Advanced', groups: [
+                { items: [
+                    { key: 'experimentalFeatures', title: 'Enable Experimental Features', desc: 'Access new features that are still in development. May cause instability.', type: 'toggle' },
+                ]},
+                { title: 'Diagnostics', items: [
+                    { key: 'debugInfo', title: 'Send Debug Info', desc: 'Help us fix issues on your device by sending anonymous logs', type: 'action' },
+                ]}
+            ]},
+        };
+
+        const pageFileMap = {
+            accountSettings: 'Account.html',
+            privacySettings: 'PrivacySecurity.html',
+            notificationSettings: 'NotificationsSounds.html',
+            dataSettings: 'DataStorage.html',
+            chatSettings: 'ChatSettings.html',
+            appearanceSettings: 'AppearanceSettings.html',
+            stickerSettings: 'StickersEmoji.html',
+            languageSettings: 'Language.html',
+            advancedSettings: 'Advanced.html',
+        };
+        
+        // --- Core Application Flow & Initialization ---
+
+        function init() {
+            auth.onAuthStateChanged(async (user) => {
+                dom.appContainer.classList.add('hidden');
+                dom.loginOverlay.classList.add('hidden');
+                dom.registerOverlay.classList.add('hidden');
+                
+                if (user) {
+                    currentUser = user;
+                    dom.loadingText.textContent = 'Loading Settings...';
+                    dom.loadingOverlay.classList.remove('hidden', 'opacity-0');
+                    await initializeUserSettings(user.uid);
+                    
+                    setTimeout(() => {
+                        dom.loadingOverlay.classList.add('opacity-0');
+                        dom.appContainer.classList.remove('hidden');
+                        dom.appContainer.classList.add('animate__animated', 'animate__fadeIn');
+                        setTimeout(() => dom.loadingOverlay.classList.add('hidden'), 300);
+                    }, 500);
+
+                } else {
+                    currentUser = null;
+                    currentUserProfile = {};
+                    userSettings = {};
+                    dom.loadingOverlay.classList.add('hidden');
+                    dom.loginOverlay.classList.remove('hidden');
+                }
+            });
+            
+            setupAuthFormListeners();
+        }
+
+        function setupAuthFormListeners() {
+            dom.showRegister.addEventListener('click', (e) => { e.preventDefault(); dom.loginOverlay.classList.add('hidden'); dom.registerOverlay.classList.remove('hidden'); });
+            dom.showLogin.addEventListener('click', (e) => { e.preventDefault(); dom.registerOverlay.classList.add('hidden'); dom.loginOverlay.classList.remove('hidden'); });
+
+            const toggleButtonLoading = (button, isLoading) => {
+                const btnText = button.querySelector('.btn-text');
+                const btnSpinner = button.querySelector('.btn-spinner');
+                button.disabled = isLoading;
+                if (btnText) btnText.classList.toggle('hidden', isLoading);
+                if (btnSpinner) btnSpinner.classList.toggle('hidden', !isLoading);
+            };
+            
+            dom.loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                toggleButtonLoading(dom.loginButton, true);
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                try {
+                    await auth.signInWithEmailAndPassword(email, password);
+                } catch (error) { showToast(error.message, 'error'); } 
+                finally { toggleButtonLoading(dom.loginButton, false); }
+            });
+            
+            dom.registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                toggleButtonLoading(dom.registerButton, true);
+                const name = document.getElementById('registerName').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                try {
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    const newUser = {
+                        nickname: name,
+                        username: email.split('@')[0].replace(/[^a-zA-Z0-9_]/g, ''),
+                        avatar: `https://avatar.iran.liara.run/public/boy?username=${encodeURIComponent(name)}`,
+                        biography: 'Hey there! I am using Synapse.',
+                        phone: ''
+                    };
+                    await database.ref(`skyline/users/${userCredential.user.uid}`).set(newUser);
+                    await database.ref(`users/${userCredential.user.uid}/settings`).set(defaultSettings);
+                } catch (error) { showToast(error.message, 'error'); } 
+                finally { toggleButtonLoading(dom.registerButton, false); }
+            });
+        }
+        
+        async function initializeUserSettings(uid) {
+            await Promise.all([
+                loadSettings(uid),
+                loadUserProfile(uid)
+            ]);
+            buildUI();
+            initEventListeners();
+        }
+        
+        // --- Data Handling Functions ---
+
+        async function loadSettings(uid) {
+            const path = `users/${uid}/settings`;
+            try {
+                const snapshot = await database.ref(path).once('value');
+                const dbSettings = snapshot.val();
+                userSettings = { ...defaultSettings, ...dbSettings };
+            } catch (error) {
+                console.error("Failed to load settings:", error);
+                showToast("Could not load settings. Using defaults.", "error");
+                userSettings = { ...defaultSettings };
+            }
+        }
+
+        async function loadUserProfile(uid) {
+            const path = `skyline/users/${uid}`;
+            try {
+                const snapshot = await database.ref(path).once('value');
+                const profile = snapshot.val();
+                if (profile) {
+                    currentUserProfile = profile;
+                    dom.user.nickname.textContent = profile.nickname || 'Synapse User';
+                    dom.user.username.textContent = `@${profile.username || 'username'}`;
+                    if (profile.avatar && profile.avatar !== 'null') {
+                        dom.user.avatar.src = profile.avatar;
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to load user profile:", error);
+                currentUserProfile = {};
+            }
+        }
+        
+        // --- UI Building & Rendering ---
+
+        function buildUI() {
+            flattenSettingsForSearch();
+            buildMainMenu();
+            applyTheme();
+        }
+
+        function initEventListeners() {
+            dom.header.searchInput.addEventListener('input', handleSearchInput);
+            dom.header.searchIcon.addEventListener('click', () => dom.header.searchContainer.classList.add('expanded'));
+            dom.header.searchInput.addEventListener('focus', () => dom.header.searchContainer.classList.add('expanded'));
+            dom.header.searchInput.addEventListener('blur', () => {
+                clearTimeout(searchCollapseTimer);
+                searchCollapseTimer = setTimeout(() => {
+                    if (dom.header.searchInput.value === '') {
+                        dom.header.searchContainer.classList.remove('expanded');
+                    }
+                }, 3000);
+            });
+            document.addEventListener('click', (e) => {
+                if (!dom.header.searchContainer.contains(e.target)) {
+                    if (dom.header.searchInput.value === '') {
+                       dom.header.searchContainer.classList.remove('expanded');
+                    }
+                }
+            });
+            
+            systemThemeWatcher.addEventListener('change', () => {
+                if(userSettings.theme === 'system') applyTheme();
+            });
+        }
+
+        function flattenSettingsForSearch() {
+            allSettingsFlat = [];
+            Object.entries(settingsConfig).forEach(([mainKey, mainValue]) => {
+                if(mainValue.groups) {
+                    mainValue.groups.forEach(group => {
+                        group.items.forEach(item => {
+                            allSettingsFlat.push({
+                                ...item,
+                                parentKey: mainKey,
+                                parentTitle: mainValue.title 
+                            });
+                        });
+                    });
+                }
+            });
+        }
+
+        function buildMainMenu() {
+            const container = document.getElementById('mainMenuLinkContainer');
+            container.innerHTML = '';
+            
+            const list = document.createElement('ul');
+            list.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+
+            settingsConfig.mainMenu.forEach((item) => {
+                const anchor = document.createElement('a');
+                anchor.href = pageFileMap[item.key] || '#';
+                anchor.dataset.key = item.key;
+
+                const listItem = dom.templates.querySelector('.setting-item').cloneNode(true);
+                listItem.querySelector('i:first-child').className = `${item.icon} w-6 text-center accent-text`;
+                listItem.querySelector('span').textContent = item.title;
+                
+                anchor.appendChild(listItem);
+                list.appendChild(anchor);
+            });
+            container.appendChild(list);
+        }
+        
+        function applyTheme() {
+            if (!userSettings.theme) return;
+            // Light/Dark mode
+            if (userSettings.theme === 'dark' || (userSettings.theme === 'system' && systemThemeWatcher.matches)) {
+                dom.html.classList.add('dark');
+            } else {
+                dom.html.classList.remove('dark');
+            }
+            // Accent color
+            const themeClasses = ['primary', 'blue', 'purple', 'green', 'pink', 'orange', 'red'].map(c => `accent-${c}`);
+            dom.body.classList.remove(...themeClasses);
+            dom.body.classList.add(`accent-${userSettings.accentColor}`);
+            // Font size
+            dom.body.style.fontSize = `${userSettings.textSize}px`;
+            
+            // Chat Background
+            const bg = userSettings.chatBackground || defaultSettings.chatBackground;
+            if (bg.type === 'image') {
+              //  document.body.style.setProperty('--chat-bg-image', `url(${bg.value})`);
+           //     document.body.style.setProperty('--chat-bg-size', 'cover');
+        //        dom.appContainer.style.backgroundColor = 'transparent';
+            } else { // color
+                const patternUrl = bg.pattern ? `url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><g fill-rule="evenodd"><g fill="%239CA3AF" fill-opacity="0.2"><path d="M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z"/></g></g></svg>')` : 'none';
+                document.body.style.setProperty('--chat-bg-image', patternUrl);
+                document.body.style.setProperty('--chat-bg-size', 'auto');
+                dom.appContainer.style.backgroundColor = bg.value;
+            }
+        }
+        
+        // --- Navigation & Interaction Handlers ---
+
+        function showToast(message, type = 'info') {
+            const colors = {
+                info: 'bg-gray-800 dark:bg-gray-200 text-white dark:text-black',
+                success: 'bg-green-600 text-white',
+                error: 'bg-red-600 text-white',
+            };
+            const toast = document.createElement('div');
+            toast.className = `toast mb-2 py-2 px-4 rounded-full shadow-lg text-sm font-medium ${colors[type]}`;
+            toast.textContent = message;
+            dom.toastContainer.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function handleSearchInput(e) {
+            clearTimeout(searchCollapseTimer);
+            const query = e.target.value.toLowerCase().trim();
+            const mainMenuContainer = document.getElementById('mainMenuLinkContainer');
+            const anchors = mainMenuContainer.querySelectorAll('a[data-key]');
+            
+            if (!query) {
+                // If query is empty, show all items and reset them
+                anchors.forEach(anchor => {
+                    anchor.classList.remove('hidden');
+                    const originalConfig = settingsConfig.mainMenu.find(item => item.key === anchor.dataset.key);
+                    const listItem = anchor.querySelector('.setting-item');
+                    listItem.querySelector('span').textContent = originalConfig.title;
+                    anchor.href = pageFileMap[originalConfig.key] || '#';
+                });
+                return;
+            }
+
+            const matchedItems = allSettingsFlat.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                (item.desc && item.desc.toLowerCase().includes(query))
+            );
+
+            const resultsByParent = matchedItems.reduce((acc, item) => {
+                if (!acc[item.parentKey]) {
+                    acc[item.parentKey] = {
+                        parentTitle: item.parentTitle,
+                        parentIcon: settingsConfig.mainMenu.find(m => m.key === item.parentKey)?.icon,
+                        matches: []
+                    };
+                }
+                acc[item.parentKey].matches.push(item);
+                return acc;
+            }, {});
+
+            anchors.forEach(anchor => anchor.classList.add('hidden'));
+
+            Object.entries(resultsByParent).forEach(([parentKey, data]) => {
+                const anchor = mainMenuContainer.querySelector(`a[data-key="${parentKey}"]`);
+                if (anchor) {
+                    anchor.classList.remove('hidden');
+                    const listItem = anchor.querySelector('.setting-item');
+                    
+                    if (data.matches.length === 1) {
+                        const match = data.matches[0];
+                        listItem.querySelector('span').innerHTML = `${data.parentTitle} <i class="fas fa-chevron-right text-xs mx-1 opacity-50"></i> <span class="font-normal text-gray-500 dark:text-gray-400">${match.title}</span>`;
+                        const pageFile = pageFileMap[parentKey];
+                        anchor.href = `${pageFile}?highlight=${match.key}`;
+                    } else {
+                        listItem.querySelector('span').textContent = data.parentTitle;
+                        anchor.href = pageFileMap[parentKey] || '#';
+                    }
+                }
+            });
+        }
+
+        // --- START THE APP ---
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Appearance - Synapse</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script>
+        // Configure Tailwind CSS for Dark Mode and Customizations
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: { DEFAULT: '#445E91', 50: '#E8EBF2', 100: '#D5DBE8', 200: '#B0BCD5', 300: '#8A9DC2', 400: '#657EAF', 500: '#445E91', 600: '#354873', 700: '#263255', 800: '#171D36', 900: '#080A18' },
+                        accent: { blue: '#3b82f6', purple: '#8b5cf6', green: '#22c55e', pink: '#ec4899', orange: '#f97316', red: '#ef4444' },
+                    },
+                    keyframes: {
+                        'sheet-in': { 'from': { transform: 'translateY(100%)' }, 'to': { transform: 'translateY(0)' } },
+                        'sheet-out': { 'from': { transform: 'translateY(0)' }, 'to': { transform: 'translateY(100%)' } },
+                        'fade-in': { 'from': { opacity: '0' }, 'to': { opacity: '1' } },
+                    },
+                    animation: {
+                        'sheet-in': 'sheet-in 0.35s cubic-bezier(0.32, 0.72, 0, 1) forwards',
+                        'sheet-out': 'sheet-out 0.3s ease-out forwards',
+                        'fade-in': 'fade-in 0.3s ease-in-out forwards',
+                    }
+                },
+            },
+        };
+    </script>
+
+    <style>
+        /* Base Styling & Global Overrides */
+        * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s ease, color 0.3s ease; overflow: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: -1; background-color: inherit; transition: background-color 0.3s ease-in-out; }
+
+        /* Fixed Layout */
+        #appContainer { height: 100vh; overflow-y: auto; }
+        .section-content { padding-top: 64px; } /* Header height */
+
+        /* Header Layout */
+        header { display: flex; align-items: center; justify-content: space-between; }
+        #headerTitle { flex-grow: 1; text-align: left; transition: all 0.3s ease; transform: translateX(calc(40px - 1rem)); }
+
+        /* Dynamic Accent Color Theming */
+        .accent-text { color: #445E91 !important; }
+        .accent-blue .accent-text { color: #3b82f6 !important; }
+        .accent-purple .accent-text { color: #8b5cf6 !important; }
+        .accent-green .accent-text { color: #22c55e !important; }
+        .accent-pink .accent-text { color: #ec4899 !important; }
+        .accent-orange .accent-text { color: #f97316 !important; }
+        .accent-red .accent-text { color: #ef4444 !important; }
+
+        /* Ripple Effect */
+        .ripple { position: relative; overflow: hidden; }
+        .ripple-effect { position: absolute; border-radius: 50%; background-color: rgba(255, 255, 255, 0.4); transform: scale(0); animation: ripple 0.6s linear; pointer-events: none; }
+
+        /* Setting Item */
+        .setting-item { transition: background-color 0.2s ease, transform 0.2s ease; }
+        .setting-item:active { transform: scale(0.98); }
+
+        /* Bottom Sheet Styles */
+        .bottom-sheet-overlay {
+            background-color: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
+            transition: opacity 0.35s ease;
+        }
+        .bottom-sheet {
+            box-shadow: 0 -10px 30px -5px rgba(0,0,0,0.1);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .bottom-sheet-option {
+            transition: background-color 0.2s ease;
+        }
+        .bottom-sheet-option .option-label {
+            transition: transform 0.2s ease;
+        }
+        .bottom-sheet-option:active .option-label {
+            transform: translateX(4px);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-300">
+        <i class="fa-solid fa-palette text-4xl accent-text animate-pulse"></i>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="max-w-xl mx-auto relative overflow-x-hidden bg-white dark:bg-gray-800 hidden">
+        
+        <!-- Fixed Header -->
+        <header class="fixed top-0 left-0 right-0 max-w-xl mx-auto h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm z-30 px-4">
+            <a href="SettingsActivity.html" id="backButton" aria-label="Go back" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h1 id="headerTitle" class="text-lg font-bold text-gray-900 dark:text-gray-100 px-4 truncate">
+                Appearance
+            </h1>
+            <div class="w-10 h-10 shrink-0"></div> <!-- Spacer -->
+        </header>
+
+        <!-- Appearance Settings Content -->
+        <div id="appearanceSettings" class="section-content">
+             <!-- Populated by JS -->
+        </div>
+    </div>
+
+    <!-- Global Containers for Modals/Sheets -->
+    <div id="modal-container"></div>
+    <div id="toast-container"></div>
+    
+    <!-- =================================================================== -->
+    <!-- HIDDEN TEMPLATES FOR DYNAMIC CONTENT GENERATION -->
+    <!-- =================================================================== -->
+    <div id="templates" class="hidden">
+    
+        <!-- Base Setting Item Template -->
+        <li class="setting-item flex items-center p-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700/50">
+            <span class="flex-1 overflow-hidden pr-2">
+                <p class="font-medium setting-title truncate"></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 setting-description truncate"></p>
+            </span>
+            <div class="setting-control flex-shrink-0 flex items-center gap-2">
+                <span class="font-medium text-gray-600 dark:text-gray-300 setting-value"></span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </li>
+
+        <!-- Bottom Sheet Template -->
+        <div id="bottomSheetTemplate" class="fixed inset-0 z-40 flex flex-col justify-end">
+            <!-- Overlay -->
+            <div class="bottom-sheet-overlay absolute inset-0 animate-fade-in"></div>
+            
+            <!-- Sheet Content -->
+            <div class="bottom-sheet relative bg-white dark:bg-gray-800 rounded-t-2xl p-4 animate-sheet-in">
+                <div class="w-10 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-4"></div>
+                <h3 class="text-lg font-bold text-center mb-4 sheet-title">Select an Option</h3>
+                <ul class="sheet-options-list space-y-1">
+                    <!-- Options will be populated here -->
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Bottom Sheet Option Template -->
+        <li class="bottom-sheet-option flex items-center p-3 rounded-lg cursor-pointer">
+            <span class="option-label flex-1 font-medium"></span>
+            <i class="fas fa-check text-lg accent-text opacity-0"></i>
+        </li>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- FIREBASE SDKs -->
+    <!-- =================================================================== -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // --- Firebase Configuration ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvefmiD5UjOo7ZkoUKhwNd0XGrnK52quE",
+            authDomain: "synapse-social-sai.firebaseapp.com",
+            databaseURL: "https://synapse-social-sai-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "synapse-social-sai",
+            storageBucket: "synapse-social-sai.firebasestorage.app",
+            appId: "1:269633434355:android:67b44261499ca8b0a3bd86"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        // --- DOM Elements & State ---
+        const dom = {
+            html: document.documentElement,
+            body: document.body,
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            appContainer: document.getElementById('appContainer'),
+            modalContainer: document.getElementById('modal-container'),
+            templates: document.getElementById('templates'),
+            appearanceSettings: document.getElementById('appearanceSettings'),
+        };
+
+        // --- Global State ---
+        let currentUser = null;
+        let userSettings = {};
+        let systemThemeWatcher = window.matchMedia('(prefers-color-scheme: dark)');
+        let debounceTimer = null;
+
+        // --- Default Settings Configuration ---
+        const defaultSettings = {
+            theme: "system", accentColor: "primary", textSize: 16,
+            // Include other defaults so they don't get wiped on save
+            chatBackground: { type: 'color', value: '#e5e7eb', pattern: false },
+        };
+        
+        // --- Page-Specific Settings Configuration ---
+        const settingsConfig = {
+            appearanceSettings: {
+                title: 'Appearance',
+                groups: [
+                    {
+                        items: [
+                            { 
+                                key: 'theme', title: 'Color Theme', 
+                                desc: 'Choose light, dark, or system default', 
+                                type: 'sheet',
+                                options: { 'system': 'System', 'light': 'Light', 'dark': 'Dark' } 
+                            },
+                            { 
+                                key: 'accentColor', title: 'Accent Color', 
+                                desc: 'Customize the main UI color', 
+                                type: 'sheet',
+                                options: { 'primary': 'Synapse Blue', 'blue': 'Blue', 'purple': 'Purple', 'green': 'Green', 'pink': 'Pink', 'orange': 'Orange', 'red': 'Red' } 
+                            },
+                        ]
+                    }
+                ]
+            }
+        };
+        
+        // --- Core Application Flow & Initialization ---
+
+        function init() {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadSettings(user.uid);
+                    buildUI();
+                    dom.loadingOverlay.classList.add('opacity-0');
+                    dom.appContainer.classList.remove('hidden');
+                    setTimeout(() => dom.loadingOverlay.classList.add('hidden'), 300);
+                } else {
+                    // If not authenticated, redirect to the main settings/login page
+                    window.location.href = 'SettingsActivity.html';
+                }
+            });
+        }
+
+        // --- Data Handling ---
+
+        async function loadSettings(uid) {
+            try {
+                const snapshot = await database.ref(`users/${uid}/settings`).once('value');
+                const dbSettings = snapshot.val() || {};
+                // Ensure all default keys exist to avoid errors
+                userSettings = { ...defaultSettings, ...dbSettings };
+            } catch (error) {
+                console.error("Failed to load settings:", error);
+                userSettings = { ...defaultSettings };
+            }
+        }
+        
+        function updateSetting(key, value) {
+            if (userSettings[key] === value) return;
+            
+            userSettings[key] = value;
+            console.log(`Setting changed: ${key} =`, value);
+
+            applyTheme();
+            updateControlValue(key, value);
+
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(saveSettingsToFirebase, 1000);
+        }
+
+        async function saveSettingsToFirebase() {
+            if (!currentUser) return;
+            try {
+                // Use update to avoid overwriting unrelated settings
+                await database.ref(`users/${currentUser.uid}/settings`).update(userSettings);
+                console.log("Settings saved to Firebase.");
+            } catch (error) {
+                console.error("Error saving settings:", error);
+            }
+        }
+        
+        // --- UI Building & Rendering ---
+
+        function buildUI() {
+            buildAppearancePage();
+            applyTheme();
+            highlightSettingFromURL();
+            initEventListeners();
+        }
+
+        function initEventListeners() {
+             systemThemeWatcher.addEventListener('change', () => {
+                if(userSettings.theme === 'system') applyTheme();
+            });
+        }
+
+        function buildAppearancePage() {
+            const config = settingsConfig.appearanceSettings;
+            dom.appearanceSettings.innerHTML = ''; // Clear
+            
+            config.groups.forEach((group) => {
+                const groupEl = document.createElement('div');
+                const list = document.createElement('ul');
+                list.className = 'p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+                
+                group.items.forEach((item) => {
+                    const listItem = buildSettingItem(item);
+                    list.appendChild(listItem);
+                });
+                
+                groupEl.appendChild(list);
+                dom.appearanceSettings.appendChild(groupEl);
+            });
+        }
+        
+        function buildSettingItem(itemConfig) {
+            const li = dom.templates.querySelector('.setting-item').cloneNode(true);
+            li.dataset.settingKey = itemConfig.key;
+            li.querySelector('.setting-title').textContent = itemConfig.title;
+            li.querySelector('.setting-description').textContent = itemConfig.desc;
+            
+            updateControlValue(itemConfig.key, userSettings[itemConfig.key], li);
+
+            li.addEventListener('click', () => {
+                showBottomSheet(
+                    itemConfig.key,
+                    itemConfig.title,
+                    itemConfig.options,
+                    userSettings[itemConfig.key]
+                );
+            });
+
+            return li;
+        }
+
+        function updateControlValue(key, value, element) {
+            const target = element || document.querySelector(`[data-setting-key="${key}"]`);
+            if (!target) return;
+
+            const config = settingsConfig.appearanceSettings.groups[0].items.find(i => i.key === key);
+            if(config) {
+                 target.querySelector('.setting-value').textContent = config.options[value];
+            }
+        }
+        
+        function applyTheme() {
+            // Light/Dark mode
+            if (userSettings.theme === 'dark' || (userSettings.theme === 'system' && systemThemeWatcher.matches)) {
+                dom.html.classList.add('dark');
+            } else {
+                dom.html.classList.remove('dark');
+            }
+            // Accent color
+            const themeClasses = ['primary', 'blue', 'purple', 'green', 'pink', 'orange', 'red'].map(c => `accent-${c}`);
+            dom.body.classList.remove(...themeClasses);
+            dom.body.classList.add(`accent-${userSettings.accentColor}`);
+        }
+        
+        function highlightSettingFromURL() {
+            const params = new URLSearchParams(window.location.search);
+            const keyToHighlight = params.get('highlight');
+            if (keyToHighlight) {
+                const targetEl = document.querySelector(`[data-setting-key="${keyToHighlight}"]`);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    targetEl.classList.add('bg-primary-50', 'dark:bg-primary-900', 'transition-all', 'duration-1000');
+                    setTimeout(() => targetEl.classList.remove('bg-primary-50', 'dark:bg-primary-900'), 1500);
+                }
+            }
+        }
+
+        // --- Bottom Sheet Functionality ---
+
+        function showBottomSheet(settingKey, title, options, currentValue) {
+            const sheetTemplate = dom.templates.querySelector("#bottomSheetTemplate");
+            const sheetInstance = sheetTemplate.cloneNode(true);
+            sheetInstance.id = 'activeBottomSheet';
+
+            const overlay = sheetInstance.querySelector('.bottom-sheet-overlay');
+            const sheetContent = sheetInstance.querySelector('.bottom-sheet');
+            const sheetTitle = sheetInstance.querySelector('.sheet-title');
+            const optionsList = sheetInstance.querySelector('.sheet-options-list');
+
+            sheetTitle.textContent = title;
+            
+            const closeSheet = () => {
+                sheetContent.classList.remove('animate-sheet-in');
+                sheetContent.classList.add('animate-sheet-out');
+                overlay.style.opacity = 0;
+                setTimeout(() => sheetInstance.remove(), 350);
+            };
+
+            overlay.addEventListener('click', closeSheet);
+
+            Object.entries(options).forEach(([value, label], index) => {
+                const optionTemplate = dom.templates.querySelector('.bottom-sheet-option');
+                const optionEl = optionTemplate.cloneNode(true);
+                optionEl.querySelector('.option-label').textContent = label;
+                
+                const checkmark = optionEl.querySelector('.fa-check');
+                if (value === currentValue) {
+                    checkmark.classList.remove('opacity-0');
+                }
+                
+                // Staggered animation for options
+                optionEl.style.opacity = '0';
+                optionEl.style.animation = `fade-in 0.5s ease ${index * 0.05 + 0.1}s forwards`;
+
+                optionEl.addEventListener('click', () => {
+                    updateSetting(settingKey, value);
+                    closeSheet();
+                });
+                optionsList.appendChild(optionEl);
+            });
+            
+            dom.modalContainer.appendChild(sheetInstance);
+        }
+
+        // --- START THE APP ---
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
