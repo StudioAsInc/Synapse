@@ -46,9 +46,11 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
@@ -66,11 +68,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+//import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 //import com.sigma.niceswitch.*;
 //import com.sigma.niceswitch.NiceSwitch;
 import com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect;
+/*
 import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
@@ -80,6 +83,7 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -87,8 +91,8 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
+//import me.dm7.barcodescanner.core.*;
+//import org.jetbrains.kotlin.*;
 import org.json.*;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
