@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -78,16 +77,18 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 /* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
+//import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
+//import com.theophrast.ui.widget.*;
+//import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
+//import eightbitlab.com.blurview.*;
+/*
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*; */
+*/
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -99,7 +100,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
-import me.dm7.barcodescanner.core.*;
+//import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
 import org.json.*;
 import com.google.firebase.database.Query;
