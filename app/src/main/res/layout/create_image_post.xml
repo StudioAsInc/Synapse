@@ -59,7 +59,7 @@
 				tools:replace="android:text"
 				android:text="@string/continue_button" />
 		</LinearLayout>
-		<com.theartofdev.edmodo.cropper.CropImageView
+		<LinearLayout
 			android:id="@+id/cropImageView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
