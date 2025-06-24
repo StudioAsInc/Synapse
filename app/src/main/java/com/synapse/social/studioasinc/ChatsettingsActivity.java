@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.animation.*;
 import android.app.*;
 import android.app.Activity;
@@ -69,8 +68,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
-import com.sigma.niceswitch.NiceSwitch;
+//import com.sigma.niceswitch.*;
+//import com.sigma.niceswitch.NiceSwitch;
 import com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect;
 import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
@@ -92,7 +91,8 @@ import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
 import org.json.*;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.slider.Slider;
+import com.google.android.material.slider.Slider;
+
 
 public class ChatsettingsActivity extends AppCompatActivity {
 	
@@ -175,17 +175,17 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	private LinearLayout linear33;
 	private ImageView imageview16;
 	private LinearLayout linear30;
-	private NiceSwitch switch1;
+//	private NiceSwitch switch1;
 	private TextView textview24;
 	private TextView textview25;
 	private ImageView imageview17;
 	private LinearLayout linear32;
-	private NiceSwitch switch2;
+//	private NiceSwitch switch2;
 	private TextView textview26;
 	private TextView textview27;
 	private ImageView imageview18;
 	private LinearLayout linear34;
-	private NiceSwitch switch3;
+//	private NiceSwitch switch3;
 	private TextView textview29;
 	private TextView textview30;
 	private LinearLayout linear39;
@@ -194,16 +194,16 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	private LinearLayout linear12;
 	private ImageView imageview21;
 	private LinearLayout linear40;
-	private NiceSwitch switch5;
+//	private NiceSwitch switch5;
 	private TextView textview35;
 	private ImageView imageview22;
 	private LinearLayout linear42;
-	private NiceSwitch switch6;
+//	private NiceSwitch switch6;
 	private TextView textview37;
 	private TextView textview38;
 	private ImageView imageview23;
 	private LinearLayout linear44;
-	private NiceSwitch switch7;
+//	private NiceSwitch switch7;
 	private TextView textview39;
 	private TextView textview40;
 	private ImageView imageview10;
@@ -232,7 +232,7 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	private TextView textview45;
 	private ImageView imageview26;
 	private LinearLayout linear51;
-	private NiceSwitch switch10;
+//	private NiceSwitch switch10;
 	private TextView textview46;
 	private TextView textview47;
 	private LinearLayout linear53;
@@ -857,4 +857,4 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
