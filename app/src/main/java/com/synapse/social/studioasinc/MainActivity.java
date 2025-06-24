@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import com.synapse.social.studioasinc.CheckpermissionActivity;
 import android.Manifest;
 import android.animation.*;
@@ -66,7 +65,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
+//import com.sigma.niceswitch.*;
 import com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect;
 import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
