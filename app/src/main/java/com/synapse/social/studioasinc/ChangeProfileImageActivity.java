@@ -187,7 +187,7 @@ public class ChangeProfileImageActivity extends AppCompatActivity {
 	
 	private LinearLayout main;
 	private LinearLayout top;
-	private CropImageView cropImageView;
+	//private CropImageView cropImageView;
 	private LinearLayout body;
 	private ImageView back;
 	private TextView title;
@@ -248,7 +248,7 @@ public class ChangeProfileImageActivity extends AppCompatActivity {
 	private void initialize(Bundle _savedInstanceState) {
 		main = findViewById(R.id.main);
 		top = findViewById(R.id.top);
-		cropImageView = findViewById(R.id.cropImageView);
+	//	cropImageView = findViewById(R.id.cropImageView);
 		body = findViewById(R.id.body);
 		back = findViewById(R.id.back);
 		title = findViewById(R.id.title);
@@ -273,7 +273,7 @@ public class ChangeProfileImageActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View _view) {
 				try {
-						saveBitmapAsPng(cropImageView.getCroppedImage());
+						//saveBitmapAsPng(cropImageView.getCroppedImage());
 				} catch (IOException e) {
 						
 				}
@@ -504,7 +504,7 @@ if (Build.VERSION.SDK_INT >= 23) {
 		int desiredHeight = screenHeight * 1 / 2 - 24;
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, desiredHeight);
 		
-		cropImageView.setLayoutParams(params);
+	//	cropImageView.setLayoutParams(params);
 		_stateColor(0xFFFFFFFF, 0xFFFFFFFF);
 		_viewGraphics(back, 0xFFFFFFFF, 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
 		_viewGraphics(continueButton, getResources().getColor(R.color.colorPrimary), getResources().getColor(R.color.colorPrimary), 300, 0, Color.TRANSPARENT);
@@ -522,8 +522,8 @@ if (Build.VERSION.SDK_INT >= 23) {
 		}
 		StorageDB = "skyline/users/".concat(FirebaseAuth.getInstance().getCurrentUser().getUid().concat("/avatars"));
 		storage = _firebase_storage.getReference(StorageDB);
-		cropImageView.setAspectRatio(1, 1);
-		cropImageView.setFixedAspectRatio(true);
+	//	cropImageView.setAspectRatio(1, 1);
+	//	cropImageView.setFixedAspectRatio(true);
 		_viewGraphics(textview1, getResources().getColor(R.color.colorPrimary), 0xFF1565C0, 300, 0, Color.TRANSPARENT);
 		_viewGraphics(addFromUrl, getResources().getColor(R.color.colorPrimary), 0xFF388E3C, 300, 0, Color.TRANSPARENT);
 	}
@@ -640,14 +640,14 @@ if (Build.VERSION.SDK_INT >= 23) {
 		imagesView.getAdapter().notifyDataSetChanged();
 		java.io.File file = new java.io.File(imagesListMap.get((int)0).get("path").toString());
 		Uri uri = Uri.fromFile(file);
-		cropImageView.setImageUriAsync(uri);
+	//	cropImageView.setImageUriAsync(uri);
 	}
 	
 	
 	public void _setCropImage(final String _path) {
-		java.io.File file = new java.io.File(_path);
-		Uri uri = Uri.fromFile(file);
-		cropImageView.setImageUriAsync(uri);
+	//	java.io.File file = new java.io.File(_path);
+	//	Uri uri = Uri.fromFile(file);
+	//	cropImageView.setImageUriAsync(uri);
 	}
 	
 	
