@@ -10,7 +10,7 @@ import android.media.*;
 import android.net.*;
 import android.os.*;
 //import android.support.customtabs.*;
-import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
