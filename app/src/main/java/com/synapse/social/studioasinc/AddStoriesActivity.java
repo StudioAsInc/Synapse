@@ -27,9 +27,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.interpolator.*;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.material.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.playintegrity.*;
