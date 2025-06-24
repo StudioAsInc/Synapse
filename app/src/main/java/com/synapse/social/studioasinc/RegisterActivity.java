@@ -14,7 +14,8 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.customtabs.*;
+//import android.support.customtabs.*;
+import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -60,7 +61,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -71,7 +72,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -84,7 +85,9 @@ import kr.co.prnd.readmore.*;
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
 import org.json.*;
-import com.google.firebase.database.Query;
+import com.google.firebase.database.Query;
+
+
 
 public class RegisterActivity extends AppCompatActivity {
 	
@@ -401,7 +404,9 @@ _timer.scheduleAtFixedRate(t, (int)(1000), (int)(1000));
 	public void onBackPressed() {
 		finish();
 	}
-	
+	
+
+
 	public void _stateColor(final int _statusColor, final int _navigationColor) {
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 		getWindow().setStatusBarColor(_statusColor);
@@ -507,4 +512,4 @@ _timer.scheduleAtFixedRate(t, (int)(1000), (int)(1000));
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

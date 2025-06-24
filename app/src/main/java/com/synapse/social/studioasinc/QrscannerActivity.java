@@ -53,7 +53,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -64,7 +64,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -76,7 +76,9 @@ import kr.co.prnd.readmore.*;
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
 import org.json.*;
-import com.google.zxing.Result;
+import com.google.zxing.Result;
+
+
 
 public class QrscannerActivity extends AppCompatActivity {
 	
@@ -248,4 +250,4 @@ public class QrscannerActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

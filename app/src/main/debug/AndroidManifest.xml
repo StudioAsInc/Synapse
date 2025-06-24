@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 
+        This is a debug-specific manifest. Since we want debug and release
+        to be identical, this file is left intentionally empty inside the
+        <manifest> tag. The build system will use everything from the
+        main manifest and will not apply any changes from here.
+    -->
+</manifest>

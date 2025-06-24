@@ -9,7 +9,8 @@ import android.graphics.drawable.*;
 import android.media.*;
 import android.net.*;
 import android.os.*;
-import android.support.customtabs.*;
+//import android.support.customtabs.*;
+import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -37,7 +38,7 @@ import com.google.android.material.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -48,7 +49,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.text.*;
 import java.util.*;
@@ -191,4 +192,4 @@ public class ImageviewerActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

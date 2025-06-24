@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+
+    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="android:fontFamily">@drawable/appfont</item>
+        <!-- This now points to the correct font family resource -->
+        <item name="android:fontFamily">@font/font_family</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorControlHighlight</item>
         <item name="colorControlNormal">@color/colorControlNormal</item>
@@ -12,6 +15,7 @@
         <item name="android:windowDisablePreview">true</item>
     </style>
 
+    <!-- Other themes and styles -->
     <style name="AppTheme.FullScreen" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -43,4 +47,5 @@
         <item name="cornerSizeBottomLeft">10%</item>
         <item name="cornerSizeBottomRight">10%</item>
     </style>
+    
 </resources>

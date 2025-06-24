@@ -92,7 +92,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -103,7 +103,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -155,7 +155,9 @@ import com.google.firebase.database.ValueEventListener;
 //Don't remove imports
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import androidx.appcompat.widget.SwitchCompat;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;;
+
+
 
 public class HomeActivity extends AppCompatActivity {
 	
@@ -3796,4 +3798,4 @@ ic.setImageResource(R.drawable.default_image);
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

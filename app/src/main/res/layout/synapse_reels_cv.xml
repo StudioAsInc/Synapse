@@ -102,7 +102,7 @@
 									android:singleLine="true"
 									android:layout_weight="1"
 									android:maxWidth="150dp"
-									android:fontFamily="@drawable/appfont" />
+									android:fontFamily="@font/font_family" />
 								<ImageView
 									android:id="@+id/buttonsRelativeBottomUserInfGenderBadge"
 									android:focusable="false"
@@ -132,7 +132,7 @@
 							android:textColor="#FFFFFF"
 							tools:replace="android:text"
 							android:text="@string/no_description"
-							android:fontFamily="@drawable/appfont" />
+							android:fontFamily="@font/font_family" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/buttonsRelativeTop"
@@ -165,7 +165,7 @@
 								android:textSize="18sp"
 								android:textStyle="bold"
 								android:textColor="#FFFFFF"
-								android:fontFamily="@drawable/appfont" />
+								android:fontFamily="@font/font_family" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/commentsButton"
@@ -191,7 +191,7 @@
 								android:textSize="18sp"
 								android:textStyle="bold"
 								android:textColor="#FFFFFF"
-								android:fontFamily="@drawable/appfont" />
+								android:fontFamily="@font/font_family" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/shareButton"
@@ -217,7 +217,7 @@
 								android:textSize="18sp"
 								android:textStyle="bold"
 								android:textColor="#FFFFFF"
-								android:fontFamily="@drawable/appfont" />
+								android:fontFamily="@font/font_family" />
 						</LinearLayout>
 						<LinearLayout
 							android:id="@+id/addFavoriteButton"
@@ -242,7 +242,7 @@
 								android:textSize="18sp"
 								android:textStyle="bold"
 								android:textColor="#FFFFFF"
-								android:fontFamily="@drawable/appfont" />
+								android:fontFamily="@font/font_family" />
 						</LinearLayout>
 					</LinearLayout>
 				</LinearLayout>
@@ -264,7 +264,7 @@
 						android:layout_weight="1"
 						tools:replace="android:text"
 						android:text="@string/original_sound"
-						android:fontFamily="@drawable/appfont" />
+						android:fontFamily="@font/font_family" />
 					<ImageView
 						android:id="@+id/videoMusicInfoIc"
 						android:focusable="false"
