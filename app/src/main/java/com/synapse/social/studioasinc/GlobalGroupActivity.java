@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -73,7 +72,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
+//import com.sigma.niceswitch.*;
 import com.synapse.social.studioasinc.FadeEditText;
 import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
@@ -1067,4 +1066,4 @@ _view.setBackground(new GradientDrawable() { public GradientDrawable getIns(int 
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
