@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.animation.*;
 import android.app.*;
 import android.app.Activity;
@@ -24,7 +23,7 @@ import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -40,9 +39,11 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.material.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.playintegrity.*;
@@ -66,8 +67,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
 
 public class LanguagesActivity extends AppCompatActivity {

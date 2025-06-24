@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -33,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -47,10 +46,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.interpolator.*;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.bumptech.glide.Glide;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -75,11 +76,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+/*
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
+import com.sigma.niceswitch.*; 
+*/
 import com.synapse.social.studioasinc.FadeEditText;
-import com.theartofdev.edmodo.cropper.*;
+/* import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
@@ -88,6 +91,7 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.io.File;
 import java.text.*;
@@ -97,10 +101,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
-import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.SwitchCompat;
+
+
 
 public class CreateImagePostNextStepActivity extends AppCompatActivity {
 	
@@ -806,7 +814,9 @@ public class CreateImagePostNextStepActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
+	
+
+
 	public void _setStatusBarColor(final boolean _isLight, final int _stateColor, final int _navigationColor) {
 		if (_isLight) {
 			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -910,4 +920,4 @@ public class CreateImagePostNextStepActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

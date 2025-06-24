@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -29,7 +28,7 @@ import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -46,10 +45,12 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.bumptech.glide.Glide;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -74,7 +75,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.jsibbold.zoomage.*;
+/*import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -87,6 +88,7 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -98,8 +100,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
@@ -107,7 +111,9 @@ import android.graphics.Bitmap.CompressFormat;
 import android.media.MediaMetadataRetriever;
 import android.database.Cursor;
 import android.provider.MediaStore;
-import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.RequestOptions;
+
+
 
 public class ChangeCoverImageActivity extends AppCompatActivity {
 	
@@ -541,7 +547,9 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
+	
+
+
 	public void _stateColor(final int _statusColor, final int _navigationColor) {
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 		getWindow().setStatusBarColor(_statusColor);
@@ -738,4 +746,4 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

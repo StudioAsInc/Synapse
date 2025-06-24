@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -38,7 +37,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+/*
 import androidmads.library.qrgenearator.*;
+*/
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -56,10 +57,12 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.bumptech.glide.Glide;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,12 +87,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+/*
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
+*/
 import com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect;
 import com.synapse.social.studioasinc.FadeEditText;
-import com.theartofdev.edmodo.cropper.*;
+/*import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
@@ -98,6 +103,7 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -111,8 +117,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
 import com.google.firebase.database.Query;
 import android.os.Handler;
@@ -131,7 +139,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.vdurmont.emoji.EmojiParser;
-import android.content.SharedPreferences;
+import android.content.SharedPreferences;
+
+
 
 public class ChatActivity extends AppCompatActivity {
 	
@@ -1477,7 +1487,9 @@ ChatMessagesListRecycler.addOnScrollListener(new RecyclerView.OnScrollListener()
 				    }
 		});
 		/*
-View pop1V = getLayoutInflater().inflate(R.layout.chat_msg_options_popup_cv_synapse, null);
+View pop1V = getLayoutInflater().inflate(R.layout.chat_msg_options_popup_cv_synapse, null);
+
+
 final PopupWindow pop1 = new PopupWindow(pop1V, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 pop1.setFocusable(true);
 pop1.setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
@@ -3256,4 +3268,4 @@ try {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.animation.*;
 import android.app.*;
 import android.content.*;
@@ -26,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -43,10 +42,12 @@ import androidx.swiperefreshlayout.*;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.bumptech.glide.Glide;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
@@ -83,8 +84,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
 import com.google.firebase.database.Query;
 import android.os.Handler;

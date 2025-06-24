@@ -73,11 +73,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
+/*
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
+*/
 import com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect;
-import com.theartofdev.edmodo.cropper.*;
+/*import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
@@ -86,6 +88,7 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -93,8 +96,10 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
 import com.google.firebase.database.Query;
 import com.google.firebase.auth.FirebaseAuth;
@@ -105,7 +110,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout;
+
+
 
 public class OnboardActivity extends AppCompatActivity {
 	
@@ -911,4 +918,4 @@ startActivityForResult(mGoogleLoginIntent, REQ_CD_LOGIN_GOOGLE);
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

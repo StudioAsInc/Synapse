@@ -94,8 +94,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
 
 public class CreateGroupActivity extends AppCompatActivity {
