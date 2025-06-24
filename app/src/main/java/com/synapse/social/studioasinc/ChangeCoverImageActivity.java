@@ -186,7 +186,7 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 	
 	private LinearLayout main;
 	private LinearLayout top;
-	private CropImageView cropImageView;
+	//private CropImageView cropImageView;
 	private LinearLayout body;
 	private ImageView back;
 	private TextView title;
@@ -245,7 +245,7 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 	private void initialize(Bundle _savedInstanceState) {
 		main = findViewById(R.id.main);
 		top = findViewById(R.id.top);
-		cropImageView = findViewById(R.id.cropImageView);
+	//	cropImageView = findViewById(R.id.cropImageView);
 		body = findViewById(R.id.body);
 		back = findViewById(R.id.back);
 		title = findViewById(R.id.title);
@@ -268,7 +268,7 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View _view) {
 				try {
-						saveBitmapAsPng(cropImageView.getCroppedImage());
+					//	saveBitmapAsPng(cropImageView.getCroppedImage());
 				} catch (IOException e) {
 						
 				}
@@ -486,7 +486,7 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 		int desiredHeight = screenHeight * 1 / 2 - 24;
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, desiredHeight);
 		
-		cropImageView.setLayoutParams(params);
+		//cropImageView.setLayoutParams(params);
 		_stateColor(0xFFFFFFFF, 0xFFFFFFFF);
 		_viewGraphics(back, 0xFFFFFFFF, 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
 		_viewGraphics(continueButton, 0xFFFFFFFF, 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
@@ -505,8 +505,8 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 		}
 		StorageDB = "skyline/users/".concat(FirebaseAuth.getInstance().getCurrentUser().getUid().concat("/cover-images"));
 		storage = _firebase_storage.getReference(StorageDB);
-		cropImageView.setAspectRatio(16, 9);
-		cropImageView.setFixedAspectRatio(true);
+	//	cropImageView.setAspectRatio(16, 9);
+	//	cropImageView.setFixedAspectRatio(true);
 	}
 	
 	@Override
@@ -621,14 +621,14 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 		imagesView.getAdapter().notifyDataSetChanged();
 		java.io.File file = new java.io.File(imagesListMap.get((int)0).get("path").toString());
 		Uri uri = Uri.fromFile(file);
-		cropImageView.setImageUriAsync(uri);
+	//	cropImageView.setImageUriAsync(uri);
 	}
 	
 	
 	public void _setCropImage(final String _path) {
 		java.io.File file = new java.io.File(_path);
 		Uri uri = Uri.fromFile(file);
-		cropImageView.setImageUriAsync(uri);
+	//	cropImageView.setImageUriAsync(uri);
 	}
 	
 	
