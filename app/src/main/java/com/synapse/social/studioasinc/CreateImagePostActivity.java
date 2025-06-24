@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -31,7 +30,7 @@ import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -48,14 +47,17 @@ import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.bumptech.glide.Glide;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.material.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.perf.*;
+/*
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
@@ -69,6 +71,7 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -77,8 +80,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
+/*
 import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
+*/
 import org.json.*;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
@@ -89,7 +94,8 @@ import android.provider.MediaStore;
 import com.bumptech.glide.request.RequestOptions;
 import java.net.URL;
 import java.net.MalformedURLException;
-import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputLayout;
+
 
 public class CreateImagePostActivity extends AppCompatActivity {
 	
@@ -162,7 +168,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	
 	private LinearLayout main;
 	private LinearLayout top;
-	private CropImageView cropImageView;
+	//private CropImageView cropImageView;
 	private LinearLayout urlImagePreview;
 	private LinearLayout body;
 	private ImageView back;
@@ -205,7 +211,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	private void initialize(Bundle _savedInstanceState) {
 		main = findViewById(R.id.main);
 		top = findViewById(R.id.top);
-		cropImageView = findViewById(R.id.cropImageView);
+	//	cropImageView = findViewById(R.id.cropImageView);
 		urlImagePreview = findViewById(R.id.urlImagePreview);
 		body = findViewById(R.id.body);
 		back = findViewById(R.id.back);
@@ -233,7 +239,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			public void onClick(View _view) {
 				if (AddFromUrlStr == null) {
 					try {
-							saveBitmapAsPng(cropImageView.getCroppedImage());
+						//	saveBitmapAsPng(cropImageView.getCroppedImage());
 					} catch (IOException e) {
 							
 					}
@@ -291,8 +297,8 @@ public class CreateImagePostActivity extends AppCompatActivity {
 		int desiredHeight = screenHeight * 1 / 2 - 24;
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, desiredHeight);
 		
-		cropImageView.setLayoutParams(params);
-		urlImagePreview.setLayoutParams(params);
+	//	cropImageView.setLayoutParams(params);
+	//	urlImagePreview.setLayoutParams(params);
 		_stateColor(0xFFFFFFFF, 0xFFFFFFFF);
 		_viewGraphics(back, 0xFFFFFFFF, 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
 		_viewGraphics(continueButton, getResources().getColor(R.color.colorPrimary), 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
@@ -310,8 +316,8 @@ public class CreateImagePostActivity extends AppCompatActivity {
 		} else {
 			    _getImageFiles();
 		}
-		cropImageView.setAspectRatio(4, 3);
-		cropImageView.setFixedAspectRatio(true);
+	//	cropImageView.setAspectRatio(4, 3);
+//		cropImageView.setFixedAspectRatio(true);
 	}
 	
 	@Override
@@ -352,7 +358,8 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
+	
+
 	public void _ImageColor(final ImageView _image, final int _color) {
 		_image.setColorFilter(_color,PorterDuff.Mode.SRC_ATOP);
 	}
@@ -431,14 +438,14 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			AddFromUrlStr = null;
 			java.io.File file = new java.io.File(_path);
 			Uri uri = Uri.fromFile(file);
-			cropImageView.setImageUriAsync(uri);
+		//	cropImageView.setImageUriAsync(uri);
 			urlImagePreview.setVisibility(View.GONE);
-			cropImageView.setVisibility(View.VISIBLE);
+		//	cropImageView.setVisibility(View.VISIBLE);
 		} else {
 			AddFromUrlStr = _path;
 			Glide.with(getApplicationContext()).load(Uri.parse(_path)).into(urlImagePreviewImage);
 			urlImagePreview.setVisibility(View.VISIBLE);
-			cropImageView.setVisibility(View.GONE);
+		//	cropImageView.setVisibility(View.GONE);
 		}
 	}
 	
@@ -606,4 +613,4 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
