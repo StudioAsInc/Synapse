@@ -552,7 +552,7 @@
 								android:textColor="#9E9E9E"
 								android:lines="2" />
 						</LinearLayout>
-						<com.sigma.niceswitch.NiceSwitch
+						<Switch
 							android:id="@+id/switch1"
 							android:layout_width="50dp"
 							android:layout_height="30dp"
@@ -561,9 +561,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true" />
-							<!-- app:switcher_on_color="#445E91" -->
-							<!-- app:switcher_off_color="#E3E2E6" -->
+							android:checked="true"
+							app:switcher_on_color="#445E91"
+							app:switcher_off_color="#E3E2E6" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear31"
@@ -605,7 +605,7 @@
 								android:textColor="#9E9E9E"
 								android:lines="2" />
 						</LinearLayout>
-						<com.sigma.niceswitch.NiceSwitch
+						<Switch
 							android:id="@+id/switch2"
 							android:layout_width="50dp"
 							android:layout_height="30dp"
@@ -614,9 +614,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true" />
-							<!-- app:switcher_on_color="#445E91" -->
-							<!-- app:switcher_off_color="#E3E2E6" -->
+							android:checked="true"
+							app:switcher_on_color="#445E91"
+							app:switcher_off_color="#E3E2E6" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear33"
@@ -657,7 +657,7 @@
 								android:textColor="#9E9E9E"
 								android:lines="2" />
 						</LinearLayout>
-						<com.sigma.niceswitch.NiceSwitch
+						<Switch
 							android:id="@+id/switch3"
 							android:layout_width="50dp"
 							android:layout_height="30dp"
@@ -666,9 +666,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true" />
-							<!-- app:switcher_on_color="#445E91" -->
-							<!-- app:switcher_off_color="#E3E2E6" -->
+							android:checked="true"
+							app:switcher_on_color="#445E91"
+							app:switcher_off_color="#E3E2E6" />
 					</LinearLayout>
 				</LinearLayout>
 				<TextView
@@ -716,7 +716,7 @@
 								android:textSize="18sp"
 								android:textColor="#000000" />
 						</LinearLayout>
-						<com.sigma.niceswitch.NiceSwitch
+						<Switch
 							android:id="@+id/switch5"
 							android:layout_width="50dp"
 							android:layout_height="30dp"
@@ -724,9 +724,9 @@
 							android:padding="8dp"
 							android:text="Switch"
 							android:textSize="12sp"
-							android:textColor="#000000" />
-							<!-- app:switcher_on_color="#445E91" -->
-							<!-- app:switcher_off_color="#E3E2E6" -->
+							android:textColor="#000000"
+							app:switcher_on_color="#445E91"
+							app:switcher_off_color="#E3E2E6" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear41"
@@ -767,7 +767,7 @@
 								android:textSize="14sp"
 								android:textColor="#9E9E9E" />
 						</LinearLayout>
-						<com.sigma.niceswitch.NiceSwitch
+						<Switch
 							android:id="@+id/switch6"
 							android:layout_width="50dp"
 							android:layout_height="30dp"
@@ -776,9 +776,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true" />
-							<!-- app:switcher_on_color="#445E91" -->
-							<!-- app:switcher_off_color="#E3E2E6" -->
+							android:checked="true"
+							app:switcher_on_color="#445E91"
+							app:switcher_off_color="#E3E2E6" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear43"
@@ -817,7 +817,7 @@
 								android:textSize="14sp"
 								android:textColor="#9E9E9E" />
 						</LinearLayout>
-						<com.sigma.niceswitch.NiceSwitch
+						<Switch
 							android:id="@+id/switch7"
 							android:layout_width="50dp"
 							android:layout_height="30dp"
@@ -825,9 +825,9 @@
 							android:padding="8dp"
 							android:text="Switch"
 							android:textSize="12sp"
-							android:textColor="#000000" />
-							<!-- app:switcher_on_color="#445E91" -->
-							<!-- app:switcher_off_color="#E3E2E6" -->
+							android:textColor="#000000"
+							app:switcher_on_color="#445E91"
+							app:switcher_off_color="#E3E2E6" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear12"
@@ -1089,7 +1089,7 @@
 								android:textSize="14sp"
 								android:textColor="#9E9E9E" />
 						</LinearLayout>
-						<com.sigma.niceswitch.NiceSwitch
+						<Switch
 							android:id="@+id/switch10"
 							android:layout_width="50dp"
 							android:layout_height="30dp"
@@ -1097,9 +1097,9 @@
 							android:padding="8dp"
 							android:text="Switch"
 							android:textSize="12sp"
-							android:textColor="#000000" />
-							<!-- app:switcher_on_color="#445E91" -->
-							<!-- app:switcher_off_color="#E3E2E6" -->
+							android:textColor="#000000"
+							app:switcher_on_color="#445E91"
+							app:switcher_off_color="#E3E2E6" />
 					</LinearLayout>
 				</LinearLayout>
 				<TextView
