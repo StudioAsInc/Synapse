@@ -45,7 +45,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -56,7 +56,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -74,7 +74,9 @@ import android.content.pm.PackageManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import java.util.Timer;
-import java.util.TimerTask;
+import java.util.TimerTask;
+
+
 
 public class CheckpermissionActivity extends AppCompatActivity {
 	
@@ -260,7 +262,9 @@ public class CheckpermissionActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finishAffinity();
 	}
-	
+	
+
+
 	
 	@Deprecated
 	public void showMessage(String _s) {
@@ -312,4 +316,4 @@ public class CheckpermissionActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

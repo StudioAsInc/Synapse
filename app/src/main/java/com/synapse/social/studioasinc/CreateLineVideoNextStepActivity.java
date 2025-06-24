@@ -16,7 +16,8 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-import android.support.customtabs.*;
+//import android.support.customtabs.*;
+import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -77,7 +78,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -88,7 +89,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -717,4 +718,4 @@ public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

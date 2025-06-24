@@ -561,9 +561,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true"
-							app:switcher_on_color="#445E91"
-							app:switcher_off_color="#E3E2E6" />
+							android:checked="true" />
+							<!-- app:switcher_on_color="#445E91" -->
+							<!-- app:switcher_off_color="#E3E2E6" -->
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear31"
@@ -614,9 +614,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true"
-							app:switcher_on_color="#445E91"
-							app:switcher_off_color="#E3E2E6" />
+							android:checked="true" />
+							<!-- app:switcher_on_color="#445E91" -->
+							<!-- app:switcher_off_color="#E3E2E6" -->
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear33"
@@ -666,9 +666,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true"
-							app:switcher_on_color="#445E91"
-							app:switcher_off_color="#E3E2E6" />
+							android:checked="true" />
+							<!-- app:switcher_on_color="#445E91" -->
+							<!-- app:switcher_off_color="#E3E2E6" -->
 					</LinearLayout>
 				</LinearLayout>
 				<TextView
@@ -724,9 +724,9 @@
 							android:padding="8dp"
 							android:text="Switch"
 							android:textSize="12sp"
-							android:textColor="#000000"
-							app:switcher_on_color="#445E91"
-							app:switcher_off_color="#E3E2E6" />
+							android:textColor="#000000" />
+							<!-- app:switcher_on_color="#445E91" -->
+							<!-- app:switcher_off_color="#E3E2E6" -->
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear41"
@@ -776,9 +776,9 @@
 							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
-							android:checked="true"
-							app:switcher_on_color="#445E91"
-							app:switcher_off_color="#E3E2E6" />
+							android:checked="true" />
+							<!-- app:switcher_on_color="#445E91" -->
+							<!-- app:switcher_off_color="#E3E2E6" -->
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear43"
@@ -825,9 +825,9 @@
 							android:padding="8dp"
 							android:text="Switch"
 							android:textSize="12sp"
-							android:textColor="#000000"
-							app:switcher_on_color="#445E91"
-							app:switcher_off_color="#E3E2E6" />
+							android:textColor="#000000" />
+							<!-- app:switcher_on_color="#445E91" -->
+							<!-- app:switcher_off_color="#E3E2E6" -->
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/linear12"
@@ -1097,9 +1097,9 @@
 							android:padding="8dp"
 							android:text="Switch"
 							android:textSize="12sp"
-							android:textColor="#000000"
-							app:switcher_on_color="#445E91"
-							app:switcher_off_color="#E3E2E6" />
+							android:textColor="#000000" />
+							<!-- app:switcher_on_color="#445E91" -->
+							<!-- app:switcher_off_color="#E3E2E6" -->
 					</LinearLayout>
 				</LinearLayout>
 				<TextView

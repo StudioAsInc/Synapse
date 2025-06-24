@@ -12,7 +12,8 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-import android.support.customtabs.*;
+//import android.support.customtabs.*;
+import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -62,7 +63,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -73,7 +74,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -92,7 +93,9 @@ import com.google.firebase.database.Query;
 import android.os.Handler;
 import android.os.Looper;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Executors;
+
+
 
 public class PreviewUserProfileActivity extends AppCompatActivity {
 	
@@ -459,7 +462,9 @@ public class PreviewUserProfileActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
+	
+
+
 	public void _viewGraphics(final View _view, final int _onFocus, final int _onRipple, final double _radius, final double _stroke, final int _strokeColor) {
 		android.graphics.drawable.GradientDrawable GG = new android.graphics.drawable.GradientDrawable();
 		GG.setColor(_onFocus);
@@ -782,4 +787,4 @@ public class PreviewUserProfileActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

@@ -1,10 +1,9 @@
 package com.synapse.social.studioasinc;
 
+// Keep - Standard Android & Google
 import android.animation.*;
 import android.app.*;
 import android.content.*;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.*;
@@ -17,8 +16,11 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.customtabs.*;
+//import android.support.customtabs.*;
+import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.text.style.*;
 import android.util.*;
 import android.view.*;
@@ -27,39 +29,25 @@ import android.view.View.*;
 import android.view.animation.*;
 import android.webkit.*;
 import android.widget.*;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
 import androidx.cardview.widget.CardView;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.interpolator.*;
-import androidx.recyclerview.widget.*;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.RecyclerView.Adapter;
-import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 import androidx.swiperefreshlayout.*;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener;
 import androidx.transition.*;
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
 import com.bumptech.glide.Glide;
-import com.caverock.androidsvg.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.auth.AuthResult;
@@ -73,37 +61,41 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
-import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
-import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import com.synapse.social.studioasinc.FadeEditText;
+import androidx.appcompat.widget.SwitchCompat;
+import com.google.firebase.database.Query;
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
+import java.net.URL;
+import java.net.MalformedURLException;
 import org.json.*;
-import androidx.core.widget.NestedScrollView;
-import com.google.firebase.database.Query;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+// *** PROBLEM IMPORTS - COMMENT THESE OUT ***
+// These are the libraries that are missing from your project.
+
+// import androidmads.library.qrgenearator.*;
+// import com.blogspot.atifsoftwares.animatoolib.*;
+// import com.budiyev.android.codescanner.*;
+// import com.caverock.androidsvg.*;
+// import com.jsibbold.zoomage.*;
+// import com.shobhitpuri.custombuttons.*;
+// import com.sigma.niceswitch.*;
+// import com.theartofdev.edmodo.cropper.*;
+// import com.theophrast.ui.widget.*;
+// import com.wuyr.rippleanimation.*;
+// import com.yalantis.ucrop.*;
+// import eightbitlab.com.blurview.*;
+// import io.noties.markwon.*;
+// import io.noties.markwon.ext.strikethrough.*;
+// import io.noties.markwon.ext.tables.*;
+// import io.noties.markwon.ext.tasklist.*;
+   import kr.co.prnd.readmore.*;
+// import me.dm7.barcodescanner.core.*;
+// import org.jetbrains.kotlin.*;
 
 public class ProfileActivity extends AppCompatActivity {
 	
@@ -375,13 +367,16 @@ class c {
 				bs.show();
 			}
 		});
+			
 		
+		/* Commented due to problems of imports...by Ashik
 		myqr_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				_QR_BottomSheet();
 			}
 		});
+		*/
 		
 		ProfilePageTopBarMenu.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -797,6 +792,7 @@ startActivity(intent);
 		};
 		maindb.addChildEventListener(_maindb_child_listener);
 		
+		/*
 		_rn_qrcode_request_listener = new RequestNetwork.RequestListener() {
 			@Override
 			public void onResponse(String _param1, String _param2, HashMap<String, Object> _param3) {
@@ -828,6 +824,7 @@ startActivity(intent);
 				
 			}
 		};
+		*/
 		
 		auth_updateEmailListener = new OnCompleteListener<Void>() {
 			@Override
@@ -1664,9 +1661,11 @@ startActivity(intent);
 	}
 	
 	
+	/* Removed for imports problems
 	public void _QR_BottomSheet() {
 		rn_qrcode.startRequestNetwork(RequestNetworkController.GET, "google.com", "a", _rn_qrcode_request_listener);
 	}
+	*/
 	
 	
 	public void _ImgRound(final ImageView _imageview, final double _value) {
@@ -2144,4 +2143,4 @@ startActivity(intent);
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

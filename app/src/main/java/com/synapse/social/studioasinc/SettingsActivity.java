@@ -1,63 +1,33 @@
 package com.synapse.social.studioasinc;
-
-import android.animation.*;
-import android.app.*;
-import android.content.*;
-import android.content.res.*;
-import android.graphics.*;
-import android.graphics.drawable.*;
-import android.media.*;
-import android.net.*;
-import android.os.*;
-import android.support.customtabs.*;
-import android.text.*;
-import android.text.style.*;
-import android.util.*;
-import android.view.*;
-import android.view.View.*;
-import android.view.animation.*;
-import android.webkit.*;
-import android.webkit.WebSettings;
+// Keep these imports
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.util.SparseBooleanArray;
+import android.util.TypedValue;
+import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import android.widget.*;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
-import androidmads.library.qrgenearator.*;
-import androidx.annotation.*;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
-import androidx.swiperefreshlayout.*;
-import androidx.transition.*;
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
-import com.caverock.androidsvg.*;
-import com.google.android.material.*;
+
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
-import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
-import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
-import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
-import java.io.*;
-import java.text.*;
-import java.util.*;
-import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
-import org.json.*;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity {
 	
@@ -183,4 +153,4 @@ public class SettingsActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

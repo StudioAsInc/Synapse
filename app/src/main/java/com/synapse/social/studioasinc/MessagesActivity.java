@@ -73,7 +73,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -84,7 +84,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -113,7 +113,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import eightbitlab.com.blurview.BlurView;
 import eightbitlab.com.blurview.RenderScriptBlur;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.reflect.TypeToken;
+
+
 
 public class MessagesActivity extends AppCompatActivity {
 	
@@ -1579,4 +1581,4 @@ username.setText("Username");
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

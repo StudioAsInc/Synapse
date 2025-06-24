@@ -44,7 +44,7 @@ import com.google.android.material.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+/* import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
@@ -55,7 +55,7 @@ import eightbitlab.com.blurview.*;
 import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
+import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -310,4 +310,4 @@ public class ManageUsersActivity extends AppCompatActivity {
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}

@@ -1,1 +1,29 @@
+// settings.gradle (in your root folder)
+
+// This block tells Gradle where to find plugins and what versions to use.
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    // Define the versions of the plugins used in the project
+    plugins {
+        id 'com.android.application' version '8.4.1' apply false
+        id 'com.google.gms.google-services' version '4.4.2' apply false
+        id 'org.jetbrains.kotlin.android' version '1.9.22' apply false
+    }
+}
+
+// This block tells Gradle where to find libraries for your app's code.
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = 'https://jitpack.io' }
+    }
+}
+
+rootProject.name = "Synapse"
 include ':app'

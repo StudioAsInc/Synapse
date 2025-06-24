@@ -491,8 +491,8 @@
 										android:textSize="16sp"
 										android:textStyle="bold"
 										android:textColor="#000000"
-										android:thumb="@drawable/switchIn"
-										app:track="@drawable/switchOut" />
+										android:thumb="@drawable/switch_in"
+										app:track="@drawable/switch_out" />
 									<androidx.appcompat.widget.SwitchCompat
 										android:id="@+id/manage_account_panel_ban"
 										android:layout_width="match_parent"
@@ -503,8 +503,8 @@
 										android:textSize="16sp"
 										android:textStyle="bold"
 										android:textColor="#000000"
-										android:thumb="@drawable/switchIn"
-										app:track="@drawable/switchOut" />
+										android:thumb="@drawable/switch_in"
+										app:track="@drawable/switch_out" />
 									<androidx.appcompat.widget.SwitchCompat
 										android:id="@+id/manage_account_panel_premium"
 										android:layout_width="match_parent"
@@ -515,8 +515,8 @@
 										android:textSize="16sp"
 										android:textStyle="bold"
 										android:textColor="#000000"
-										android:thumb="@drawable/switchIn"
-										app:track="@drawable/switchOut" />
+										android:thumb="@drawable/switch_in"
+										app:track="@drawable/switch_out" />
 								</LinearLayout>
 							</LinearLayout>
 						</LinearLayout>
