@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.animation.*;
 import android.app.*;
 import android.content.*;
@@ -59,8 +58,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
-import com.sigma.niceswitch.NiceSwitch;
+//import com.sigma.niceswitch.*;
+//import com.sigma.niceswitch.NiceSwitch;
 import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
@@ -157,17 +156,17 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 	private LinearLayout linear25;
 	private ImageView imageview14;
 	private LinearLayout linear26;
-	private NiceSwitch Read_recipt_switch;
+//	private NiceSwitch Read_recipt_switch;
 	private TextView textview18;
 	private TextView textview19;
 	private ImageView imageview15;
 	private LinearLayout linear27;
-	private NiceSwitch disapear_switch;
+//	private NiceSwitch disapear_switch;
 	private TextView textview20;
 	private TextView textview21;
 	private ImageView imageview26;
 	private LinearLayout linear49;
-	private NiceSwitch autosavephoto_switch;
+//	private NiceSwitch autosavephoto_switch;
 	private TextView textview44;
 	private TextView textview45;
 	private ImageView imageview16;
@@ -740,4 +739,4 @@ ProfilePageTabUserInfoStatus.setTextColor(0xFF757575);
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
