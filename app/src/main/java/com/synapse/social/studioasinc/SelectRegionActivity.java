@@ -69,7 +69,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
+//import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
