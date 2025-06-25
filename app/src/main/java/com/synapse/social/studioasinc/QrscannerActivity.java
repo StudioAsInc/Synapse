@@ -25,7 +25,7 @@ import android.view.View.*;
 import android.view.animation.*;
 import android.webkit.*;
 import android.widget.*;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -38,9 +38,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.interpolator.*;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
-import com.budiyev.android.codescanner.CodeScannerView;
+//import com.blogspot.atifsoftwares.animatoolib.*;
+//import com.budiyev.android.codescanner.*;
+//import com.budiyev.android.codescanner.CodeScannerView;
 import com.caverock.androidsvg.*;
 import com.google.android.material.*;
 import com.google.firebase.FirebaseApp;
@@ -73,10 +73,10 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
+//import me.dm7.barcodescanner.core.*;
+//import org.jetbrains.kotlin.*;
 import org.json.*;
-import com.google.zxing.Result;
+//import com.google.zxing.Result;
 
 
 
