@@ -48,13 +48,13 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 		android:name=".SynapseApp"
 		android:requestLegacyExternalStorage="true"
 		android:theme="@style/AppTheme">
-		<activity>
+		<activity
 			android:name=".MainActivity"
 			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
 			android:hardwareAccelerated="true"
 			android:supportsPictureInPicture="true"
 			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden"
+			android:windowSoftInputMode="stateHidden">
 			<intent-filter>
 			<action android:name="android.intent.action.MAIN" />
 			<category android:name="android.intent.category.LAUNCHER" />
