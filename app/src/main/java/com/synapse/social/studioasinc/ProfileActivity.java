@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 // Keep - Standard Android & Google
 import android.animation.*;
 import android.app.*;
@@ -73,6 +72,11 @@ import java.util.regex.*;
 import java.net.URL;
 import java.net.MalformedURLException;
 import org.json.*;
+//AndroidX imports
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.google.android.material.tabs.TabLayout;
 
 // *** PROBLEM IMPORTS - COMMENT THESE OUT ***
 // These are the libraries that are missing from your project.
