@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.animation.*;
 import android.app.*;
 import android.content.*;
@@ -447,7 +446,7 @@ public class ReportRequestsActivity extends AppCompatActivity {
 						if (UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString().equals("null")) {
 								profileCardImage.setImageResource(R.drawable.avatar);
 						} else {
-								Glide.with(getApplicationContext()).load(Uri.parse(UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString())).into(profileCardImage);
+							//	Glide.with(getApplicationContext()).load(Uri.parse(UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString())).into(profileCardImage);
 						}
 				}
 				if (UserInfoCacheMap.get("nickname-".concat(_data.get((int)_position).get("uid").toString())).toString().equals("null")) {
@@ -532,7 +531,7 @@ public class ReportRequestsActivity extends AppCompatActivity {
 																						if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 																								profileCardImage.setImageResource(R.drawable.avatar);
 																						} else {
-																								Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(profileCardImage);
+																						//		Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(profileCardImage);
 																						}
 																				}
 																				if (dataSnapshot.child("nickname").getValue(String.class).equals("null")) {
