@@ -125,7 +125,6 @@ npm run db:migrate
 
 # Start the development server
 npm run dev
-```
 
 ### Deployment
 We provide multiple deployment options:
