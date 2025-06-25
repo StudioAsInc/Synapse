@@ -362,6 +362,7 @@ class c {
 		ProfilePageTopBarSpace.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
+			/*
 				bs = new com.google.android.material.bottomsheet.BottomSheetDialog(ProfileActivity.this);
 				View bsV;
 				bsV = getLayoutInflater().inflate(R.layout.account_switch_bscv,null );
@@ -369,6 +370,7 @@ class c {
 				bs.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
 				bs.setCancelable(true);
 				bs.show();
+				*/
 			}
 		});
 			
@@ -385,6 +387,7 @@ class c {
 		ProfilePageTopBarMenu.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
+			/*
 				// Create a bundle and put userUID in it
 				Bundle sendDataDialog = new Bundle();
 				sendDataDialog.putString("userUID", getIntent().getStringExtra("uid"));
@@ -477,7 +480,7 @@ class c {
 					public void onClick(View _view) {
 						/*
 startActivity(intent);
-*/
+*
 					}
 				});
 				share_bs.setOnClickListener(new View.OnClickListener() {
@@ -487,6 +490,7 @@ startActivity(intent);
 						startActivity(intent);
 					}
 				});
+				*/
 			}
 		});
 		
@@ -649,15 +653,15 @@ startActivity(intent);
 				startActivity(intent);
 			}
 		});
-		
+		/*
 		user_uid_layout_text.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View _view) {
-				((ClipboardManager) getSystemService(getApplicationContext().CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText("clipboard", user_uid_layout_text.getText().toString()));
-				return true;
+			//	((ClipboardManager) getSystemService(getApplicationContext().CLIPBOARD_SERVICE)).setPrimaryClip(ClipData.newPlainText("clipboard", user_uid_layout_text.getText().toString()));
+			//	return true;
 			}
 		});
-		
+		*/
 		ProfilePageNoInternetBodyRetry.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
@@ -1655,6 +1659,7 @@ startActivity(intent);
 	
 	
 	public void _openBadgeSheet() {
+	/*
 		bs = new com.google.android.material.bottomsheet.BottomSheetDialog(ProfileActivity.this);
 		View bsV;
 		bsV = getLayoutInflater().inflate(R.layout.badge_overview_cbsd,null );
@@ -1662,6 +1667,7 @@ startActivity(intent);
 		bs.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
 		bs.setCancelable(true);
 		bs.show();
+		*/
 	}
 	
 	
