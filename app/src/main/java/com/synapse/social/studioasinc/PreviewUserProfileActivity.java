@@ -535,12 +535,12 @@ public class PreviewUserProfileActivity extends AppCompatActivity {
 						if (dataSnapshot.child("profile_cover_image").getValue(String.class).equals("null")) {
 							ProfilePageTabUserInfoCoverImage.setImageResource(R.drawable.user_null_cover_photo);
 						} else {
-							Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("profile_cover_image").getValue(String.class))).into(ProfilePageTabUserInfoCoverImage);
+							// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("profile_cover_image").getValue(String.class))).into(ProfilePageTabUserInfoCoverImage);
 						}
 						if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 							ProfilePageTabUserInfoProfileImage.setImageResource(R.drawable.avatar);
 						} else {
-							Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(ProfilePageTabUserInfoProfileImage);
+							// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(ProfilePageTabUserInfoProfileImage);
 						}
 						bannedUserInfo.setVisibility(View.GONE);
 						manage_account_panel_ban.setChecked(false);
@@ -583,7 +583,7 @@ public class PreviewUserProfileActivity extends AppCompatActivity {
 						}
 					}
 					if (dataSnapshot.child("user_region").getValue(String.class) != null) {
-						Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(dataSnapshot.child("user_region").getValue(String.class).concat(".png")))).into(ProfilePageTabUserInfoRegionFlag);
+						// Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(dataSnapshot.child("user_region").getValue(String.class).concat(".png")))).into(ProfilePageTabUserInfoRegionFlag);
 						ProfilePageTabUserInfoRegionFlagCard.setVisibility(View.VISIBLE);
 					} else {
 						ProfilePageTabUserInfoRegionFlagCard.setVisibility(View.GONE);
