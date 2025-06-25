@@ -235,23 +235,26 @@ public class CreateImagePostActivity extends AppCompatActivity {
 		});
 		
 		continueButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				if (AddFromUrlStr == null) {
-					try {
-						//	saveBitmapAsPng(cropImageView.getCroppedImage());
-					} catch (IOException e) {
-							
-					}
-				} else {
-					intent.setClass(getApplicationContext(), CreateImagePostNextStepActivity.class);
-					intent.putExtra("type", "url");
-					intent.putExtra("path", AddFromUrlStr);
-					startActivity(intent);
-					finish();
-				}
-			}
-		});
+	@Override
+	public void onClick(View _view) {
+		if (AddFromUrlStr == null) {
+			// The problematic try-catch block has been removed.
+			// The line below is still commented out.
+			// saveBitmapAsPng(cropImageView.getCroppedImage());
+
+			// WARNING: With this change, the button will do NOTHING when a user
+			// has cropped an image from their gallery. You will need to add
+			// the correct logic here later.
+			
+		} else {
+			intent.setClass(getApplicationContext(), CreateImagePostNextStepActivity.class);
+			intent.putExtra("type", "url");
+			intent.putExtra("path", AddFromUrlStr);
+			startActivity(intent);
+			finish();
+		}
+	}
+});
 		
 		selectImageWithGallery.setOnClickListener(new View.OnClickListener() {
 			@Override
