@@ -561,7 +561,7 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 							
 							if (!_charSeq.trim().equals("")) {
 									if (_checkValidUrl(_charSeq.trim())) {
-											Glide.with(getApplicationContext()).load(Uri.parse(_charSeq.trim())).into(user_avatar_image);
+											// Glide.with(getApplicationContext()).load(Uri.parse(_charSeq.trim())).into(user_avatar_image);
 									} else {
 											((EditText)user_avatar_url_input).setError("Invalid URL");
 									}
@@ -697,7 +697,7 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 			card.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)28, Color.TRANSPARENT));
 			checked.setBackgroundColor(0x50000000);
 			_ImageColor(checked_ic, 0xFFFFFFFF);
-			Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("image_url").toString())).into(profile);
+			// Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("image_url").toString())).into(profile);
 			if (_data.get((int)_position).get("image_url").toString().equals(CurrentAvatarUri)) {
 				checked.setVisibility(View.VISIBLE);
 			} else {
