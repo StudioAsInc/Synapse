@@ -469,7 +469,7 @@ public class SelectRegionActivity extends AppCompatActivity {
 			} else {
 				_setMargin(body, 14, 14, 0, 14);
 			}
-			Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(_data.get((int)_position).get("code").toString().concat(".png")))).into(flag);
+			// Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(_data.get((int)_position).get("code").toString().concat(".png")))).into(flag);
 			name.setText(_data.get((int)_position).get("name").toString());
 			if (CurrentRegionCode.equals(_data.get((int)_position).get("code").toString())) {
 				checkbox.setImageResource(R.drawable.icon_check_circle_round);
