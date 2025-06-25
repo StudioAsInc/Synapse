@@ -798,13 +798,13 @@ public class CreateImagePostNextStepActivity extends AppCompatActivity {
 		_viewGraphics(post_settings_privacy_disable_comments, 0xFFFFFFFF, 0xFFEEEEEE, 0, 0, Color.TRANSPARENT);
 		if (getIntent().hasExtra("type")) {
 			if (getIntent().getStringExtra("type").equals("local")) {
-				Glide.with(getApplicationContext()).load(getIntent().getStringExtra("path")).into(croppedImageView);
+				// Glide.with(getApplicationContext()).load(getIntent().getStringExtra("path")).into(croppedImageView);
 			} else {
-				Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("path"))).into(croppedImageView);
+				// Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("path"))).into(croppedImageView);
 			}
 		} else {
 			if (getIntent().hasExtra("path")) {
-				Glide.with(getApplicationContext()).load(getIntent().getStringExtra("path")).into(croppedImageView);
+				// Glide.with(getApplicationContext()).load(getIntent().getStringExtra("path")).into(croppedImageView);
 			}
 		}
 		
