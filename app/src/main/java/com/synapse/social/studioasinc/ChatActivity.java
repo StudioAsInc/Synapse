@@ -1702,7 +1702,7 @@ SketchwareUtil.showMessage(getApplicationContext(), "Can't be empty");
 							topProfileLayoutProfileImage.setImageResource(R.drawable.avatar);
 							SecondUserAvatar = "null";
 						} else {
-							Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(topProfileLayoutProfileImage);
+							// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(topProfileLayoutProfileImage);
 							SecondUserAvatar = dataSnapshot.child("avatar").getValue(String.class);
 						}
 					}
@@ -2505,351 +2505,13 @@ NewCustomDialog.show();
 			final TextView date = _view.findViewById(R.id.date);
 			final ImageView message_state = _view.findViewById(R.id.message_state);
 			
-			/*
-lottie1.setVisibility(View.GONE);
-RecyclerView.LayoutParams _lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-_view.setLayoutParams(_lp);
-Calendar push = Calendar.getInstance();
-mProfileCard.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)300, Color.TRANSPARENT));
-_ImageColor(typingStatusIcon, 0xFFBDBDBD);
-if (_data.get((int)_position).containsKey("typingMessageStatus")) {
-body.setTranslationY((float)(10));
-{
-android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-SketchUi.setColor(0xFFFFFFFF);
-SketchUi.setCornerRadius(d*25);
-messageBG.setBackground(SketchUi);
-}
-_setMargin(message_layout, 60, 0, 4, 4);
-message_layout.setGravity(Gravity.CENTER | Gravity.LEFT);
-body.setGravity(Gravity.TOP | Gravity.LEFT);
-message_state.setVisibility(View.GONE);
-mProfileCard.setVisibility(View.VISIBLE);
-if (SecondUserAvatar.equals("null_banned")) {
-mProfileImage.setImageResource(R.drawable.banned_avatar);
-} else {
-if (SecondUserAvatar.equals("null")) {
-mProfileImage.setImageResource(R.drawable.avatar);
-} else {
-Glide.with(getApplicationContext()).load(Uri.parse(SecondUserAvatar)).into(mProfileImage);
-}
-}
-showOldMessagesProgress.setVisibility(View.GONE);
-my_message_info.setVisibility(View.GONE);
-message_text.setVisibility(View.GONE);
-mMessageImageBody.setVisibility(View.GONE);
-mRepliedMessageLayout.setVisibility(View.GONE);
-lottie1.setVisibility(View.VISIBLE);
-
-} else {
-body.setTranslationY((float)(0));
-if (_data.get((int)_position).get("uid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-body.setGravity(Gravity.TOP | Gravity.RIGHT);
-message_layout.setGravity(Gravity.CENTER | Gravity.RIGHT);
-_setMargin(message_layout, 0, 60, 0, 0);
-message_text.setTextColor(0xFFFFFFFF);
-message_state.setVisibility(View.VISIBLE);
-mProfileCard.setVisibility(View.GONE);
-mRepliedMessageLayoutLeftBar.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)300, 0xFFFFFFFF));
-mRepliedMessageLayoutUsername.setTextColor(0xFFEEEEEE);
-mRepliedMessageLayoutMessage.setTextColor(0xFFEEEEEE);
-try{
-// Retrieve corner radius value from settings
-int cornerRadius = 0; // Default value
-
-try {
-    cornerRadius = Integer.parseInt(appSettings.getString("ChatCornerRadius", ""));
-} catch (Exception e) {
-    try {
-        cornerRadius = (int) Double.parseDouble(appSettings.getString("ChatCornerRadius", ""));
-    } catch (Exception ex) {
-        cornerRadius = 27; // Default radius if parsing fails
-    }
-}
-
-// Apply the retrieved corner radius to the GradientDrawable
-android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-SketchUi.setColor(0xFF6B4CFF);
-SketchUi.setCornerRadius(d * cornerRadius);
-android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(
-    new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null
-);
-
-messageBG.setBackground(SketchUiRD);
-messageBG.setClickable(true);
-}catch(Exception e){
-{
-android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-SketchUi.setColor(0xFF6B4CFF);
-SketchUi.setCornerRadius(d*27);
-android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-messageBG.setBackground(SketchUiRD);
-messageBG.setClickable(true);
-}
-}
-} else {
-body.setGravity(Gravity.TOP | Gravity.LEFT);
-message_layout.setGravity(Gravity.CENTER | Gravity.LEFT);
-_setMargin(message_layout, 60, 0, 4, 0);
-message_text.setTextColor(0xFF000000);
-message_state.setVisibility(View.GONE);
-mProfileCard.setVisibility(View.VISIBLE);
-mRepliedMessageLayoutLeftBar.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)300, getResources().getColor(R.color.colorPrimary)));
-mRepliedMessageLayoutUsername.setTextColor(getResources().getColor(R.color.colorPrimary));
-mRepliedMessageLayoutMessage.setTextColor(0xFF000000);
-if (SecondUserAvatar.equals("null")) {
-mProfileImage.setImageResource(R.drawable.avatar);
-} else {
-Glide.with(getApplicationContext()).load(Uri.parse(SecondUserAvatar)).into(mProfileImage);
-}
-try{
-// Retrieve corner radius value from settings
-int cornerRadius = 0; // Default value
-
-try {
-    cornerRadius = Integer.parseInt(appSettings.getString("ChatCornerRadius", ""));
-} catch (Exception e) {
-    try {
-        cornerRadius = (int) Double.parseDouble(appSettings.getString("ChatCornerRadius", ""));
-    } catch (Exception ex) {
-        cornerRadius = 27; // Default radius if parsing fails
-    }
-}
-
-// Apply the retrieved corner radius to the GradientDrawable
-android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-SketchUi.setColor(0xFFFFFFFF);
-SketchUi.setCornerRadius(d * cornerRadius);
-SketchUi.setStroke(d * 2, 0xFFDFDFDF);
-android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(
-    new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null
-);
-
-messageBG.setBackground(SketchUiRD);
-messageBG.setClickable(true);
-}catch(Exception e){
-{
-android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-SketchUi.setColor(0xFFFFFFFF);
-SketchUi.setCornerRadius(d*27);
-SketchUi.setStroke(d*2,0xFFDFDFDF);
-android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-messageBG.setBackground(SketchUiRD);
-messageBG.setClickable(true);
-}
-}
-}
-_textview_mh(message_text, _data.get((int)_position).get("message_text").toString());
-reaction.setText(_data.get((int)_position).get("message_text").toString());
-push.setTimeInMillis((long)(Double.parseDouble(_data.get((int)_position).get("push_date").toString())));
-date.setText(new SimpleDateFormat("hh:mm a").format(push.getTime()));
-if (_data.get((int)_position).containsKey("replied_message_id")) {
-{
-	ExecutorService mExecutorService = Executors.newSingleThreadExecutor();
-	Handler mMainHandler = new Handler(Looper.getMainLooper());
-	
-	mExecutorService.execute(new Runnable() {
-		@Override
-		public void run() {
-			DatabaseReference getRepliedMessageRef = FirebaseDatabase.getInstance().getReference("skyline/chats").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(getIntent().getStringExtra("uid")).child(_data.get((int)_position).get("replied_message_id").toString());
-			getRepliedMessageRef.addListenerForSingleValueEvent(new ValueEventListener() {
-				@Override
-				public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-					mMainHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							if(dataSnapshot.exists()) {
-								if (dataSnapshot.child("uid").getValue(String.class).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-									mRepliedMessageLayoutUsername.setText(FirstUserName);
-								} else {
-									mRepliedMessageLayoutUsername.setText(SecondUserName);
-								}
-								if (dataSnapshot.child("message_text").getValue(String.class) != null) {
-									mRepliedMessageLayoutMessage.setText(dataSnapshot.child("message_text").getValue(String.class));
-									mRepliedMessageLayout.setVisibility(View.VISIBLE);
-								} else {
-									mRepliedMessageLayout.setVisibility(View.GONE);
-								}
-							} else {
-								mRepliedMessageLayout.setVisibility(View.GONE);
-							}
-						}
-					});
-				}
-				
-				@Override
-				public void onCancelled(@NonNull DatabaseError databaseError) {
-					
-				}
-			});
-		}
-	});
-}
-
-mRepliedMessageLayout.setVisibility(View.VISIBLE);
-} else {
-mRepliedMessageLayout.setVisibility(View.GONE);
-}
-if (_data.get((int)_position).containsKey("message_image_uri")) {
-Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("message_image_uri").toString())).into(mMessageImageView);
-_setMargin(message_text, 0, 0, 8, 0);
-mMessageImageBody.setVisibility(View.VISIBLE);
-mMessageImageView.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View _view) {
-i.setClass(getApplicationContext(), ImageviewerActivity.class);
-i.putExtra("img", _data.get((int)_position).get("message_image_uri").toString());
-startActivity(i);
-}
-});
-} else {
-_setMargin(message_text, 0, 0, 0, 0);
-mMessageImageBody.setVisibility(View.GONE);
-}
-if (_data.get((int)_position).get("message_state").toString().equals("sended")) {
-message_state.setImageResource(R.drawable.icon_done_round);
-_ImageColor(message_state, 0xFF424242);
-} else {
-if (_data.get((int)_position).get("message_state").toString().equals("seen")) {
-message_state.setImageResource(R.drawable.icon_done_all_round);
-_ImageColor(message_state, getResources().getColor(R.color.colorPrimary));
-}
-}
-if (_data.size() > 79) {
-if (_position == 0) {
-showOldMessagesProgress.setVisibility(View.VISIBLE);
-loadTimer = new TimerTask() {
-@Override
-public void run() {
-runOnUiThread(new Runnable() {
-@Override
-public void run() {
-_getOldChatMessagesRef();
-showOldMessagesProgress.setVisibility(View.GONE);
-}
-});
-}
-};
-_timer.schedule(loadTimer, (int)(1000));
-} else {
-showOldMessagesProgress.setVisibility(View.GONE);
-}
-} else {
-showOldMessagesProgress.setVisibility(View.GONE);
-}
-if (_position == 0) {
-	my_message_info.setVisibility(View.GONE);
-    mProfileImage.setVisibility(View.GONE);
-	if (_data.size() == 1) {
-		my_message_info.setVisibility(View.VISIBLE);
-        mProfileImage.setVisibility(View.VISIBLE);
-	} else {
-		if (!_data.get((int)_position).get("uid").toString().equals(_data.get((int)_position + 1).get("uid").toString())) {
-			my_message_info.setVisibility(View.VISIBLE);
-            mProfileImage.setVisibility(View.VISIBLE);
-		}
-	}
-} else {
-	if (!_data.get((int)_position).get("uid").toString().equals(_data.get((int)_position - 1).get("uid").toString())) {
-		my_message_info.setVisibility(View.GONE);
-        mProfileImage.setVisibility(View.GONE);
-		if (_position == (_data.size() - 1)) {
-			my_message_info.setVisibility(View.VISIBLE);
-            mProfileImage.setVisibility(View.VISIBLE);
-		} else {
-			if (!_data.get((int)_position).get("uid").toString().equals(_data.get((int)_position + 1).get("uid").toString())) {
-				my_message_info.setVisibility(View.VISIBLE);
-                mProfileImage.setVisibility(View.VISIBLE);
-			}
-		}
-	} else {
-		if (_position == (_data.size() - 1)) {
-			my_message_info.setVisibility(View.VISIBLE);
-            mProfileImage.setVisibility(View.VISIBLE);
-		} else {
-			if (_data.get((int)_position).get("uid").toString().equals(_data.get((int)_position - 1).get("uid").toString()) && _data.get((int)_position).get("uid").toString().equals(_data.get((int)_position + 1).get("uid").toString())) {
-				my_message_info.setVisibility(View.GONE);
-                mProfileImage.setVisibility(View.GONE);
-			} else {
-				if (_data.get((int)_position).get("uid").toString().equals(_data.get((int)_position + 1).get("uid").toString())) {
-					my_message_info.setVisibility(View.GONE);
-                    mProfileImage.setVisibility(View.GONE);
-				} else {
-					my_message_info.setVisibility(View.VISIBLE);
-                    mProfileImage.setVisibility(View.VISIBLE);
-				}
-			}
-		}
-	}
-}
-if (!_data.get((int)_position).get("uid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-	if (_data.get((int)_position).get("message_state").toString().equals("sended")) {
-		FirebaseDatabase.getInstance().getReference("skyline/chats").child(getIntent().getStringExtra("uid")).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(_data.get((int)_position).get("key").toString()).child("message_state").setValue("seen");
-		FirebaseDatabase.getInstance().getReference("skyline/chats").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(getIntent().getStringExtra("uid")).child(_data.get((int)_position).get("key").toString()).child("message_state").setValue("seen");
-		FirebaseDatabase.getInstance().getReference("skyline/inbox").child(getIntent().getStringExtra("uid")).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("last_message_state").setValue("seen");
-	}
-}
-lottie1.setVisibility(View.GONE);
-message_text.setVisibility(View.VISIBLE);
-}
-message_layout.setOnLongClickListener(new View.OnLongClickListener() {
-@Override
-public boolean onLongClick(View _view) {
-_messageOverviewPopup(menuView_d, _position, _data);
-return true;
-}
-});
-messageBG.setOnLongClickListener(new View.OnLongClickListener() {
-@Override
-public boolean onLongClick(View _view) {
-_messageOverviewPopup(menuView_d, _position, _data);
-return true;
-}
-});
-message_text.setOnLongClickListener(new View.OnLongClickListener() {
-@Override
-public boolean onLongClick(View _view) {
-_messageOverviewPopup(menuView_d, _position, _data);
-return true;
-}
-});
-mProfileImage.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View _view) {
-intent.setClass(getApplicationContext(), ProfileActivity.class);
-intent.putExtra("uid", getIntent().getStringExtra("uid"));
-startActivity(intent);
-}
-});
-try{
-//Retrieve text size from settings
-try {
-	message_text.setTextSize((int) Integer.parseInt(appSettings.getString("ChatTextSize", "")));
-	mRepliedMessageLayoutMessage.setTextSize((int) Integer.parseInt(appSettings.getString("ChatTextSize", "")));
-} catch (Exception e) {
-	try {
-		message_text.setTextSize((int) Double.parseDouble(appSettings.getString("ChatTextSize", "")));
-		mRepliedMessageLayoutMessage.setTextSize((int) Double.parseDouble(appSettings.getString("ChatTextSize", "")));
-	} catch (Exception ex) { // Changed variable name to ex
-		message_text.setTextSize((int) 16);
-	}
-}
-}catch(Exception e){
- 
-}
-*/
 			reaction.setVisibility(View.GONE);
 			lottie1.setVisibility(View.GONE);
 			RecyclerView.LayoutParams _lp = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 			_view.setLayoutParams(_lp);
 			Calendar push = Calendar.getInstance();
 			mProfileCard.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)300, Color.TRANSPARENT));
-			_ImageColor(typingStatusIcon, 0xFFBDBDBD);
+	//		_ImageColor(typingStatusIcon, 0xFFBDBDBD);
 			if (_data.get((int)_position).containsKey("typingMessageStatus")) {
 				    body.setTranslationY((float)(10));
 				    {
@@ -2870,7 +2532,7 @@ try {
 					        if (SecondUserAvatar.equals("null")) {
 						            mProfileImage.setImageResource(R.drawable.avatar);
 						        } else {
-						            Glide.with(getApplicationContext()).load(Uri.parse(SecondUserAvatar)).into(mProfileImage);
+						            // Glide.with(getApplicationContext()).load(Uri.parse(SecondUserAvatar)).into(mProfileImage);
 						        }
 					    }
 				    showOldMessagesProgress.setVisibility(View.GONE);
@@ -2879,7 +2541,7 @@ try {
 				    mMessageImageBody.setVisibility(View.GONE);
 				    mRepliedMessageLayout.setVisibility(View.GONE);
 				    lottie1.setVisibility(View.VISIBLE);
-				    typingStatusIcon.setVisibility(View.GONE);
+			//	    typingStatusIcon.setVisibility(View.GONE);
 			} else {
 				    body.setTranslationY((float)(0));
 				    if (_data.get((int)_position).get("uid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
@@ -2941,7 +2603,7 @@ try {
 					        if (SecondUserAvatar.equals("null")) {
 						            mProfileImage.setImageResource(R.drawable.avatar);
 						        } else {
-						            Glide.with(getApplicationContext()).load(Uri.parse(SecondUserAvatar)).into(mProfileImage);
+						            // Glide.with(getApplicationContext()).load(Uri.parse(SecondUserAvatar)).into(mProfileImage);
 						        }
 					        try{
 						            // Retrieve corner radius value from settings
@@ -3058,7 +2720,7 @@ try {
 					        mRepliedMessageLayout.setOnClickListener(null); // Remove listener
 					    }
 				    if (_data.get((int)_position).containsKey("message_image_uri")) {
-					        Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("message_image_uri").toString())).into(mMessageImageView);
+					        // Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("message_image_uri").toString())).into(mMessageImageView);
 					        _setMargin(message_text, 0, 0, 8, 0);
 					        mMessageImageBody.setVisibility(View.VISIBLE);
 					        mMessageImageView.setOnClickListener(new View.OnClickListener() {
