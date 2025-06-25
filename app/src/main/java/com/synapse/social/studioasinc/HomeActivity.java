@@ -444,12 +444,16 @@ startActivity(intent);
 		});
 		
 		scanner.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				intent.setClass(getApplicationContext(), QrscannerActivity.class);
-				startActivity(intent);
-			}
-		});
+	@Override
+	public void onClick(View _view) {
+		// intent.setClass(getApplicationContext(), QrscannerActivity.class);
+		// startActivity(intent);
+
+		// You can optionally add a Toast message to confirm the click works
+		// import android.widget.Toast; // Add this to the top of the file
+		// Toast.makeText(getApplicationContext(), "Scanner feature is disabled.", Toast.LENGTH_SHORT).show();
+	}
+});
 		
 		imageview1.setOnClickListener(new View.OnClickListener() {
 			@Override
