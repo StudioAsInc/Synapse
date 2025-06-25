@@ -383,7 +383,7 @@ public class ChatsettingsActivity extends AppCompatActivity {
 		textview38 = findViewById(R.id.textview38);
 		imageview23 = findViewById(R.id.imageview23);
 		linear44 = findViewById(R.id.linear44);
-		switch7 = findViewById(R.id.switch7);
+	//	switch7 = findViewById(R.id.switch7);
 		textview39 = findViewById(R.id.textview39);
 		textview40 = findViewById(R.id.textview40);
 		imageview10 = findViewById(R.id.imageview10);
