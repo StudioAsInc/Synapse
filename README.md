@@ -39,5 +39,5 @@ PRs welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 ---
 
 📄 **License:** MIT  
-📬 **Contact:** contact@studioas.inc  
-🌐 **Website:** [studioas.inc](https://studioas.inc)
+📬 **Contact:** mashikahamed0@gmail.com
+🌐 **Website:** [studioas.inc](https://studioas-inc.pages.dev)
