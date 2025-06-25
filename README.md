@@ -5,10 +5,10 @@
   <h1>Synapse</h1>
   
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
-  [![Downloads](https://img.shields.io/github/downloads/StudioAsInc/Synapse/total?color=green&label=Downloads)](https://github.com/StudioAs-Inc/Synapse/releases)
+  [![Downloads](https://img.shields.io/github/downloads/StudioAsInc/Synapse/total?color=green&label=Downloads)](https://github.com/StudioAsInc/Synapse/releases)
   [![Users](https://img.shields.io/endpoint?url=https://i.pluginhub.me/shields/installs/plugin/synapse&label=Active+Users)](https://github.com/StudioAsInc/Synapse)
   [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/StudioAsInc/Synapse/pulls)
-  [![Stars](https://img.shields.io/github/stars/StudioAsInc/Synapse?style=social)](https://github.com/StudioAs-Inc/Synapse/stargazers)
+  [![Stars](https://img.shields.io/github/stars/StudioAsInc/Synapse?style=social)](https://github.com/StudioAsInc/Synapse/stargazers)
 
 </div>
 
@@ -70,7 +70,7 @@
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/StudioAs-Inc/Synapse.git
+git clone https://github.com/StudioAsInc/Synapse.git
 cd Synapse
 
 # Install dependencies
@@ -88,8 +88,8 @@ npm run dev
 
 We welcome all contributions! Please read our [Contribution Guidelines](CONTRIBUTE.md) before submitting PRs.
 
-<a href="https://github.com/StudioAs-Inc/Synapse/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=StudioAs-Inc/Synapse" />
+<a href="https://github.com/StudioAsInc/Synapse/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=StudioAsInc/Synapse" />
 </a>
 
 ---
@@ -108,10 +108,10 @@ Synapse is [MIT licensed](LICENSE.md).
 🐦 Twitter: [@StudioAs_Inc](https://twitter.com/StudioAs_Inc)  
 
 <div align="center" style="margin-top: 2rem;">
-  <a href="https://github.com/StudioAs-Inc/Synapse">
+  <a href="https://github.com/StudioAsInc/Synapse">
     <img src="https://img.shields.io/badge/⭐_Star_on_GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
   </a>
-  <a href="https://github.com/StudioAs-Inc/Synapse/fork">
+  <a href="https://github.com/StudioAsInc/Synapse/fork">
     <img src="https://img.shields.io/badge/Fork-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
   </a>
 </div>
