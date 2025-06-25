@@ -33,11 +33,11 @@ npm run dev
 
 
 
-## 🤝 Contributing
-PRs welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+## 🤝 CONTRIBUTE
+PRs welcome. See [CONTRIBUTE](CONTRIBUTING.md).
 
 ---
 
-📄 **License:** MIT  
-📬 **Contact:** mashikahamed0@gmail.com
-🌐 **Website:** [studioas.inc](https://studioas-inc.pages.dev)
+**License:** MIT  
+**Contact:** mashikahamed0@gmail.com
+**Website:** [studioas.inc](https://studioas-inc.pages.dev)
