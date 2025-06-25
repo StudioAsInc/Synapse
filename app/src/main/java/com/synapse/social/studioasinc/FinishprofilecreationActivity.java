@@ -823,7 +823,7 @@ initializeLogic();
 			username_input.setText("");
 		}
 		if (getIntent().hasExtra("googleLoginName") && (getIntent().hasExtra("googleLoginEmail") && getIntent().hasExtra("googleLoginAvatarUri"))) {
-			Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("googleLoginAvatarUri"))).into(profile_image);
+			// Glide.with(getApplicationContext()).load(Uri.parse(getIntent().getStringExtra("googleLoginAvatarUri"))).into(profile_image);
 			nickname_input.setText(getIntent().getStringExtra("googleLoginName"));
 		}
 		try{
