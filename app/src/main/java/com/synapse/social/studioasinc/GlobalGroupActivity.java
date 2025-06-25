@@ -431,7 +431,7 @@ camera_gallery_btn_container_round.setVisibility(View.GONE);
 				if (_childKey.equals(group_key)) {
 					group_name_txt.setText(_childValue.get("group_name").toString());
 					group_creator_txt.setText("Created by ".concat(_childValue.get("creator").toString()));
-					Glide.with(getApplicationContext()).load(Uri.parse(_childValue.get("group_image").toString())).into(user_dp);
+					// Glide.with(getApplicationContext()).load(Uri.parse(_childValue.get("group_image").toString())).into(user_dp);
 					setTitle(_childValue.get("group_name").toString());
 				}
 			}
@@ -444,7 +444,7 @@ camera_gallery_btn_container_round.setVisibility(View.GONE);
 				if (_childKey.equals(group_key)) {
 					group_name_txt.setText(_childValue.get("group_name").toString());
 					group_creator_txt.setText("Created by ".concat(_childValue.get("creator").toString()));
-					Glide.with(getApplicationContext()).load(Uri.parse(_childValue.get("group_image").toString())).into(user_dp);
+					// Glide.with(getApplicationContext()).load(Uri.parse(_childValue.get("group_image").toString())).into(user_dp);
 					setTitle(_childValue.get("group_name").toString());
 				}
 			}
