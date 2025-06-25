@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.animation.*;
 import android.app.*;
 import android.content.*;
@@ -27,7 +26,7 @@ import android.widget.*;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -37,15 +36,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.interpolator.*;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
+/*
 import com.blogspot.atifsoftwares.animatoolib.*;
 import com.budiyev.android.codescanner.*;
 import com.canhub.cropper.*;
 import com.caverock.androidsvg.*;
+*/
 import com.google.android.material.*;
 import com.google.android.material.color.MaterialColors;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.perf.*;
+/*
 import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 import com.sigma.niceswitch.*;
@@ -58,12 +60,13 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-import me.dm7.barcodescanner.core.*;
+//import kr.co.prnd.readmore.*;
+//import me.dm7.barcodescanner.core.*;
 import org.jetbrains.kotlin.*;
 import org.json.*;
 import java.io.*;
