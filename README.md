@@ -29,6 +29,7 @@ git clone https://github.com/StudioAsInc/Synapse.git
 cd Synapse
 npm install
 npm run dev
+```
 
 
 
