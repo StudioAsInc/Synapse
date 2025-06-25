@@ -935,7 +935,7 @@ startActivity(intent);
 		new int[] {0xFFEEEEEE}));
 		ProfilePageTabLayout.setSelectedTabIndicatorColor(0xFF445E91);
 		ProfilePageTabLayout.setElevation((float)2);
-		ProfilePageTabUserPostsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+	//	ProfilePageTabUserPostsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 		bannedUserInfo.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)28, 0xFF445E91));
 		_ImageColor(bannedUserInfoIc, 0xFFFFFFFF);
 		ProfilePageTabUserInfoBioLayout.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)28, 0xFFF5F5F5));
@@ -1002,12 +1002,12 @@ startActivity(intent);
 						if (dataSnapshot.child("profile_cover_image").getValue(String.class).equals("null")) {
 							ProfilePageTabUserInfoCoverImage.setImageResource(R.drawable.user_null_cover_photo);
 						} else {
-							Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("profile_cover_image").getValue(String.class))).into(ProfilePageTabUserInfoCoverImage);
+							// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("profile_cover_image").getValue(String.class))).into(ProfilePageTabUserInfoCoverImage);
 						}
 						if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 							ProfilePageTabUserInfoProfileImage.setImageResource(R.drawable.avatar);
 						} else {
-							Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(ProfilePageTabUserInfoProfileImage);
+							// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(ProfilePageTabUserInfoProfileImage);
 						}
 					}
 					if (dataSnapshot.child("status").getValue(String.class).equals("online")) {
@@ -1049,7 +1049,7 @@ startActivity(intent);
 						}
 					}
 					if (dataSnapshot.child("user_region").getValue(String.class) != null) {
-						Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(dataSnapshot.child("user_region").getValue(String.class).concat(".png")))).into(ProfilePageTabUserInfoRegionFlag);
+						// Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(dataSnapshot.child("user_region").getValue(String.class).concat(".png")))).into(ProfilePageTabUserInfoRegionFlag);
 						ProfilePageTabUserInfoRegionFlagCard.setVisibility(View.VISIBLE);
 					} else {
 						ProfilePageTabUserInfoRegionFlagCard.setVisibility(View.GONE);
@@ -1441,7 +1441,7 @@ startActivity(intent);
 								avatar.setImageResource(R.drawable.avatar);
 								save_to_history.setVisibility(View.GONE);
 							} else {
-								Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(avatar);
+								// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(avatar);
 								if (!dataSnapshot.child("uid").getValue(String.class).equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
 									if (dataSnapshot.child("avatar_history_type").getValue(String.class).equals("url")) {
 										save_to_history.setOnClickListener(new View.OnClickListener() {
@@ -1761,7 +1761,7 @@ startActivity(intent);
 							postMessageTextMiddle.setVisibility(View.GONE);
 					}
 					if (_data.get((int)_position).containsKey("post_image")) {
-							Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("post_image").toString())).into(postImage);
+							// Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("post_image").toString())).into(postImage);
 							postImage.setVisibility(View.VISIBLE);
 					} else {
 							postImage.setVisibility(View.GONE);
@@ -1805,7 +1805,7 @@ startActivity(intent);
 						if (UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString().equals("null")) {
 								userInfoProfileImage.setImageResource(R.drawable.avatar);
 						} else {
-								Glide.with(getApplicationContext()).load(Uri.parse(UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString())).into(userInfoProfileImage);
+								// Glide.with(getApplicationContext()).load(Uri.parse(UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString())).into(userInfoProfileImage);
 						}
 				}
 				if (UserInfoCacheMap.get("nickname-".concat(_data.get((int)_position).get("uid").toString())).toString().equals("null")) {
@@ -1881,7 +1881,7 @@ startActivity(intent);
 												if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 														userInfoProfileImage.setImageResource(R.drawable.avatar);
 												} else {
-														Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(userInfoProfileImage);
+														// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(userInfoProfileImage);
 												}
 										}
 										if (dataSnapshot.child("nickname").getValue(String.class).equals("null")) {
