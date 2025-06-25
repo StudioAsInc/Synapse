@@ -29,3 +29,23 @@ git clone https://github.com/StudioAsInc/Synapse.git
 cd Synapse
 npm install
 npm run dev
+
+
+
+## 🤝 Contributing
+PRs welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+---
+
+📄 **License:** MIT  
+📬 **Contact:** contact@studioas.inc  
+🌐 **Website:** [studioas.inc](https://studioas.inc)
+```
+
+Key features:
+- Extremely compact (1/3 the size)
+- Professional minimalist design
+- All essential information
+- Clear section hierarchy
+- Maintains branding and key links
+- Mobile-friendly layout
