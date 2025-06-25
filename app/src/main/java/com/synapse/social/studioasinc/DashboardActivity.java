@@ -518,7 +518,7 @@ public class DashboardActivity extends AppCompatActivity {
 																		if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 																				app_user_info_profile_image.setImageResource(R.drawable.avatar);
 																		} else {
-																				Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(app_user_info_profile_image);
+																				// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(app_user_info_profile_image);
 																		}
 																		if (dataSnapshot.child("nickname").getValue(String.class).equals("null")) {
 																				app_user_info_username.setText("@" + dataSnapshot.child("username").getValue(String.class));
