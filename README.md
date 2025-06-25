@@ -10,16 +10,14 @@
 ---
 
 ## ✨ Features
-- Modern React/Next.js frontend
-- TypeScript throughout the stack
+- Modern user interface 
 - Real-time updates
 - Privacy-focused design
 - PWA support
 
 ## 🛠 Tech Stack
-**Frontend:** React, Next.js, TypeScript, Tailwind CSS  
-**Backend:** Node.js, Express, PostgreSQL  
-**Infra:** Docker, Kubernetes, AWS
+**Frontend:** Java, Kotlin, CSS, JavaScript 
+**Backend:** Firebase
 
 ---
 
