@@ -1,5 +1,4 @@
 package com.synapse.social.studioasinc;
-
 import android.animation.*;
 import android.app.*;
 import android.content.*;
@@ -83,7 +82,7 @@ import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
 //import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
+//import org.jetbrains.kotlin.*;
 import org.json.*;
 
 public class LoginActivity extends AppCompatActivity {
