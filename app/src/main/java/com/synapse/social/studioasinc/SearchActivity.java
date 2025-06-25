@@ -823,7 +823,7 @@ public class SearchActivity extends AppCompatActivity {
 					if (_data.get((int)_position).get("avatar").toString().equals("null")) {
 						profileAvatar.setImageResource(R.drawable.avatar);
 					} else {
-						Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("avatar").toString())).into(profileAvatar);
+						// Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("avatar").toString())).into(profileAvatar);
 					}
 				}
 				if (_data.get((int)_position).get("nickname").toString().equals("null")) {
