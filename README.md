@@ -1,6 +1,4 @@
-Here's an enhanced version of your README with a more professional, visually appealing design and additional sections:
-
-```markdown
+markdown
 <div align="center">
   <img src="https://sketchub.in/storage/project_files/28085/3924415.png" 
        width="150" height="150" 
