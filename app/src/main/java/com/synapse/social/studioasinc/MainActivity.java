@@ -31,7 +31,7 @@ import android.webkit.*;
 import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -43,8 +43,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.interpolator.*;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
+//import com.blogspot.atifsoftwares.animatoolib.*;
+//import com.budiyev.android.codescanner.*;
 import com.bumptech.glide.Glide;
 import com.caverock.androidsvg.*;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,10 +63,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
-import com.jsibbold.zoomage.*;
+//import com.jsibbold.zoomage.*;
 import com.shobhitpuri.custombuttons.*;
 //import com.sigma.niceswitch.*;
 import com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect;
+/*
 import com.theartofdev.edmodo.cropper.*;
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
@@ -76,6 +77,7 @@ import io.noties.markwon.*;
 import io.noties.markwon.ext.strikethrough.*;
 import io.noties.markwon.ext.tables.*;
 import io.noties.markwon.ext.tasklist.*;
+*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -88,8 +90,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
+//import me.dm7.barcodescanner.core.*;
+//import org.jetbrains.kotlin.*;
 import org.json.*;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -123,7 +125,8 @@ import android.os.Build;
 import android.provider.Settings;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import android.os.Bundle;
+import android.os.Bundle;
+
 
 public class MainActivity extends AppCompatActivity {
 	
@@ -1021,4 +1024,4 @@ rn2.startRequestNetwork(RequestNetworkController.GET, "https://google.com", "", 
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
-}
+}
