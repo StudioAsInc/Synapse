@@ -1,4 +1,4 @@
-name: Android CI v2
+name: Android CI
 
 on:
   push:
@@ -112,9 +112,10 @@ jobs:
     - name: Upload APK as Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: synapse-${{ github.event.inputs.build-type || 'debug' }}-apk
+        name: synapse-${{ github.event.inputs.build-type || 'debug' }}.apk
         path: ${{ steps.find-apk.outputs.apk_path }}
         retention-days: 7
+        if-no-files-found: error
 
     - name: Upload Build Reports on Failure
       if: failure()
