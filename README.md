@@ -1,4 +1,6 @@
-![Synapse Preview](https://example.com/path-to-preview-image.png) <!-- Replace with actual image -->
+<img src="https://sketchub.in/storage/project_files/28085/3924415.png" 
+     width="100" height="100" 
+     style="border: 20px solid #445e91; border-radius: 50%; object-fit: cover;">
 # Synapse
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
