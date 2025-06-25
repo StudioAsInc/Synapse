@@ -325,6 +325,7 @@ if (language.contains("language")) {
 				final HashMap<String, Object> _childValue = _param1.getValue(_ind);
 				if (_childKey.equals("app")) {
 					if (Double.parseDouble(current_version) < Double.parseDouble(_childValue.get("version").toString())) {
+					/*
 						bs = new com.google.android.material.bottomsheet.BottomSheetDialog(MainActivity.this);
 						View bsV;
 						bsV = getLayoutInflater().inflate(R.layout.update_sheet,null );
@@ -388,7 +389,7 @@ if (language.contains("language")) {
 							updated_on_txt.setText(_childValue.get("release date").toString());
 						}
 						if (_childValue.containsKey("icon")) {
-							Glide.with(getApplicationContext()).load(Uri.parse(_childValue.get("icon").toString())).into(app_icon);
+							// Glide.with(getApplicationContext()).load(Uri.parse(_childValue.get("icon").toString())).into(app_icon);
 						}
 						if (_childValue.containsKey("link")) {
 							update_btn1.setOnClickListener(new View.OnClickListener() {
@@ -397,7 +398,7 @@ if (language.contains("language")) {
 									_Download_No_Dialog(_childValue.get("link").toString(), "/Download/");
 									/*
 progressbar.setVisibility(View.VISIBLE);
-*/
+
 									DownloadLayout.setVisibility(View.VISIBLE);
 								}
 							});
@@ -418,6 +419,7 @@ progressbar.setVisibility(View.VISIBLE);
 							});
 							progressbar.setVisibility(View.GONE);
 						}
+						*/
 					} else {
 						request.startRequestNetwork(RequestNetworkController.POST, "https://google.com", "google", _request_request_listener);
 					}
@@ -966,11 +968,13 @@ rn2.startRequestNetwork(RequestNetworkController.GET, "https://google.com", "", 
 	
 	
 	public void _OpenWebView(final String _URL) {
+	/*
 		AndroidDevelopersBlogURL = _URL;
 		CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
 		builder.setToolbarColor(Color.parseColor("#242D39"));
 		CustomTabsIntent customtabsintent = builder.build();
 		customtabsintent.launchUrl(this, Uri.parse(AndroidDevelopersBlogURL));
+		*/
 	}
 	
 	
