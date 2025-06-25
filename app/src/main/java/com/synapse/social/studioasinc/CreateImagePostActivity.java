@@ -518,7 +518,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			final RelativeLayout relative = _view.findViewById(R.id.relative);
 			final androidx.cardview.widget.CardView main = _view.findViewById(R.id.main);
 			final LinearLayout relativeTop = _view.findViewById(R.id.relativeTop);
-			final com.theophrast.ui.widget.SquareImageView image = _view.findViewById(R.id.image);
+	//		final com.theophrast.ui.widget.SquareImageView image = _view.findViewById(R.id.image);
 			final LinearLayout relativeSpc = _view.findViewById(R.id.relativeSpc);
 			final ImageView typeIcon = _view.findViewById(R.id.typeIcon);
 			final LinearLayout rvtSpc = _view.findViewById(R.id.rvtSpc);
