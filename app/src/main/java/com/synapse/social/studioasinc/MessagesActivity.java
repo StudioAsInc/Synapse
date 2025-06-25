@@ -1097,7 +1097,7 @@ public void onCancelled(@NonNull DatabaseError databaseError) {
 							        //dp = UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("avatar").toString()));
 									profileCardImage.setImageResource(R.drawable.avatar);
 							} else {
-									Glide.with(getApplicationContext()).load(Uri.parse(UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString())).into(profileCardImage);
+									// Glide.with(getApplicationContext()).load(Uri.parse(UserInfoCacheMap.get("avatar-".concat(_data.get((int)_position).get("uid").toString())).toString())).into(profileCardImage);
 							}
 					}
 					if (UserInfoCacheMap.get("nickname-".concat(_data.get((int)_position).get("uid").toString())).toString().equals("null")) {
@@ -1185,7 +1185,7 @@ public void onCancelled(@NonNull DatabaseError databaseError) {
 																							if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 																									profileCardImage.setImageResource(R.drawable.avatar);
 																							} else {
-																									Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(profileCardImage);
+																									// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(profileCardImage);
 																							}
 																					}
 																					if (dataSnapshot.child("nickname").getValue(String.class).equals("null")) {
@@ -1267,6 +1267,7 @@ public void onCancelled(@NonNull DatabaseError databaseError) {
 			main.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
 				public boolean onLongClick(View _view) {
+				/*
 					try{
 						bs = new com.google.android.material.bottomsheet.BottomSheetDialog(MessagesActivity.this);
 						View bsV;
@@ -1356,7 +1357,7 @@ public void onCancelled(@NonNull DatabaseError databaseError) {
 subtitle.setText("Permanently delete the chats with ".concat(username.concat("?")));
 username.setText("Username");
 
-*/
+
 						archive_btn.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View _view) {
@@ -1401,6 +1402,7 @@ username.setText("Username");
 					return true;
 				}
 			});
+			*/
 		}
 		
 		@Override
@@ -1455,7 +1457,7 @@ username.setText("Username");
 			groupName.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/product_b.ttf"), 0);
 			groupName.setText(_data.get((int)_position).get("group_name").toString());
 			if (_data.get((int)_position).containsKey("group_image")) {
-				Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("group_image").toString())).into(profileCardImage);
+				// Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("group_image").toString())).into(profileCardImage);
 			} else {
 				
 			}
@@ -1465,7 +1467,7 @@ username.setText("Username");
 				
 			}
 			if (_data.get((int)_position).containsKey("group_image")) {
-				Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("group_image").toString())).into(profileCardImage);
+				// Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("group_image").toString())).into(profileCardImage);
 				_ImgRound(profileCardImage, 360);
 			} else {
 				
