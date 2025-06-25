@@ -1,94 +1,117 @@
-<img src="https://sketchub.in/storage/project_files/28085/3924415.png" 
-     width="100" height="100" 
-     style="border: 20px solid #445e91; border-radius: 50%; object-fit: cover;">
-# Synapse
+<div align="center">
+  <img src="https://sketchub.in/storage/project_files/28085/3924415.png" 
+       width="120" height="120" 
+       style="border: 3px solid #445e91; border-radius: 50%; object-fit: cover; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+  <h1>Synapse</h1>
+  
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
+  [![Downloads](https://img.shields.io/github/downloads/StudioAs-Inc/Synapse/total?color=green&label=Downloads)](https://github.com/StudioAs-Inc/Synapse/releases)
+  [![Users](https://img.shields.io/endpoint?url=https://i.pluginhub.me/shields/installs/plugin/synapse&label=Active+Users)](https://github.com/StudioAs-Inc/Synapse)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/StudioAs-Inc/Synapse/pulls)
+  [![Stars](https://img.shields.io/github/stars/StudioAs-Inc/Synapse?style=social)](https://github.com/StudioAs-Inc/Synapse/stargazers)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/StudioAs-Inc/Synapse/pulls)
+</div>
 
-Synapse is an open-source social media platform's front-end application developed by **StudioAs Inc.** Designed to be modern, accessible, and community-driven.
+<p align="center">
+  <em>The next-generation open-source social media platform</em>
+</p>
 
+---
 
-## Features
+## ✨ Features
 
-- 🚀 Modern, responsive UI/UX
-- 🌈 Customizable user profiles
-- 🔄 Real-time updates and notifications
-- 🔒 Privacy-focused design
-- 📱 Progressive Web App (PWA) support
-- 💬 Interactive post and comment system
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 2rem 0;">
 
-## Technologies
+<div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #445e91;">
+<h3>🚀 Core Features</h3>
+<ul>
+<li>Modern, responsive UI/UX</li>
+<li>Customizable user profiles</li>
+<li>Real-time updates</li>
+<li>Privacy-focused design</li>
+</ul>
+</div>
 
-- React.js / Next.js
-- TypeScript
-- Tailwind CSS
-- Redux / Zustand (state management)
-- Axios (API communication)
-- React Query (data fetching)
-- Jest/React Testing Library (testing)
+<div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; border-left: 4px solid #445e91;">
+<h3>💎 Premium Experience</h3>
+<ul>
+<li>PWA support</li>
+<li>Interactive post system</li>
+<li>Advanced notifications</li>
+<li>Dark/Light mode</li>
+</ul>
+</div>
 
-## Getting Started
+</div>
+
+---
+
+## 🛠 Technologies
+
+<div align="center">
+
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+
+</div>
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- Node.js (v16 or higher)
-- npm (v8 or higher) or yarn
+- Node.js (v16+)
+- npm (v8+) or yarn
 - Git
 
 ### Installation
+```bash
+# Clone the repository
+git clone https://github.com/StudioAs-Inc/Synapse.git
+cd Synapse
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/StudioAs-Inc/Synapse.git
-   cd Synapse
-   ```
+# Install dependencies
+npm install
 
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+# Configure environment
+cp .env.example .env.local
 
-3. Set up environment variables:
-   ```bash
-   cp .env.example .env.local
-   ```
-   Then edit `.env.local` with your configuration.
+# Start development server
+npm run dev
 
-4. Run the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+---
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+## 🤝 Contributing
 
-## Scripts
+We welcome all contributions! Please read our [Contribution Guidelines](CONTRIBUTE.md) before submitting PRs.
 
-- `dev`: Runs the development server
-- `build`: Creates a production build
-- `start`: Starts the production server
-- `test`: Runs tests
-- `lint`: Runs ESLint
-- `format`: Formats code with Prettier
+<a href="https://github.com/StudioAs-Inc/Synapse/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=StudioAs-Inc/Synapse" />
+</a>
 
-## Contributing
+---
 
-We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTE.md) before submitting pull requests.
+## 📜 License
 
-## License
+Synapse is [MIT licensed](LICENSE.md).
 
-Synapse is open-source software licensed under the [MIT License](LICENSE.md).
+---
 
-## Acknowledgments
+## 📬 Contact
 
-- Thanks to all our contributors
-- Inspired by the open-source community
-- Built with ❤️ by StudioAs Inc.
+**StudioAs Inc.**  
+💌 Email: [contact@studioas.inc](mailto:contact@studioas.inc)  
+🌐 Website: [https://studioas.inc](https://studioas.inc)  
+🐦 Twitter: [@StudioAs_Inc](https://twitter.com/StudioAs_Inc)  
 
-## Contact
-
-For inquiries, please contact [StudioAs Inc.](https://studioas.inc) or open an issue in this repository.
+<div align="center" style="margin-top: 2rem;">
+  <a href="https://github.com/StudioAs-Inc/Synapse">
+    <img src="https://img.shields.io/badge/⭐_Star_on_GitHub-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
+  </a>
+  <a href="https://github.com/StudioAs-Inc/Synapse/fork">
+    <img src="https://img.shields.io/badge/Fork-%23121011.svg?style=for-the-badge&logo=github&logoColor=white">
+  </a>
+</div>
