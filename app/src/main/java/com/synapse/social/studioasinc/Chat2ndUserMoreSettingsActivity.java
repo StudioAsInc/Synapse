@@ -299,17 +299,17 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 		linear25 = findViewById(R.id.linear25);
 		imageview14 = findViewById(R.id.imageview14);
 		linear26 = findViewById(R.id.linear26);
-		Read_recipt_switch = findViewById(R.id.Read_recipt_switch);
+	//	Read_recipt_switch = findViewById(R.id.Read_recipt_switch);
 		textview18 = findViewById(R.id.textview18);
 		textview19 = findViewById(R.id.textview19);
 		imageview15 = findViewById(R.id.imageview15);
 		linear27 = findViewById(R.id.linear27);
-		disapear_switch = findViewById(R.id.disapear_switch);
+	//	disapear_switch = findViewById(R.id.disapear_switch);
 		textview20 = findViewById(R.id.textview20);
 		textview21 = findViewById(R.id.textview21);
 		imageview26 = findViewById(R.id.imageview26);
 		linear49 = findViewById(R.id.linear49);
-		autosavephoto_switch = findViewById(R.id.autosavephoto_switch);
+	//	autosavephoto_switch = findViewById(R.id.autosavephoto_switch);
 		textview44 = findViewById(R.id.textview44);
 		textview45 = findViewById(R.id.textview45);
 		imageview16 = findViewById(R.id.imageview16);
@@ -618,7 +618,7 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 						if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 							user_profile_picture.setImageResource(R.drawable.avatar);
 						} else {
-							Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(user_profile_picture);
+							// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(user_profile_picture);
 						}
 					}
 					if (dataSnapshot.child("nickname").getValue(String.class).equals("null")) {
@@ -662,6 +662,7 @@ ProfilePageTabUserInfoStatus.setTextColor(0xFF757575);
 	
 	
 	public void _BlockBS() {
+	/*
 		bs = new com.google.android.material.bottomsheet.BottomSheetDialog(Chat2ndUserMoreSettingsActivity.this);
 		View bsV;
 		bsV = getLayoutInflater().inflate(R.layout.block_chat_bscv,null );
@@ -743,4 +744,5 @@ ProfilePageTabUserInfoStatus.setTextColor(0xFF757575);
 	public int getDisplayHeightPixels() {
 		return getResources().getDisplayMetrics().heightPixels;
 	}
+ */
 }
