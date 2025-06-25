@@ -443,7 +443,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 		//	cropImageView.setVisibility(View.VISIBLE);
 		} else {
 			AddFromUrlStr = _path;
-			Glide.with(getApplicationContext()).load(Uri.parse(_path)).into(urlImagePreviewImage);
+			// Glide.with(getApplicationContext()).load(Uri.parse(_path)).into(urlImagePreviewImage);
 			urlImagePreview.setVisibility(View.VISIBLE);
 		//	cropImageView.setVisibility(View.GONE);
 		}
@@ -527,7 +527,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			_ImageColor(typeIcon, 0xFFFFFFFF);
 			typeIcon.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)24, 0x7B000000));
 			mediaDuration.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)24, 0x7B000000));
-			Glide.with(getApplicationContext()).load(_data.get((int)_position).get("path").toString()).into(image);
+			// Glide.with(getApplicationContext()).load(_data.get((int)_position).get("path").toString()).into(image);
 			typeIcon.setImageResource(R.drawable.image_ic);
 			mediaDuration.setVisibility(View.GONE);
 			relative.setOnClickListener(new View.OnClickListener() {
