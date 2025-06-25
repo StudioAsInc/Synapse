@@ -268,7 +268,7 @@ public class ChangeProfileImageActivity extends AppCompatActivity {
 				onBackPressed();
 			}
 		});
-		
+		/*
 		continueButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
@@ -279,7 +279,7 @@ public class ChangeProfileImageActivity extends AppCompatActivity {
 				}
 			}
 		});
-		
+		*/
 		textview1.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
