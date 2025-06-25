@@ -1,4 +1,5 @@
 package com.synapse.social.studioasinc;
+
 import android.animation.*;
 import android.app.*;
 import android.content.*;
@@ -25,7 +26,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -36,12 +36,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.interpolator.*;
 import androidx.swiperefreshlayout.*;
 import androidx.transition.*;
-/*
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
-import com.bumptech.glide.Glide;
-import com.caverock.androidsvg.*;
-*/
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
@@ -58,21 +52,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.perf.*;
-/*
-import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-//import com.sigma.niceswitch.*;
-//import com.sigma.niceswitch.NiceSwitch;
-import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
-import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
-*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -80,8 +59,6 @@ import java.util.*;
 import java.util.HashMap;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
-//import me.dm7.barcodescanner.core.*;
-//import org.jetbrains.kotlin.*;
 import org.json.*;
 
 public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
@@ -160,17 +137,14 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 	private LinearLayout linear25;
 	private ImageView imageview14;
 	private LinearLayout linear26;
-//	private NiceSwitch Read_recipt_switch;
 	private TextView textview18;
 	private TextView textview19;
 	private ImageView imageview15;
 	private LinearLayout linear27;
-//	private NiceSwitch disapear_switch;
 	private TextView textview20;
 	private TextView textview21;
 	private ImageView imageview26;
 	private LinearLayout linear49;
-//	private NiceSwitch autosavephoto_switch;
 	private TextView textview44;
 	private TextView textview45;
 	private ImageView imageview16;
@@ -299,17 +273,14 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 		linear25 = findViewById(R.id.linear25);
 		imageview14 = findViewById(R.id.imageview14);
 		linear26 = findViewById(R.id.linear26);
-	//	Read_recipt_switch = findViewById(R.id.Read_recipt_switch);
 		textview18 = findViewById(R.id.textview18);
 		textview19 = findViewById(R.id.textview19);
 		imageview15 = findViewById(R.id.imageview15);
 		linear27 = findViewById(R.id.linear27);
-	//	disapear_switch = findViewById(R.id.disapear_switch);
 		textview20 = findViewById(R.id.textview20);
 		textview21 = findViewById(R.id.textview21);
 		imageview26 = findViewById(R.id.imageview26);
 		linear49 = findViewById(R.id.linear49);
-	//	autosavephoto_switch = findViewById(R.id.autosavephoto_switch);
 		textview44 = findViewById(R.id.textview44);
 		textview45 = findViewById(R.id.textview45);
 		imageview16 = findViewById(R.id.imageview16);
@@ -618,7 +589,7 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 						if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 							user_profile_picture.setImageResource(R.drawable.avatar);
 						} else {
-							// Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(user_profile_picture);
+							
 						}
 					}
 					if (dataSnapshot.child("nickname").getValue(String.class).equals("null")) {
@@ -628,19 +599,6 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 						username.setText(dataSnapshot.child("nickname").getValue(String.class));
 						user2nickname = dataSnapshot.child("nickname").getValue(String.class);
 					}
-					/*
-if (dataSnapshot.child("status").getValue(String.class).equals("online")) {
-ProfilePageTabUserInfoStatus.setText(getResources().getString(R.string.online));
-ProfilePageTabUserInfoStatus.setTextColor(0xFF2196F3);
-} else {
-if (dataSnapshot.child("status").getValue(String.class).equals("offline")) {
-ProfilePageTabUserInfoStatus.setText(getResources().getString(R.string.offline));
-} else {
-_setUserLastSeen(Double.parseDouble(dataSnapshot.child("status").getValue(String.class)), ProfilePageTabUserInfoStatus);
-}
-ProfilePageTabUserInfoStatus.setTextColor(0xFF757575);
-}
-*/
 				} else {
 				}
 			}
@@ -662,87 +620,6 @@ ProfilePageTabUserInfoStatus.setTextColor(0xFF757575);
 	
 	
 	public void _BlockBS() {
-	/*
-		bs = new com.google.android.material.bottomsheet.BottomSheetDialog(Chat2ndUserMoreSettingsActivity.this);
-		View bsV;
-		bsV = getLayoutInflater().inflate(R.layout.block_chat_bscv,null );
-		bs.setContentView(bsV);
-		bs.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
-		final TextView title_with_username = (TextView) bsV.findViewById(R.id.title_with_username);
-		final TextView notReadyToBlock_btn = (TextView) bsV.findViewById(R.id.notReadyToBlock_btn);
-		final TextView Block_bs_btn = (TextView) bsV.findViewById(R.id.Block_bs_btn);
-		final LinearLayout bs_bar = (LinearLayout) bsV.findViewById(R.id.bs_bar);
-		bs.setCancelable(true);
-		_rippleRoundStroke(bs_bar, "#E0E0E0", "#F5F5F5", 360, 0, "#000000");
-		_rippleRoundStroke(Block_bs_btn, "#445E91", "#576E9C", 360, 0, "#576E9C");
-		_rippleRoundStroke(notReadyToBlock_btn, "#00000000", "#00000000", 360, 0, "#576E9C");
-		bs.show();
-		Block_bs_btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				_Block(getIntent().getStringExtra("uid"));
-				bs.dismiss();
-			}
-		});
-		notReadyToBlock_btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				bs.dismiss();
-			}
-		});
-		title_with_username.setText("Block ".concat(user2nickname.concat("?")));
+		
 	}
-	
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
- */
 }
