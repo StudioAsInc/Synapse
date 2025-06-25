@@ -683,7 +683,7 @@ if (Build.VERSION.SDK_INT >= 23) {
 			final RelativeLayout relative = _view.findViewById(R.id.relative);
 			final androidx.cardview.widget.CardView main = _view.findViewById(R.id.main);
 			final LinearLayout relativeTop = _view.findViewById(R.id.relativeTop);
-			final com.theophrast.ui.widget.SquareImageView image = _view.findViewById(R.id.image);
+		//	final com.theophrast.ui.widget.SquareImageView image = _view.findViewById(R.id.image);
 			final LinearLayout relativeSpc = _view.findViewById(R.id.relativeSpc);
 			final ImageView typeIcon = _view.findViewById(R.id.typeIcon);
 			final LinearLayout rvtSpc = _view.findViewById(R.id.rvtSpc);
@@ -692,7 +692,7 @@ if (Build.VERSION.SDK_INT >= 23) {
 			_ImageColor(typeIcon, 0xFFFFFFFF);
 			typeIcon.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)24, 0x7B000000));
 			mediaDuration.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)24, 0x7B000000));
-			Glide.with(getApplicationContext()).load(_data.get((int)_position).get("path").toString()).into(image);
+		//	Glide.with(getApplicationContext()).load(_data.get((int)_position).get("path").toString()).into(image);
 			typeIcon.setImageResource(R.drawable.image_ic);
 			mediaDuration.setVisibility(View.GONE);
 			relative.setOnClickListener(new View.OnClickListener() {
