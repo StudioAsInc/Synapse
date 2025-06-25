@@ -1,3 +1,4 @@
+![Synapse Preview](https://example.com/path-to-preview-image.png) <!-- Replace with actual image -->
 # Synapse
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -5,7 +6,6 @@
 
 Synapse is an open-source social media platform's front-end application developed by **StudioAs Inc.** Designed to be modern, accessible, and community-driven.
 
-![Synapse Preview](https://example.com/path-to-preview-image.png) <!-- Replace with actual image -->
 
 ## Features
 
