@@ -75,11 +75,11 @@ Synapse is an open-source social media platform's front-end application develope
 
 ## Contributing
 
-We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting pull requests.
+We welcome contributions from the community! Please read our [Contributing Guidelines](CONTRIBUTE.md) before submitting pull requests.
 
 ## License
 
-Synapse is open-source software licensed under the [MIT License](LICENSE).
+Synapse is open-source software licensed under the [MIT License](LICENSE.md).
 
 ## Acknowledgments
 
