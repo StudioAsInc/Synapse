@@ -17,7 +17,7 @@ import android.view.View.*;
 import android.view.animation.*;
 import android.webkit.*;
 import android.widget.*;
-import androidmads.library.qrgenearator.*;
+//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.asynclayoutinflater.*;
@@ -54,7 +54,7 @@ import java.util.*;
 import java.util.regex.*;
 import kr.co.prnd.readmore.*;
 //import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
+//import org.jetbrains.kotlin.*;
 import org.json.*;
 
 public class AddStoriesActivity extends AppCompatActivity {
