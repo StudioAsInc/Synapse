@@ -264,6 +264,7 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 			}
 		});
 		
+		/*
 		continueButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
@@ -274,7 +275,7 @@ public class ChangeCoverImageActivity extends AppCompatActivity {
 				}
 			}
 		});
-		
+		*/
 		selectImageWithGallery.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
