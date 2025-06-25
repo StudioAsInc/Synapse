@@ -78,7 +78,7 @@ import com.shobhitpuri.custombuttons.*;
 //import com.sigma.niceswitch.*;
 */
 import com.synapse.social.studioasinc.FadeEditText;
-import com.theartofdev.edmodo.cropper.*;
+//import com.theartofdev.edmodo.cropper.*;
 /*
 import com.theophrast.ui.widget.*;
 import com.wuyr.rippleanimation.*;
