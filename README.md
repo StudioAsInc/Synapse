@@ -5,10 +5,10 @@
   <h1>Synapse</h1>
   
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md)
-  [![Downloads](https://img.shields.io/github/downloads/StudioAs-Inc/Synapse/total?color=green&label=Downloads)](https://github.com/StudioAs-Inc/Synapse/releases)
-  [![Users](https://img.shields.io/endpoint?url=https://i.pluginhub.me/shields/installs/plugin/synapse&label=Active+Users)](https://github.com/StudioAs-Inc/Synapse)
-  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/StudioAs-Inc/Synapse/pulls)
-  [![Stars](https://img.shields.io/github/stars/StudioAs-Inc/Synapse?style=social)](https://github.com/StudioAs-Inc/Synapse/stargazers)
+  [![Downloads](https://img.shields.io/github/downloads/StudioAsInc/Synapse/total?color=green&label=Downloads)](https://github.com/StudioAs-Inc/Synapse/releases)
+  [![Users](https://img.shields.io/endpoint?url=https://i.pluginhub.me/shields/installs/plugin/synapse&label=Active+Users)](https://github.com/StudioAsInc/Synapse)
+  [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/StudioAsInc/Synapse/pulls)
+  [![Stars](https://img.shields.io/github/stars/StudioAsInc/Synapse?style=social)](https://github.com/StudioAs-Inc/Synapse/stargazers)
 
 </div>
 
