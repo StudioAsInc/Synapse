@@ -217,71 +217,77 @@ public class MainActivity extends AppCompatActivity {
      * Shows a bottom sheet dialog with update information.
      * @param updateData A map containing details about the update.
      */
-	private void _showUpdateBottomSheet(final HashMap<String, Object> updateData) {
-        final BottomSheetDialog bs = new BottomSheetDialog(MainActivity.this);
-        View bsView = getLayoutInflater().inflate(R.layout.update_sheet, null);
-        bs.setContentView(bsView);
-        bs.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+	
+private void _showUpdateBottomSheet(final HashMap<String, Object> updateData) {
+    // MODIFICATION 1: Pass the custom transparent theme to the dialog's constructor.
+    // This uses the style you added to styles.xml.
+    final BottomSheetDialog bs = new BottomSheetDialog(MainActivity.this, R.style.AppTheme_TransparentBottomSheetDialog);
 
-        final LinearLayout mainLayout = bsView.findViewById(R.id.FatherLayout);
-        final TextView appName = bsView.findViewById(R.id.app_name);
-        final TextView versionTxt = bsView.findViewById(R.id.version_txt);
-        final TextView updateSize = bsView.findViewById(R.id.update_size);
-        final LinearLayout updateBtn = bsView.findViewById(R.id.update_btn);
-        final TextView updatedOnTxt = bsView.findViewById(R.id.update_push_date);
-        final ImageView appIcon = bsView.findViewById(R.id.app_icon);
-        final TextView whatsNewSubtitle = bsView.findViewById(R.id.whats_new_subtitle);
-        final ImageView crossIc = bsView.findViewById(R.id.cross_ic);
+    View bsView = getLayoutInflater().inflate(R.layout.update_sheet, null);
+    bs.setContentView(bsView);
+    
+    // MODIFICATION 2: Delete this line. The theme now handles the transparent background.
+    // This was the line causing the compilation error.
+    // bs.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
 
-        // Set rounded corners for the main layout
-        GradientDrawable mainDrawable = new GradientDrawable();
-        mainDrawable.setColor(Color.WHITE);
-        mainDrawable.setCornerRadii(new float[]{48, 48, 48, 48, 0, 0, 0, 0});
-        mainLayout.setBackground(mainDrawable);
-        mainLayout.setElevation(8);
+    final LinearLayout mainLayout = bsView.findViewById(R.id.FatherLayout);
+    final TextView appName = bsView.findViewById(R.id.app_name);
+    final TextView versionTxt = bsView.findViewById(R.id.version_txt);
+    final TextView updateSize = bsView.findViewById(R.id.update_size);
+    final LinearLayout updateBtn = bsView.findViewById(R.id.update_btn);
+    final TextView updatedOnTxt = bsView.findViewById(R.id.update_push_date);
+    final ImageView appIcon = bsView.findViewById(R.id.app_icon);
+    final TextView whatsNewSubtitle = bsView.findViewById(R.id.whats_new_subtitle);
+    final ImageView crossIc = bsView.findViewById(R.id.cross_ic);
 
-        // Populate the dialog with data from Firebase
-        if (updateData.containsKey("app name")) appName.setText(String.valueOf(updateData.get("app name")));
-        if (updateData.containsKey("version")) versionTxt.setText("Version ".concat(String.valueOf(updateData.get("version"))));
-        if (updateData.containsKey("size")) updateSize.setText(String.valueOf(updateData.get("size")));
-        if (updateData.containsKey("release date")) updatedOnTxt.setText(String.valueOf(updateData.get("release date")));
-        if (updateData.containsKey("changes")) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                whatsNewSubtitle.setText(Html.fromHtml(String.valueOf(updateData.get("changes")), Html.FROM_HTML_MODE_COMPACT));
-            } else {
-                whatsNewSubtitle.setText(Html.fromHtml(String.valueOf(updateData.get("changes"))));
-            }
-        }
-        if (updateData.containsKey("icon")) {
-            Glide.with(getApplicationContext()).load(Uri.parse(String.valueOf(updateData.get("icon")))).into(appIcon);
-        }
+    // Set rounded corners for the main layout
+    GradientDrawable mainDrawable = new GradientDrawable();
+    mainDrawable.setColor(Color.WHITE);
+    mainDrawable.setCornerRadii(new float[]{48, 48, 48, 48, 0, 0, 0, 0});
+    mainLayout.setBackground(mainDrawable);
+    mainLayout.setElevation(8);
 
-        // Configure buttons
-        String downloadUrl = updateData.containsKey("link") ? String.valueOf(updateData.get("link")) : null;
-        if (downloadUrl != null) {
-            updateBtn.setOnClickListener(v -> {
-                _startDownload(downloadUrl, "/Download/");
-                Toast.makeText(getApplicationContext(), "Download started...", Toast.LENGTH_SHORT).show();
-                bs.dismiss();
-            });
-        }
-
-        // Handle skippable updates
-        boolean isSkippable = "true".equals(String.valueOf(updateData.get("skippable")));
-        bs.setCancelable(isSkippable);
-        if (isSkippable) {
-            crossIc.setVisibility(View.VISIBLE);
-            crossIc.setOnClickListener(v -> {
-                bs.dismiss();
-                _proceedToNextActivity();
-            });
+    // Populate the dialog with data from Firebase
+    if (updateData.containsKey("app name")) appName.setText(String.valueOf(updateData.get("app name")));
+    if (updateData.containsKey("version")) versionTxt.setText("Version ".concat(String.valueOf(updateData.get("version"))));
+    if (updateData.containsKey("size")) updateSize.setText(String.valueOf(updateData.get("size")));
+    if (updateData.containsKey("release date")) updatedOnTxt.setText(String.valueOf(updateData.get("release date")));
+    if (updateData.containsKey("changes")) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            whatsNewSubtitle.setText(Html.fromHtml(String.valueOf(updateData.get("changes")), Html.FROM_HTML_MODE_COMPACT));
         } else {
-            crossIc.setVisibility(View.GONE);
+            whatsNewSubtitle.setText(Html.fromHtml(String.valueOf(updateData.get("changes"))));
         }
-
-        bs.show();
+    }
+    if (updateData.containsKey("icon")) {
+        Glide.with(getApplicationContext()).load(Uri.parse(String.valueOf(updateData.get("icon")))).into(appIcon);
     }
 
+    // Configure buttons
+    String downloadUrl = updateData.containsKey("link") ? String.valueOf(updateData.get("link")) : null;
+    if (downloadUrl != null) {
+        updateBtn.setOnClickListener(v -> {
+            _startDownload(downloadUrl, "/Download/");
+            Toast.makeText(getApplicationContext(), "Download started...", Toast.LENGTH_SHORT).show();
+            bs.dismiss();
+        });
+    }
+
+    // Handle skippable updates
+    boolean isSkippable = "true".equals(String.valueOf(updateData.get("skippable")));
+    bs.setCancelable(isSkippable);
+    if (isSkippable) {
+        crossIc.setVisibility(View.VISIBLE);
+        crossIc.setOnClickListener(v -> {
+            bs.dismiss();
+            _proceedToNextActivity();
+        });
+    } else {
+        crossIc.setVisibility(View.GONE);
+    }
+
+    bs.show();
+}
 
 	/**
 	 * Determines the next screen based on user authentication status.
