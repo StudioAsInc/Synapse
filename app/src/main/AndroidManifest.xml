@@ -49,17 +49,18 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 		android:requestLegacyExternalStorage="true"
 		android:theme="@style/AppTheme">
 		<activity
-			android:name=".MainActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
-			android:hardwareAccelerated="true"
-			android:supportsPictureInPicture="true"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="stateHidden">
-			<intent-filter>
-			<action android:name="android.intent.action.MAIN" />
-			<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-			</activity>
+    android:name=".MainActivity"
+    android:exported="true"  <!-- Add this line -->
+    android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
+    android:hardwareAccelerated="true"
+    android:supportsPictureInPicture="true"
+    android:screenOrientation="portrait"
+    android:windowSoftInputMode="stateHidden">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
 			
 		<activity
 			android:name=".OnboardActivity"
