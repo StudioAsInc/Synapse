@@ -54,8 +54,13 @@ jobs:
         distribution: 'temurin'
         cache: 'gradle'
 
-    - name: Setup Android SDK
+    # MODIFICATION: Added 'with' block to install the required Android 34 platform
+    - name: Set up Android SDK
       uses: android-actions/setup-android@v3
+      with:
+        # Your project uses compileSdkVersion 34, so you must install the
+        # corresponding platform SDK on the runner.
+        packages: 'platforms;android-34'
 
     - name: Create and Verify google-services.json
       env:
@@ -97,8 +102,10 @@ jobs:
           --stacktrace \
           --warning-mode all
     
+    # MODIFICATION: Added 'if: success()' to ensure this only runs on a successful build
     - name: Find APK
       id: find-apk
+      if: success()
       run: |
         BUILD_TYPE=${{ github.event.inputs.build-type || 'debug' }}
         APK_PATH=$(find app/build/outputs/apk/$BUILD_TYPE -name '*.apk' | head -n 1)
@@ -109,7 +116,9 @@ jobs:
         echo "Found APK: $APK_PATH"
         echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
 
+    # MODIFICATION: Added 'if: success()' to ensure this only runs on a successful build
     - name: Upload APK as Artifact
+      if: success()
       uses: actions/upload-artifact@v4
       with:
         name: synapse-${{ github.event.inputs.build-type || 'debug' }}.apk
