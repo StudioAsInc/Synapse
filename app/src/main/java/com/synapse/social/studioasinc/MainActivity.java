@@ -1,65 +1,378 @@
 //Simplified version only Splash & Go
 package com.synapse.social.studioasinc;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.Environment;
+import android.text.Html;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DELAY_MS = 800; // 0.8 seconds
+    private static final String TAG = "MainActivity";
+    private static final int PERMISSION_REQUEST_CODE = 1000;
 
     private FirebaseAuth auth;
+    private SharedPreferences languagePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        _applyLanguage();
         setContentView(R.layout.main);
+        initialize();
+        startAppFlow();
+    }
 
-        // Make the splash screen fullscreen
+    /**
+     * Initializes all necessary components and views.
+     */
+    private void initialize() {
+        FirebaseApp.initializeApp(this);
+        auth = FirebaseAuth.getInstance();
+        languagePref = getSharedPreferences("language", Activity.MODE_PRIVATE);
+
+        // Make status and navigation bars transparent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-
-        // Initialize Firebase
-        FirebaseApp.initializeApp(this);
-        auth = FirebaseAuth.getInstance();
-
-        // Use a Handler to delay the navigation, giving the splash screen time to be visible.
-        new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            // Check the current user's authentication state
-            FirebaseUser currentUser = auth.getCurrentUser();
-            
-            if (currentUser != null) {
-                // User is signed in, navigate to HomeActivity
-                navigateTo(HomeActivity.class);
-            } else {
-                // No user is signed in, navigate to OnboardActivity
-                navigateTo(OnboardActivity.class);
-            }
-        }, SPLASH_DELAY_MS);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
 
     /**
-     * Navigates to a destination activity and finishes the current one.
-     * @param destinationActivity The class of the activity to navigate to.
+     * Starts the main application flow.
      */
-    private void navigateTo(Class<?> destinationActivity) {
-        Intent intent = new Intent(MainActivity.this, destinationActivity);
-        startActivity(intent);
-        // Call finish() to remove the splash screen from the back stack,
-        // so the user cannot navigate back to it.
+    private void startAppFlow() {
+        // 1. Check Internet Connection
+        if (!_isNetworkAvailable()) {
+            _showNoInternetDialog();
+            return; // Stop the flow if there's no internet
+        }
+
+        // Request storage permission if needed, otherwise continue
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        } else {
+            // 2. Check for updates
+            _checkForUpdates();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                _checkForUpdates(); // Permission granted, continue the flow
+            } else {
+                Toast.makeText(this, "Storage permission is required to download updates.", Toast.LENGTH_LONG).show();
+                finish(); // Close the app if permission is denied
+            }
+        }
+    }
+
+    /**
+     * Checks Firebase for a new version of the app.
+     */
+    private void _checkForUpdates() {
+        DatabaseReference versionRef = FirebaseDatabase.getInstance().getReference("inapp/version/app");
+        versionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    Log.d(TAG, "No update info found in Firebase. Proceeding...");
+                    _handleAuthentication(); // Plan B: Proceed without update check
+                    return;
+                }
+
+                GenericTypeIndicator<HashMap<String, Object>> t = new GenericTypeIndicator<HashMap<String, Object>>() {};
+                HashMap<String, Object> versionData = snapshot.getValue(t);
+
+                if (versionData == null || versionData.get("version") == null) {
+                    Log.w(TAG, "Update data is malformed. Proceeding...");
+                    _handleAuthentication(); // Plan B: Proceed
+                    return;
+                }
+
+                try {
+                    String onlineVersionStr = Objects.requireNonNull(versionData.get("version")).toString();
+                    String localVersionStr = getAppVersionName();
+
+                    if (_isUpdateRequired(localVersionStr, onlineVersionStr)) {
+                        _showUpdateBottomSheet(versionData);
+                    } else {
+                        _handleAuthentication();
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error comparing versions", e);
+                    _handleAuthentication(); // Plan B: Proceed if versions are not parsable
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Firebase update check failed: " + error.getMessage());
+                Toast.makeText(MainActivity.this, "Could not check for updates.", Toast.LENGTH_SHORT).show();
+                _handleAuthentication(); // Plan B: Proceed even if DB call fails
+            }
+        });
+    }
+
+    /**
+     * Checks if the user is authenticated and routes them accordingly.
+     */
+    private void _handleAuthentication() {
+        if (auth.getCurrentUser() == null) {
+            _navigateToOnboardActivity();
+        } else {
+            _checkUserProfile(auth.getCurrentUser().getUid());
+        }
+    }
+
+    /**
+     * Checks the authenticated user's profile status (banned, new, existing).
+     */
+    private void _checkUserProfile(@NonNull String uid) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("skyline/users").child(uid);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Check if banned
+                    if ("true".equals(String.valueOf(snapshot.child("banned").getValue()))) {
+                        _showBannedUserDialog();
+                    } else {
+                        _navigateToHomeActivity();
+                    }
+                } else {
+                    // User is authenticated but has no profile data
+                    _navigateToCompleteProfileActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to check user profile: " + error.getMessage());
+                Toast.makeText(MainActivity.this, "Could not verify profile. Please log in again.", Toast.LENGTH_LONG).show();
+                _navigateToOnboardActivity(); // Plan B: Send back to login
+            }
+        });
+    }
+
+    /**
+     * Displays a custom bottom sheet with update information.
+     */
+    private void _showUpdateBottomSheet(final HashMap<String, Object> updateData) {
+        final BottomSheetDialog bs = new BottomSheetDialog(this, R.style.AppTheme_TransparentBottomSheetDialog);
+        View bsView = LayoutInflater.from(this).inflate(R.layout.update_sheet, null);
+        bs.setContentView(bsView);
+
+        TextView appName = bsView.findViewById(R.id.app_name);
+        TextView versionTxt = bsView.findViewById(R.id.version_txt);
+        // ... find other views like updateSize, updateBtn, etc.
+
+        // Use a helper method to create the rounded background
+        bsView.findViewById(R.id.FatherLayout).setBackground(createTopRoundedDrawable(Color.WHITE, 48));
+
+        // Populate data safely
+        appName.setText(String.valueOf(updateData.getOrDefault("app name", "Synapse")));
+        versionTxt.setText("Version ".concat(String.valueOf(updateData.getOrDefault("version", ""))));
+        // ... populate other views
+
+        // Update Button
+        String downloadUrl = String.valueOf(updateData.get("link"));
+        bsView.findViewById(R.id.update_btn).setOnClickListener(v -> {
+            _startDownload(downloadUrl);
+            bs.dismiss();
+        });
+
+        // Handle skippable updates
+        boolean isSkippable = "true".equals(String.valueOf(updateData.get("skippable")));
+        bs.setCancelable(isSkippable);
+        ImageView crossIc = bsView.findViewById(R.id.cross_ic);
+        crossIc.setVisibility(isSkippable ? View.VISIBLE : View.GONE);
+        if (isSkippable) {
+            crossIc.setOnClickListener(v -> {
+                bs.dismiss();
+                _handleAuthentication(); // Proceed to next step if update is skipped
+            });
+        }
+        
+        bs.show();
+    }
+
+    // --- HELPER & UTILITY METHODS ---
+
+    private boolean _isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    private String getAppVersionName() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            // Remove suffixes like "-debug" to compare only the core version string
+            return pInfo.versionName.split("-")[0];
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Could not get package version name.", e);
+            return "1.0.0"; // Fallback version
+        }
+    }
+
+    private boolean _isUpdateRequired(String localVersion, String onlineVersion) {
+        // Robust version comparison
+        String[] localParts = localVersion.split("\\.");
+        String[] onlineParts = onlineVersion.split("\\.");
+        int length = Math.max(localParts.length, onlineParts.length);
+        for (int i = 0; i < length; i++) {
+            int local = i < localParts.length ? Integer.parseInt(localParts[i]) : 0;
+            int online = i < onlineParts.length ? Integer.parseInt(onlineParts[i]) : 0;
+            if (online > local) {
+                return true;
+            }
+            if (online < local) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private void _startDownload(final String url) {
+        if (url == null || url.trim().isEmpty()) {
+            Toast.makeText(this, "Invalid download link.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String fileName = Uri.parse(url).getLastPathSegment();
+        if (fileName == null || fileName.isEmpty()) {
+            fileName = "synapse-update.apk"; // Fallback filename
+        }
+
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url))
+                .setTitle(fileName)
+                .setDescription("Downloading Update...")
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+                .setAllowedOverMetered(true)
+                .setAllowedOverRoaming(true);
+
+        DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        if (manager != null) {
+            manager.enqueue(request);
+            Toast.makeText(this, "Download started...", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Download service not available.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void _showNoInternetDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("No Internet Connection")
+                .setMessage("Please connect to the internet and try again.")
+                .setPositiveButton("Exit", (dialog, which) -> finish())
+                .setCancelable(false)
+                .show();
+    }
+
+    private void _showBannedUserDialog() {
+        // ... implementation for banned dialog
+        new AlertDialog.Builder(this)
+                .setTitle("Account Suspended")
+                .setMessage("Your account has been suspended.")
+                .setPositiveButton("OK", (dialog, which) -> finishAffinity())
+                .setCancelable(false)
+                .show();
+    }
+    
+    // --- NAVIGATION METHODS ---
+    
+    private void _navigateToHomeActivity() {
+        startActivity(new Intent(this, HomeActivity.class));
         finish();
+    }
+
+    private void _navigateToCompleteProfileActivity() {
+        startActivity(new Intent(this, CompleteProfileActivity.class));
+        finish();
+    }
+
+    private void _navigateToOnboardActivity() {
+        startActivity(new Intent(this, OnboardActivity.class));
+        finish();
+    }
+
+    // --- LANGUAGE METHODS ---
+
+    private void _applyLanguage() {
+        languagePref = getSharedPreferences("language", Activity.MODE_PRIVATE);
+        String langCode = languagePref.getString("language", "en"); // Default to English
+        _setLanguage(langCode);
+    }
+
+    public void _setLanguage(final String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+        Resources resources = getResources();
+        Configuration config = new Configuration(resources.getConfiguration());
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    // --- DRAWABLE HELPER ---
+
+    private GradientDrawable createTopRoundedDrawable(int color, float radius) {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(color);
+        drawable.setCornerRadii(new float[]{radius, radius, radius, radius, 0, 0, 0, 0});
+        return drawable;
     }
 }
 
