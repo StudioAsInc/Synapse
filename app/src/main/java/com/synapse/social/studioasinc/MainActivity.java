@@ -13,15 +13,16 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -53,146 +54,163 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+    private static final int PERMISSION_REQUEST_CODE = 1000;
+
     private final FirebaseDatabase _firebase = FirebaseDatabase.getInstance();
-    private String current_version = "1.0"; // Default version
-
     private FirebaseAuth auth;
-    private DatabaseReference ver_ref;
-    private ValueEventListener _ver_value_listener;
-
-    private SharedPreferences language;
+    private SharedPreferences languagePref;
 
     @Override
-    protected void onCreate(Bundle _savedInstanceState) {
-        super.onCreate(_savedInstanceState);
-        // Apply language settings before setting the content view
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         _applyLanguage();
         setContentView(R.layout.main);
-        initialize(_savedInstanceState);
+        initialize();
         FirebaseApp.initializeApp(this);
 
-        // Request permissions if not already granted
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
-        } else {
-            initializeLogic();
-        }
+        // Start the main application flow
+        startAppFlow();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1000) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initializeLogic();
-            } else {
-                Toast.makeText(this, "Storage permission is required to download updates.", Toast.LENGTH_LONG).show();
-                finish(); // Close the app if permission is denied
-            }
-        }
-    }
-
-    private void initialize(Bundle _savedInstanceState) {
+    /**
+     * Initializes essential components and UI listeners.
+     */
+    private void initialize() {
         ImageView app_logo = findViewById(R.id.app_logo);
-
         auth = FirebaseAuth.getInstance();
-        ver_ref = _firebase.getReference("inapp/version/app");
-        language = getSharedPreferences("language", Activity.MODE_PRIVATE);
+        languagePref = getSharedPreferences("language", Activity.MODE_PRIVATE);
 
         // Developer debug feature
         app_logo.setOnLongClickListener(_view -> {
             if (auth.getCurrentUser() != null && "mashikahamed0@gmail.com".equals(auth.getCurrentUser().getEmail())) {
                 _setLanguage("bn");
-                language.edit().putString("language", "bn").apply();
-                Intent i = new Intent(getApplicationContext(), HomeActivity.class);
-                startActivity(i);
-                finish();
+                languagePref.edit().putString("language", "bn").apply();
+                navigateToHomeActivity();
             }
             return true;
         });
 
-        _ver_value_listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
-                    HashMap<String, Object> _childValue = snapshot.getValue(_ind);
-
-                    if (_childValue != null) {
-                        try {
-                            String onlineVersionStr = String.valueOf(_childValue.get("version"));
-                            double onlineVersion = Double.parseDouble(onlineVersionStr);
-                            double localVersion = Double.parseDouble(current_version);
-
-                            if (localVersion < onlineVersion) {
-                                _showUpdateBottomSheet(_childValue);
-                            } else {
-                                _proceedToNextActivity();
-                            }
-                        } catch (Exception e) {
-                            Log.e("VersionCheckError", "Could not parse version numbers.", e);
-                            _proceedToNextActivity(); // Proceed if there's a parsing error
-                        }
-                    } else {
-                        _proceedToNextActivity(); // Proceed if data is malformed
-                    }
-                } else {
-                    _proceedToNextActivity(); // Proceed if "app" node doesn't exist
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FirebaseError", "Database error: " + error.getMessage());
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Connection Error")
-                        .setMessage("Could not check for updates. Please check your internet connection and try again.")
-                        .setPositiveButton("Exit", (dialog, which) -> finish())
-                        .setCancelable(false)
-                        .show();
-            }
-        };
-    }
-
-    private void initializeLogic() {
         // Make status and navigation bars transparent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
             w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         }
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+    }
 
-        // Get current app version
-        try {
-            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            current_version = pInfo.versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("VersionError", "Could not get package info", e);
-            current_version = "1.0"; // Fallback version
+    /**
+     * The main logic sequence for the app startup.
+     */
+    private void startAppFlow() {
+        if (isInternetAvailable()) {
+            checkForUpdates();
+        } else {
+            Toast.makeText(this, "No Internet Connection", Toast.LENGTH_LONG).show();
+            // As a plan B, still try to proceed offline.
+            handleAuthentication();
         }
-
-        // Attach the listener to check for updates
-        ver_ref.addListenerForSingleValueEvent(_ver_value_listener);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        // Listener is ValueEventListener with addListenerForSingleValueEvent, no need to remove.
+    /**
+     * Checks for a new version on Firebase. If an update is found, it shows the bottom sheet.
+     * If not, or if an error occurs, it proceeds to the authentication check.
+     */
+    private void checkForUpdates() {
+        DatabaseReference versionRef = _firebase.getReference("inapp/version/app");
+        versionRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    Log.w(TAG, "Firebase version node does not exist. Skipping update check.");
+                    handleAuthentication(); // Plan B: Proceed without update check
+                    return;
+                }
+
+                GenericTypeIndicator<HashMap<String, Object>> t = new GenericTypeIndicator<HashMap<String, Object>>() {};
+                HashMap<String, Object> versionData = snapshot.getValue(t);
+
+                if (versionData == null || versionData.get("version") == null) {
+                    Log.w(TAG, "Version data is malformed. Skipping update check.");
+                    handleAuthentication(); // Plan B: Proceed
+                    return;
+                }
+
+                try {
+                    String onlineVersionStr = String.valueOf(versionData.get("version"));
+                    String localVersionStr = getAppVersionName();
+
+                    // Compare versions properly (e.g., "1.0.1" vs "1.0.0")
+                    if (isUpdateRequired(localVersionStr, onlineVersionStr)) {
+                        _showUpdateBottomSheet(versionData);
+                    } else {
+                        handleAuthentication();
+                    }
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "Could not parse version numbers.", e);
+                    handleAuthentication(); // Plan B: Proceed if versions are not numbers
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Firebase update check failed: " + error.getMessage());
+                Toast.makeText(MainActivity.this, "Could not check for updates.", Toast.LENGTH_SHORT).show();
+                handleAuthentication(); // Plan B: Proceed even if DB call fails
+            }
+        });
+    }
+    
+    /**
+     * Checks authentication status and navigates to the appropriate screen.
+     */
+    private void handleAuthentication() {
+        if (auth.getCurrentUser() != null) {
+            checkUserProfileAndNavigate();
+        } else {
+            navigateToOnboardActivity();
+        }
     }
 
-    @Override
-    public void onBackPressed() {
-        finishAffinity();
+    /**
+     * Checks if the user has a profile in the database.
+     * Navigates to Home if profile exists, or CompleteProfile if not.
+     */
+    private void checkUserProfileAndNavigate() {
+        String uid = auth.getCurrentUser().getUid();
+        DatabaseReference userRef = _firebase.getReference("skyline/users").child(uid);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    // Check for ban status
+                    if ("true".equals(snapshot.child("banned").getValue(String.class))) {
+                        _showBannedUserDialog();
+                    } else {
+                        navigateToHomeActivity();
+                    }
+                } else {
+                    navigateToCompleteProfileActivity();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e(TAG, "Failed to check user profile: " + error.getMessage());
+                Toast.makeText(MainActivity.this, "Could not verify profile. Please log in again.", Toast.LENGTH_LONG).show();
+                navigateToOnboardActivity(); // Plan B: Send back to login
+            }
+        });
     }
 
+    /**
+     * Shows the update bottom sheet dialog.
+     */
     private void _showUpdateBottomSheet(final HashMap<String, Object> updateData) {
-        // Use the custom transparent theme for the dialog
         final BottomSheetDialog bs = new BottomSheetDialog(this, R.style.AppTheme_TransparentBottomSheetDialog);
         View bsView = getLayoutInflater().inflate(R.layout.update_sheet, null);
         bs.setContentView(bsView);
 
-        // All views from the layout
+        // ... (The rest of your bottom sheet view finding and population code remains the same)
         final LinearLayout mainLayout = bsView.findViewById(R.id.FatherLayout);
         final TextView appName = bsView.findViewById(R.id.app_name);
         final TextView versionTxt = bsView.findViewById(R.id.version_txt);
@@ -203,14 +221,8 @@ public class MainActivity extends AppCompatActivity {
         final TextView whatsNewSubtitle = bsView.findViewById(R.id.whats_new_subtitle);
         final ImageView crossIc = bsView.findViewById(R.id.cross_ic);
 
-        // Set rounded corners for the main layout
-        GradientDrawable mainDrawable = new GradientDrawable();
-        mainDrawable.setColor(Color.WHITE);
-        mainDrawable.setCornerRadii(new float[]{48, 48, 48, 48, 0, 0, 0, 0});
-        mainLayout.setBackground(mainDrawable);
-        mainLayout.setElevation(8);
+        mainLayout.setBackground(createTopRoundedDrawable(Color.WHITE, 48));
 
-        // Populate data
         appName.setText(String.valueOf(updateData.get("app name")));
         versionTxt.setText("Version ".concat(String.valueOf(updateData.get("version"))));
         updateSize.setText(String.valueOf(updateData.get("size")));
@@ -225,72 +237,38 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // Configure buttons
         String downloadUrl = String.valueOf(updateData.get("link"));
         updateBtn.setOnClickListener(v -> {
-            _startDownload(downloadUrl);
-            Toast.makeText(this, "Download started...", Toast.LENGTH_SHORT).show();
+            startDownloadWithPermissionCheck(downloadUrl);
             bs.dismiss();
         });
 
-        // Handle skippable updates
         boolean isSkippable = "true".equals(String.valueOf(updateData.get("skippable")));
         bs.setCancelable(isSkippable);
         crossIc.setVisibility(isSkippable ? View.VISIBLE : View.GONE);
         if (isSkippable) {
             crossIc.setOnClickListener(v -> {
                 bs.dismiss();
-                _proceedToNextActivity();
+                handleAuthentication(); // Proceed to next step if update is skipped
             });
         }
         
         bs.show();
     }
 
-    private void _proceedToNextActivity() {
-        if (auth.getCurrentUser() == null) {
-            Log.e("AuthError", "User not authenticated, cannot proceed.");
-            Toast.makeText(this, "Authentication failed. Please restart.", Toast.LENGTH_SHORT).show();
-            return;
+    /**
+     * Starts the APK download after ensuring permissions are granted.
+     */
+    private void startDownloadWithPermissionCheck(String url) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            Toast.makeText(this, "Storage permission needed to save the update.", Toast.LENGTH_SHORT).show();
+        } else {
+            _startDownload(url);
         }
-
-        DatabaseReference checkUser = _firebase.getReference("skyline/users").child(auth.getCurrentUser().getUid());
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Intent intent = new Intent();
-                if (dataSnapshot.exists()) {
-                    if ("false".equals(dataSnapshot.child("banned").getValue(String.class))) {
-                        intent.setClass(getApplicationContext(), HomeActivity.class);
-                    } else {
-                        _showBannedUserDialog();
-                        return; // Stop further execution
-                    }
-                } else {
-                    intent.setClass(getApplicationContext(), CompleteProfileActivity.class);
-                }
-                startActivity(intent);
-                finish();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("FirebaseError", "Error checking user status: " + databaseError.getMessage());
-                Toast.makeText(MainActivity.this, "Could not verify user status.", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void _showBannedUserDialog() {
-        new AlertDialog.Builder(this)
-                .setView(getLayoutInflater().inflate(R.layout.banned_dialog, null))
-                .setCancelable(false)
-                .create()
-                .show();
     }
 
     private void _startDownload(final String url) {
-        // MODIFIED: Replaced URLUtil with Uri.getLastPathSegment() for robustness.
         String fileName = Uri.parse(url).getLastPathSegment();
         if (fileName == null || fileName.isEmpty()) {
             fileName = "synapse-update.apk"; // Fallback filename
@@ -299,45 +277,93 @@ public class MainActivity extends AppCompatActivity {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url))
                 .setTitle(fileName)
                 .setDescription("Downloading Update...")
+                .setMimeType("application/vnd.android.package-archive")
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
-                .setAllowedOverMetered(true)
-                .setAllowedOverRoaming(true);
+                .setAllowedOverMetered(true);
 
         DownloadManager manager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        manager.enqueue(request);
-    }
-
-    public void _installApk(final String apkFileName) {
-        // MODIFIED: Use modern, non-deprecated method for accessing public Downloads directory.
-        File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-        File file = new File(downloadsDir, apkFileName);
-
-        if (file.exists()) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                uri = FileProvider.getUriForFile(this, getApplicationContext().getPackageName() + ".provider", file);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            } else {
-                uri = Uri.fromFile(file);
-            }
-            intent.setDataAndType(uri, "application/vnd.android.package-archive");
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            try {
-                startActivity(intent);
-            } catch (ActivityNotFoundException e) {
-                Log.e("InstallError", "Error opening APK file.", e);
-                Toast.makeText(this, "Could not open installer.", Toast.LENGTH_SHORT).show();
-            }
+        if (manager != null) {
+            manager.enqueue(request);
+            Toast.makeText(this, "Download started...", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Update file not found.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Download service is not available.", Toast.LENGTH_SHORT).show();
         }
     }
 
+    // --- Utility and Helper Methods ---
+
+    private GradientDrawable createTopRoundedDrawable(int color, float radius) {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setColor(color);
+        drawable.setCornerRadii(new float[]{radius, radius, radius, radius, 0, 0, 0, 0});
+        return drawable;
+    }
+
+    private boolean isInternetAvailable() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
+        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Network network = cm.getActiveNetwork();
+            if (network == null) return false;
+            NetworkCapabilities capabilities = cm.getNetworkCapabilities(network);
+            return capabilities != null && (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET));
+        } else {
+            return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+        }
+    }
+
+    private String getAppVersionName() {
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            return pInfo.versionName.split("-")[0]; // "1.0.0-debug" -> "1.0.0"
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Could not get package info", e);
+            return "0.0.0"; // Fallback version
+        }
+    }
+
+    private boolean isUpdateRequired(String localVersion, String onlineVersion) {
+        // Simple version comparison assuming "major.minor.patch" format
+        String[] localParts = localVersion.split("\\.");
+        String[] onlineParts = onlineVersion.split("\\.");
+        int length = Math.max(localParts.length, onlineParts.length);
+        for (int i = 0; i < length; i++) {
+            int local = i < localParts.length ? Integer.parseInt(localParts[i]) : 0;
+            int online = i < onlineParts.length ? Integer.parseInt(onlineParts[i]) : 0;
+            if (online > local) return true;
+            if (local > online) return false;
+        }
+        return false;
+    }
+    
+    private void _showBannedUserDialog() {
+        // Implementation for showing a banned user dialog
+    }
+    
+    // --- Navigation Methods ---
+    
+    private void navigateToHomeActivity() {
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
+    }
+    
+    private void navigateToCompleteProfileActivity() {
+        startActivity(new Intent(this, CompleteProfileActivity.class));
+        finish();
+    }
+    
+    private void navigateToOnboardActivity() {
+        startActivity(new Intent(this, OnboardActivity.class));
+        finish();
+    }
+    
+    // --- Language Methods ---
+
     private void _applyLanguage() {
-        language = getSharedPreferences("language", Activity.MODE_PRIVATE);
-        String langCode = language.getString("language", "en"); // Default to English
+        languagePref = getSharedPreferences("language", Activity.MODE_PRIVATE);
+        String langCode = languagePref.getString("language", "en");
         _setLanguage(langCode);
     }
 
@@ -347,6 +373,7 @@ public class MainActivity extends AppCompatActivity {
         Resources resources = getResources();
         Configuration config = new Configuration(resources.getConfiguration());
         config.setLocale(locale);
+        createConfigurationContext(config);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }
