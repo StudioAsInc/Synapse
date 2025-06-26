@@ -35,7 +35,7 @@
         <item name="textAllCaps">false</item>
         <item name="android:textSize">14sp</item>
     </style>
-    
+
     <style name="CustomSliderTooltip" parent="Widget.MaterialComponents.Tooltip">
         <item name="shapeAppearanceOverlay">@style/TooltipShape</item>
     </style>
@@ -47,5 +47,19 @@
         <item name="cornerSizeBottomLeft">10%</item>
         <item name="cornerSizeBottomRight">10%</item>
     </style>
-    
+
+    <!-- =============================================== -->
+    <!-- MODIFICATION: Added styles for transparent Bottom Sheet -->
+    <!-- =============================================== -->
+
+    <!-- 1. A style for the BottomSheet widget itself. It sets the background to transparent. -->
+    <style name="TransparentBottomSheetWidget" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <!-- 2. A theme for the BottomSheetDialog. It applies the custom widget style from above. -->
+    <style name="AppTheme.TransparentBottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/TransparentBottomSheetWidget</item>
+    </style>
+
 </resources>
