@@ -355,7 +355,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void navigateToOnboardActivity() {
-        startActivity(new Intent(this, OnboardActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
     
