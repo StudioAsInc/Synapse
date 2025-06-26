@@ -1,3 +1,69 @@
+//Simplified version only Splash & Go
+package com.synapse.social.studioasinc;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.Window;
+import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class MainActivity extends AppCompatActivity {
+
+    private static final int SPLASH_DELAY_MS = 800; // 0.8 seconds
+
+    private FirebaseAuth auth;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+
+        // Make the splash screen fullscreen
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        }
+
+        // Initialize Firebase
+        FirebaseApp.initializeApp(this);
+        auth = FirebaseAuth.getInstance();
+
+        // Use a Handler to delay the navigation, giving the splash screen time to be visible.
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            // Check the current user's authentication state
+            FirebaseUser currentUser = auth.getCurrentUser();
+            
+            if (currentUser != null) {
+                // User is signed in, navigate to HomeActivity
+                navigateTo(HomeActivity.class);
+            } else {
+                // No user is signed in, navigate to OnboardActivity
+                navigateTo(OnboardActivity.class);
+            }
+        }, SPLASH_DELAY_MS);
+    }
+
+    /**
+     * Navigates to a destination activity and finishes the current one.
+     * @param destinationActivity The class of the activity to navigate to.
+     */
+    private void navigateTo(Class<?> destinationActivity) {
+        Intent intent = new Intent(MainActivity.this, destinationActivity);
+        startActivity(intent);
+        // Call finish() to remove the splash screen from the back stack,
+        // so the user cannot navigate back to it.
+        finish();
+    }
+}
+
+/*
 package com.synapse.social.studioasinc;
 
 import android.Manifest;
@@ -377,3 +443,4 @@ public class MainActivity extends AppCompatActivity {
         resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }
+*/
