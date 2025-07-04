@@ -25,7 +25,6 @@ on:
         type: boolean
 
 jobs:
-  # This job notifies at the start
   notifyTelegramStart:
     name: Notify Telegram of Start
     runs-on: ${{ vars.IS_USING_HOSTED_RUNNERS == 'true' && 'self-hosted' || 'ubuntu-latest' }}
@@ -45,7 +44,6 @@ jobs:
         run: python ./.github/workflows/notify_telegram.py
         continue-on-error: true
 
-  # This is the main build job, combining the best of both workflows
   build:
     name: Build Release APK
     needs: notifyTelegramStart
@@ -74,10 +72,11 @@ jobs:
       with:
         packages: 'platforms;android-34'
 
-    # CORRECTED FIX: Create the physical google-services.json file
+    # --- THIS IS THE CORRECTED STEP ---
+    # It now uses the simpler, standard syntax for checking if a secret exists.
+    # This will run only if the GOOGLE_SERVICES_JSON secret has been set in your repository.
     - name: Create google-services.json
-      # The expression MUST be wrapped in ${{...}} for the `if` condition
-      if: ${{ secrets.GOOGLE_SERVICES_JSON != '' }}
+      if: secrets.GOOGLE_SERVICES_JSON
       env:
         GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_JSON }}
       run: |
@@ -125,11 +124,9 @@ jobs:
           exit 1
         fi
         echo "Found source APK at: $SOURCE_APK"
-
         APK_NAME="app-release-${{ steps.set_sha.outputs.short_sha }}.apk"
         mv "$SOURCE_APK" "$APK_NAME"
         echo "Renamed APK to: $APK_NAME"
-
         echo "apk_path=$APK_NAME" >> $GITHUB_OUTPUT
         echo "apk_name=$APK_NAME" >> $GITHUB_OUTPUT
 
@@ -149,7 +146,6 @@ jobs:
           **/build/reports/
         retention-days: 3
 
-  # This job sends the built APK to Telegram
   sendToTelegram:
     name: Send APK to Telegram
     needs: build
@@ -189,7 +185,6 @@ jobs:
         run: python ./.github/workflows/deploy_artifacts.py
         continue-on-error: true
 
-  # This job updates app data in parallel to sending the APK
   updateAppData:
     name: Update App Data
     needs: build
