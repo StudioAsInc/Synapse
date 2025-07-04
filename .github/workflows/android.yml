@@ -55,13 +55,12 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      - name: Set environmental variables
-        shell: bash
-        env:
-          JSON_CONTENT: ${{ secrets.GOOGLE_SERVICES_JSON }}
-        if: ${{ env.JSON_CONTENT != '' }}
+      - name: Create google-services.json from secret
         run: |
-          printf 'GOOGLE_SERVICES_JSON<<EOF\n%s\nEOF\n' "$JSON_CONTENT" >> $GITHUB_ENV
+          mkdir -p app/src/release
+          echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/src/release/google-services.json
+          # Verify the file was created properly
+          ls -la app/src/release/
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
@@ -165,4 +164,3 @@ jobs:
           git commit -m "feat: Update app about screen data"
           git push
         continue-on-error: true
-      
