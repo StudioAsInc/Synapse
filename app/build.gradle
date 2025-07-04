@@ -50,7 +50,7 @@ android {
         minSdk = 23
         targetSdk = 34
         versionCode = getGitCommitCount() + 1 // Start with commit count + 1
-        versionName = "commit-${getGitCommitHash()}" // Use commit hash as version name
+        versionName = "debug-${getGitCommitHash()}" // Use commit hash as version name
         multiDexEnabled = true
     }
 
