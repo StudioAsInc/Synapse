@@ -7,11 +7,6 @@
   [![Release](https://img.shields.io/github/v/release/StudioAsInc/Synapse)](https://github.com/StudioAsInc/Synapse/releases)
 </div>
 
----
-
-
-## 🤝 CONTRIBUTE
-PRs welcome. See [CONTRIBUTE](CONTRIBUTING.md).
 
 ---
 
