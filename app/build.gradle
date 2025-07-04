@@ -10,9 +10,29 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
+// Function to get commit hash
+def getGitCommitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+// Function to get commit count (for version code)
+def getGitCommitCount = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-list', '--count', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim().toInteger()
+}
+
 android {
     namespace = "com.synapse.social.studioasinc"
-    compileSdk = 34
+    compileSdk = 36 //Android version 16
 
     useLibrary 'org.apache.http.legacy'
 
@@ -29,8 +49,8 @@ android {
         applicationId = "com.synapse.social.studioasinc"
         minSdk = 23
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0.0 beta"
+        versionCode = getGitCommitCount() + 1 // Start with commit count + 1
+        versionName = "commit-${getGitCommitHash()}" // Use commit hash as version name
         multiDexEnabled = true
     }
 
