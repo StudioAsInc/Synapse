@@ -9,27 +9,6 @@
 
 ---
 
-## ✨ Features
-- Modern user interface 
-- Real-time updates
-- Privacy-focused design
-- PWA support
-
-## 🛠 Tech Stack
-**Frontend:** Java, Kotlin, CSS, JavaScript 
-**Backend:** Firebase
-
----
-
-## 🚀 Quick Start
-```bash
-git clone https://github.com/StudioAsInc/Synapse.git
-cd Synapse
-npm install
-npm run dev
-```
-
-
 
 ## 🤝 CONTRIBUTE
 PRs welcome. See [CONTRIBUTE](CONTRIBUTING.md).
