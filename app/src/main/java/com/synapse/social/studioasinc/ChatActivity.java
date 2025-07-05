@@ -1048,7 +1048,7 @@ public class ChatActivity extends AppCompatActivity {
 			String path = null;
 			try (Cursor cursor = context.getContentResolver().query(uri, null, null, null, null)) {
 				if (cursor != null && cursor.moveToFirst()) {
-					int-disable-next-line
+			//		int-disable-next-line
 					path = cursor.getString(cursor.getColumnIndexOrThrow(android.provider.MediaStore.Images.Media.DATA));
 				}
 			} catch (Exception e) {
