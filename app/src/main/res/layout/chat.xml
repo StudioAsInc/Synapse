@@ -30,7 +30,8 @@
 				android:layout_marginRight="8dp"
 				android:padding="12dp"
 				android:src="@drawable/icon_arrow_back_ios_round"
-				android:scaleType="fitCenter" />
+				android:scaleType="fitCenter"
+				android:contentDescription="Back" />
 			<LinearLayout
 				android:id="@+id/topProfileLayout"
 				android:layout_width="wrap_content"
@@ -114,7 +115,8 @@
 				android:layout_height="match_parent"
 				android:padding="6dp"
 				android:src="@drawable/icon_videocam_round"
-				android:scaleType="fitCenter" />
+				android:scaleType="fitCenter"
+				android:contentDescription="Video Call" />
 			<ImageView
 				android:id="@+id/imageview1"
 				android:layout_width="35dp"
@@ -123,14 +125,16 @@
 				android:layout_marginRight="10dp"
 				android:padding="6dp"
 				android:src="@drawable/icon_phone_round"
-				android:scaleType="fitCenter" />
+				android:scaleType="fitCenter"
+				android:contentDescription="Audio Call" />
 			<ImageView
 				android:id="@+id/more"
 				android:layout_width="35dp"
 				android:layout_height="match_parent"
 				android:padding="6dp"
 				android:src="@drawable/icon_info_round"
-				android:scaleType="fitCenter" />
+				android:scaleType="fitCenter"
+				android:contentDescription="More Options" />
 		</com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect>
 		<LinearLayout
 			android:id="@+id/middle"
@@ -242,7 +246,8 @@
 					android:layout_marginLeft="8dp"
 					android:padding="10dp"
 					android:src="@drawable/icon_close_round"
-					android:scaleType="fitCenter" />
+					android:scaleType="fitCenter"
+					android:contentDescription="Cancel Reply" />
 			</com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect>
 			<LinearLayout
 				android:id="@+id/mMessageReplyLayoutSpace"
@@ -267,7 +272,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:padding="3dp"
-				android:background="#FFFFFF"
+				android:background="@drawable/input_bg_collapsed"
 				android:gravity="center_horizontal|center_vertical"
 				android:orientation="vertical"
 				android:layout_weight="1"
@@ -300,7 +305,8 @@
 						android:src="@drawable/remove_ic"
 						android:scaleType="fitCenter"
 						android:translationX="-23.0dp"
-						android:translationY="-23.0dp" />
+						android:translationY="-23.0dp"
+						android:contentDescription="Remove Selected Image" />
 					<LinearLayout
 						android:id="@+id/img_name_container"
 						android:layout_width="match_parent"
@@ -353,7 +359,8 @@
 						android:layout_width="20dp"
 						android:layout_height="25dp"
 						android:src="@drawable/iconss_1"
-						android:scaleType="fitCenter" />
+						android:scaleType="fitCenter"
+						android:contentDescription="Expand Attachment Options" />
 					<LinearLayout
 						android:id="@+id/devider_mic_camera"
 						android:layout_width="1dp"
@@ -368,7 +375,8 @@
 						android:layout_width="20dp"
 						android:layout_height="25dp"
 						android:src="@drawable/icons_2"
-						android:scaleType="fitCenter" />
+						android:scaleType="fitCenter"
+						android:contentDescription="Open Gallery" />
 					<LinearLayout
 						android:id="@+id/devider"
 						android:layout_width="1dp"
@@ -384,7 +392,8 @@
 						android:layout_height="25dp"
 						android:src="@drawable/iconss_3"
 						android:scaleType="fitCenter"
-						android:rotation="90" />
+						android:rotation="90"
+						android:contentDescription="Attach File" />
 					<LinearLayout
 						android:id="@+id/devider1"
 						android:layout_width="1dp"
@@ -399,7 +408,8 @@
 						android:layout_width="20dp"
 						android:layout_height="25dp"
 						android:src="@drawable/mic"
-						android:scaleType="fitCenter" />
+						android:scaleType="fitCenter"
+						android:contentDescription="Record Voice Message" />
 					<LinearLayout
 						android:id="@+id/devider2"
 						android:layout_width="1dp"
@@ -414,7 +424,8 @@
 						android:layout_width="20dp"
 						android:layout_height="25dp"
 						android:src="@drawable/iconss_5"
-						android:scaleType="fitCenter" />
+						android:scaleType="fitCenter"
+						android:contentDescription="More Attachment Options" />
 				</LinearLayout>
 			</LinearLayout>
 			<LinearLayout
@@ -433,7 +444,8 @@
 					android:padding="10dp"
 					android:background="@android:color/transparent"
 					android:src="@drawable/love_ic"
-					android:scaleType="fitCenter" />
+					android:scaleType="fitCenter"
+					android:contentDescription="Send Message" />
 			</LinearLayout>
 		</LinearLayout>
 		<com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect
@@ -450,7 +462,8 @@
 				android:layout_height="44dp"
 				android:padding="10dp"
 				android:src="@drawable/default_image"
-				android:scaleType="fitCenter" />
+				android:scaleType="fitCenter"
+				android:contentDescription="Cancel Recording" />
 			<TextView
 				android:id="@+id/bottomAudioRecorderTime"
 				android:layout_width="wrap_content"
@@ -468,7 +481,8 @@
 				android:padding="8dp"
 				android:background="#F0F3F8"
 				android:src="@drawable/icons_3"
-				android:scaleType="fitCenter" />
+				android:scaleType="fitCenter"
+				android:contentDescription="Send Recording" />
 		</com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect>
 		<TextView
 			android:id="@+id/unblock_btn"
