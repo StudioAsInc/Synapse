@@ -92,7 +92,6 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.firebase.database.Query;
-import android.database.Cursor;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -208,18 +207,38 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (requestCode == PERMISSION_REQUEST_CODE) {
-			if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				initializeLogic();
-			} else {
-				// Handle permission denial gracefully
-				Toast.makeText(this, "Permissions are required to use chat features.", Toast.LENGTH_LONG).show();
-				finish();
-			}
-		}
-	}
+public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+    if (requestCode == PERMISSION_REQUEST_CODE) {
+        boolean allPermissionsGranted = true;
+
+        // Check if we received any results at all.
+        if (grantResults.length > 0) {
+            // Loop through each permission result.
+            for (int grantResult : grantResults) {
+                // If we find any single permission that was denied...
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    allPermissionsGranted = false; // ...mark the whole process as failed.
+                    break; // No need to check the rest.
+                }
+            }
+        } else {
+            // If the user cancelled or the results array is empty, it's a failure.
+            allPermissionsGranted = false;
+        }
+
+        // Finally, check our flag.
+        if (allPermissionsGranted) {
+            // This only runs if EVERY permission was granted.
+            initializeLogic();
+        } else {
+            // This runs if one or more permissions were denied.
+            Toast.makeText(this, "All permissions are required to use chat features.", Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+}
 
 	private void initializeLogic() {
 		_UI();
