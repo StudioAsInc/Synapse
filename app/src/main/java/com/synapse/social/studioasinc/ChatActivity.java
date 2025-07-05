@@ -92,6 +92,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.firebase.database.Query;
+import android.database.Cursor;
 
 public class ChatActivity extends AppCompatActivity {
 
