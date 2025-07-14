@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- progress_bar_background.xml -->
-   <shape xmlns:android="http://schemas.android.com/apk/res/android">
-       <corners android:radius="999dp" /> <!-- Makes it capsule-shaped -->
-       <solid android:color="#F4FAFA" /> <!-- Color for the remaining part -->
-   </shape>
