@@ -45,8 +45,8 @@ android {
 
     defaultConfig {
         applicationId "com.synapse.social.studioasinc"
-        minSdk 21
-        targetSdk 32
+        minSdk 23 // Don't downgrade the minApi more than 23.
+        targetSdk 32 // Android 12
         versionCode getGitCommitCount() + 1
         versionName "debug-${getGitCommitHash()}"
         multiDexEnabled true
