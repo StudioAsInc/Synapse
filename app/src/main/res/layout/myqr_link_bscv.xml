@@ -1,0 +1,86 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<androidx.cardview.widget.CardView
+		android:id="@+id/roundLayoutBS"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:cardBackgroundColor="#FFFFFF"
+		app:cardElevation="0dp"
+		app:cardCornerRadius="20dp">
+		<LinearLayout
+			android:id="@+id/main"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:paddingLeft="15dp"
+			android:paddingTop="10dp"
+			android:paddingRight="15dp"
+			android:paddingBottom="10dp"
+			android:background="@android:color/transparent"
+			android:gravity="center_horizontal|center_vertical"
+			android:orientation="vertical">
+			<LinearLayout
+				android:id="@+id/bar"
+				android:layout_width="50dp"
+				android:layout_height="5dp"
+				android:layout_marginBottom="15dp"
+				android:padding="8dp"
+				android:orientation="horizontal"
+				android:background="@drawable/bsbar" />
+			<LinearLayout
+				android:id="@+id/qr_template"
+				android:layout_width="200dp"
+				android:layout_height="183dp"
+				android:background="@drawable/empty_qr"
+				android:gravity="center_horizontal|center_vertical"
+				android:orientation="vertical">
+				<LinearLayout
+					android:id="@+id/QRlinear1"
+					android:layout_width="110dp"
+					android:layout_height="110dp"
+					android:orientation="horizontal"
+					android:translationY="-8.0dp">
+					<RelativeLayout
+						android:id="@+id/relativelayout3"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent">
+						<ImageView
+							android:id="@+id/qr_img"
+							android:focusable="false"
+							android:layout_width="130dp"
+							android:layout_height="130dp"
+							android:src="@drawable/qrcodeunonown"
+							android:scaleType="fitXY" />
+					</RelativeLayout>
+				</LinearLayout>
+				<TextView
+					android:id="@+id/name"
+					android:focusable="false"
+					android:layout_width="180dp"
+					android:layout_height="wrap_content"
+					android:gravity="center_horizontal|center_vertical"
+					android:text="NAME"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					android:textColor="#FFFFFF"
+					android:translationY="17.0dp" />
+			</LinearLayout>
+			<TextView
+				android:id="@+id/textview2"
+				android:focusable="false"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="30dp"
+				android:paddingLeft="50dp"
+				android:paddingRight="50dp"
+				android:gravity="center_horizontal|center_vertical"
+				android:text="Scan this QR code from the Synapse app"
+				android:textSize="12sp"
+				android:textColor="#616161" />
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+</LinearLayout>

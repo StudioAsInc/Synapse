@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Account - Synapse</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script>
+        // Configure Tailwind CSS
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], },
+                    colors: {
+                        primary: { DEFAULT: '#445E91', 50: '#E8EBF2', 100: '#D5DBE8', 200: '#B0BCD5', 300: '#8A9DC2', 400: '#657EAF', 500: '#445E91', 600: '#354873', 700: '#263255', 800: '#171D36', 900: '#080A18' },
+                        accent: { blue: '#3b82f6', purple: '#8b5cf6', green: '#22c55e', pink: '#ec4899', orange: '#f97316', red: '#ef4444' },
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s ease, color 0.3s ease; overflow: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: -1; background-color: inherit; transition: background-color 0.3s ease-in-out; }
+        #appContainer { height: 100vh; overflow-y: auto; }
+        .section-content { padding-top: 64px; }
+        header { display: flex; align-items: center; justify-content: space-between; }
+        #headerTitle { flex-grow: 1; text-align: left; transform: translateX(calc(40px - 1rem)); }
+
+        .setting-item { transition: background-color 0.2s ease, transform 0.2s ease; }
+        .setting-item:active { transform: scale(0.98); }
+
+        .toggle-switch { width: 3.25rem; height: 1.75rem; padding: 0.25rem; background-color: #e5e7eb; transition: background-color 0.3s ease;}
+        .dark .toggle-switch { background-color: #4b5563; }
+        .toggle-dot { width: 1.25rem; height: 1.25rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .peer:checked ~ .toggle-switch { background-color: #445E91 !important; }
+        .peer:checked ~ .toggle-switch .toggle-dot { transform: translateX(1.5rem); }
+        .accent-blue .peer:checked ~ .toggle-switch { background-color: #3b82f6 !important; }
+        .accent-purple .peer:checked ~ .toggle-switch { background-color: #8b5cf6 !important; }
+
+        .modal { transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
+        .modal-content { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; }
+        .modal.hidden .modal-content { transform: scale(0.95); opacity: 0; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <div id="loadingOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-300">
+        <i class="fa-solid fa-user-gear text-4xl text-primary-500 animate-pulse"></i>
+    </div>
+
+    <div id="appContainer" class="max-w-xl mx-auto relative overflow-x-hidden bg-gray-100 dark:bg-gray-800 hidden">
+        <header class="fixed top-0 left-0 right-0 max-w-xl mx-auto h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm z-30 px-4">
+            <a href="SettingsActivity.html" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h1 id="headerTitle" class="text-lg font-bold text-gray-900 dark:text-gray-100 px-4 truncate">Account</h1>
+            <div class="w-10 h-10 shrink-0"></div>
+        </header>
+
+        <div id="accountSettings" class="section-content"></div>
+    </div>
+
+    <div id="modal-container"></div>
+    
+    <div id="templates" class="hidden">
+        <!-- Info Item -->
+        <li class="setting-item flex items-center p-4 cursor-pointer">
+            <p class="font-medium setting-title flex-1 truncate"></p>
+            <span class="text-sm text-gray-500 dark:text-gray-400 setting-value truncate"></span>
+        </li>
+        <!-- Toggle Item -->
+        <li class="setting-item flex items-center p-4 cursor-pointer">
+             <span class="flex-1 overflow-hidden pr-2">
+                <p class="font-medium setting-title truncate"></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 setting-description truncate"></p>
+            </span>
+            <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="toggle-switch rounded-full"><div class="toggle-dot bg-white rounded-full shadow-md"></div></div>
+            </label>
+        </li>
+        <!-- Danger Action Item -->
+        <li class="setting-item flex items-center p-4 cursor-pointer">
+            <p class="font-medium setting-title flex-1 truncate text-red-500"></p>
+            <i class="fas fa-chevron-right text-gray-400"></i>
+        </li>
+        
+        <!-- Delete Account Modal -->
+        <div id="deleteAccountModal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-xl">
+                <div class="text-center">
+                    <i class="fa-solid fa-triangle-exclamation text-4xl text-red-500 mb-4"></i>
+                    <h3 class="text-lg font-bold">Delete Account</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 my-2">This is a permanent action. All your data will be erased forever.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Please type <strong class="text-red-500">DELETE</strong> to confirm.</p>
+                </div>
+                <input type="text" id="deleteConfirmInput" class="w-full text-center tracking-widest font-bold border border-gray-300 dark:border-gray-600 rounded-lg bg-transparent p-2 focus:outline-none focus:ring-2 focus:ring-red-500 mb-4" placeholder="DELETE">
+                <button id="confirmDeleteBtn" class="w-full py-2 bg-red-600 text-white rounded-lg font-bold opacity-50 cursor-not-allowed" disabled>Permanently Delete</button>
+                <button class="modal-cancel w-full mt-2 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Generic Info Modal -->
+        <div id="infoModalTemplate" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-xs shadow-xl text-center">
+                <h3 class="text-lg font-bold modal-title mb-2">Info</h3>
+                <p class="text-sm text-gray-500 dark:text-gray-400 modal-message mb-6"></p>
+                <button class="modal-cancel w-full py-2 bg-primary-500 text-white rounded-lg font-bold">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseConfig = { apiKey: "AIzaSyCvefmiD5UjOo7ZkoUKhwNd0XGrnK52quE", authDomain: "synapse-social-sai.firebaseapp.com", databaseURL: "https://synapse-social-sai-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "synapse-social-sai", storageBucket: "synapse-social-sai.firebasestorage.app", appId: "1:269633434355:android:67b44261499ca8b0a3bd86" };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        const dom = {
+            html: document.documentElement,
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            appContainer: document.getElementById('appContainer'),
+            modalContainer: document.getElementById('modal-container'),
+            templates: document.getElementById('templates'),
+            accountSettings: document.getElementById('accountSettings'),
+        };
+
+        let currentUser = null, userSettings = {}, userProfile = {}, debounceTimer = null;
+
+        const defaultSettings = {
+            phoneNumber: 'Not set',
+            twoStepVerification: false,
+            theme: "system", accentColor: "primary",
+        };
+        
+        const settingsConfig = {
+            accountSettings: {
+                groups: [
+                    { items: [
+                        { key: 'phoneNumber', title: 'Phone Number', type: 'info-action', action: () => showInfoModal('Phone Number', 'This is your registered phone number. It cannot be changed here.')},
+                        { key: 'username', title: 'Username', type: 'info-action', action: () => showInfoModal('Username', 'Edit your username from your main profile page.')},
+                        { key: 'bio', title: 'Bio', type: 'info-action', action: () => showInfoModal('Biography', 'Edit your bio from your main profile page.')},
+                    ]},
+                    { title: 'Security', items: [
+                        { key: 'twoStepVerification', title: 'Two-Step Verification', desc: 'Add a password to your account for extra security', type: 'toggle' },
+                        { key: 'deleteAccount', title: 'Delete My Account', type: 'danger-action', action: openDeleteAccountModal },
+                    ]}
+                ]
+            }
+        };
+        
+        function init() {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadUserDataAndSettings(user.uid);
+                    buildUI();
+                    setTimeout(() => {
+                        dom.loadingOverlay.classList.add('opacity-0');
+                        dom.appContainer.classList.remove('hidden');
+                        setTimeout(() => dom.loadingOverlay.classList.add('hidden'), 300);
+                    }, 200);
+                } else { window.location.href = 'SettingsActivity.html'; }
+            });
+        }
+
+        async function loadUserDataAndSettings(uid) {
+            try {
+                const settingsPromise = database.ref(`users/${uid}/settings`).once('value');
+                const profilePromise = database.ref(`skyline/users/${uid}`).once('value');
+                const [settingsSnapshot, profileSnapshot] = await Promise.all([settingsPromise, profilePromise]);
+                userSettings = { ...defaultSettings, ...settingsSnapshot.val() };
+                userProfile = profileSnapshot.val() || {};
+            } catch (error) {
+                userSettings = { ...defaultSettings };
+                userProfile = {};
+                console.error("Failed to load user data:", error);
+            }
+        }
+        
+        function updateSetting(key, value) {
+            userSettings[key] = value;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(saveSettingsToFirebase, 1000);
+        }
+
+        async function saveSettingsToFirebase() {
+            if (!currentUser) return;
+            try { await database.ref(`users/${currentUser.uid}/settings`).update(userSettings); } 
+            catch (error) { console.error("Error saving settings:", error); }
+        }
+        
+        function buildUI() {
+            buildAccountPage();
+            applyTheme();
+            updateAllControlValues();
+        }
+
+        function buildAccountPage() {
+            dom.accountSettings.innerHTML = '';
+            const content = document.createElement('div');
+            content.className = 'p-4 space-y-6 pb-24';
+            
+            settingsConfig.accountSettings.groups.forEach((group) => {
+                const groupEl = document.createElement('div');
+                if (group.title) {
+                    const title = document.createElement('h3');
+                    title.className = 'px-4 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase';
+                    title.textContent = group.title;
+                    groupEl.appendChild(title);
+                }
+                const list = document.createElement('ul');
+                list.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+                group.items.forEach(item => list.appendChild(buildSettingItem(item)));
+                groupEl.appendChild(list);
+                content.appendChild(groupEl);
+            });
+            dom.accountSettings.appendChild(content);
+        }
+        
+        function buildSettingItem(itemConfig) {
+            let li;
+            if (itemConfig.type === 'toggle') {
+                li = dom.templates.querySelector('li:has(.toggle-switch)').cloneNode(true);
+                li.querySelector('.setting-description').textContent = itemConfig.desc;
+                li.addEventListener('click', () => {
+                    const checkbox = li.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    updateSetting(itemConfig.key, checkbox.checked);
+                });
+            } else if (itemConfig.type === 'danger-action') {
+                li = dom.templates.querySelector('li:has(.text-red-500)').cloneNode(true);
+                if (itemConfig.action) li.addEventListener('click', itemConfig.action);
+            } else { // info-action
+                li = dom.templates.querySelector('li:has(.setting-value)').cloneNode(true);
+                if (itemConfig.action) li.addEventListener('click', itemConfig.action);
+            }
+            li.dataset.settingKey = itemConfig.key;
+            li.querySelector('.setting-title').textContent = itemConfig.title;
+            return li;
+        }
+
+        function updateAllControlValues() {
+            settingsConfig.accountSettings.groups.flatMap(g => g.items).forEach(item => {
+                const li = dom.accountSettings.querySelector(`[data-setting-key="${item.key}"]`);
+                if (!li) return;
+                
+                if (item.type === 'toggle') {
+                    li.querySelector('input[type="checkbox"]').checked = userSettings[item.key];
+                } else if (item.type === 'info-action') {
+                    const valueEl = li.querySelector('.setting-value');
+                    switch(item.key) {
+                        case 'username': valueEl.textContent = userProfile.username || 'Not set'; break;
+                        case 'bio': valueEl.textContent = userProfile.biography || 'Not set'; break;
+                        case 'phoneNumber': valueEl.textContent = userProfile.phone || 'Not set'; break;
+                    }
+                }
+            });
+        }
+        
+        function showInfoModal(title, message) {
+            const modal = dom.templates.querySelector("#infoModalTemplate").cloneNode(true);
+            modal.querySelector('.modal-title').textContent = title;
+            modal.querySelector('.modal-message').textContent = message;
+            const close = () => { modal.classList.add('opacity-0'); setTimeout(() => modal.remove(), 300); };
+            modal.querySelector('.modal-cancel').addEventListener('click', close);
+            modal.addEventListener('click', e => { if (e.target === modal) close(); });
+            dom.modalContainer.appendChild(modal);
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function openDeleteAccountModal() {
+            const modal = dom.templates.querySelector('#deleteAccountModal').cloneNode(true);
+            const confirmInput = modal.querySelector('#deleteConfirmInput');
+            const deleteBtn = modal.querySelector('#confirmDeleteBtn');
+            const close = () => { modal.classList.add('opacity-0'); setTimeout(() => modal.remove(), 300); };
+            
+            modal.querySelector('.modal-cancel').addEventListener('click', close);
+            modal.addEventListener('click', e => { if (e.target === modal) close(); });
+            
+            confirmInput.addEventListener('input', () => {
+                const isConfirmed = confirmInput.value === 'DELETE';
+                deleteBtn.disabled = !isConfirmed;
+                deleteBtn.classList.toggle('opacity-50', !isConfirmed);
+                deleteBtn.classList.toggle('cursor-not-allowed', !isConfirmed);
+            });
+
+            deleteBtn.addEventListener('click', async () => {
+                deleteBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i>`;
+                deleteBtn.disabled = true;
+                try {
+                    const uid = currentUser.uid;
+                    await database.ref(`users/${uid}`).remove();
+                    await database.ref(`skyline/users/${uid}`).remove();
+                    await auth.currentUser.delete();
+                    // Auth state change will handle redirect
+                } catch (error) {
+                    showInfoModal('Error', `Account deletion failed: ${error.message}. Please sign out and sign back in to try again.`);
+                    deleteBtn.innerHTML = 'Permanently Delete';
+                    // Re-enable after a moment to prevent spam
+                    setTimeout(() => { deleteBtn.disabled = (confirmInput.value !== 'DELETE'); }, 1000);
+                }
+            });
+
+            dom.modalContainer.appendChild(modal);
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+        
+        function applyTheme() {
+            const isDark = userSettings.theme === 'dark' || (userSettings.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            dom.html.classList.toggle('dark', isDark);
+            const accent = userSettings.accentColor || 'primary';
+            const bodyClasses = document.body.className.split(' ').filter(c => !c.startsWith('accent-'));
+            bodyClasses.push(`accent-${accent}`);
+            document.body.className = bodyClasses.join(' ');
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

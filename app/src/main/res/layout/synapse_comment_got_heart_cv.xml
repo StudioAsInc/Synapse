@@ -1,0 +1,44 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<androidx.cardview.widget.CardView
+		android:id="@+id/main"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="12dp"
+		app:cardBackgroundColor="#FFFFFF"
+		app:cardElevation="2dp"
+		app:cardCornerRadius="8dp">
+		<LinearLayout
+			android:id="@+id/body"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+			<ImageView
+				android:id="@+id/heart"
+				android:focusable="false"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:layout_marginRight="8dp"
+				android:padding="8dp"
+				android:src="@drawable/line_video_player_icons_1"
+				android:scaleType="centerInside" />
+			<TextView
+				android:id="@+id/title"
+				android:focusable="false"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="18sp"
+				android:textStyle="bold"
+				android:textColor="#000000"
+				tools:replace="android:text"
+				android:text="@string/comment_liked_by_publisher" />
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+</LinearLayout>

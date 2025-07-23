@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Attributes for your other custom views -->
+    <declare-styleable name="CustomView">
+        <attr name="bgColor" format="color" />
+        <attr name="cornerRadius" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="CustomSwitcher">
+        <attr name="switcher_on_color" format="color" />
+        <attr name="switcher_off_color" format="color" />
+    </declare-styleable>
+    
+    <declare-styleable name="RatioImageView">
+        <attr name="hwRatio" format="float" />
+    </declare-styleable>
+
+    <!--
+    ====================================================================
+    THIS IS THE BLOCK THAT FIXES THE QR SCANNER ERRORS
+    Attributes for the CodeScannerView library
+    ====================================================================
+    -->
+    <declare-styleable name="CodeScannerView">
+        <attr name="frameColor" format="color"/>
+        <attr name="maskColor" format="color"/>
+        <attr name="frameThickness" format="dimension"/>
+        <attr name="frameCornersSize" format="dimension"/>
+        <attr name="frameCornersRadius" format="dimension"/>
+        <attr name="frameAspectRatioWidth" format="float"/>
+        <attr name="frameAspectRatioHeight" format="float"/>
+        <attr name="frameSize" format="float"/>
+        <attr name="autoFocusButtonVisible" format="boolean"/>
+        <attr name="autoFocusButtonColor" format="color"/>
+        <attr name="flashButtonVisible" format="boolean"/>
+        <attr name="flashButtonColor" format="color"/>
+    </declare-styleable>
+
+</resources>

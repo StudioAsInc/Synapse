@@ -1,0 +1,129 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:id="@+id/body"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#FFFFFF"
+		android:orientation="vertical">
+		<com.google.android.material.tabs.TabLayout
+			android:id="@+id/MessagesPageTabLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#FFFFFF"
+			app:tabGravity="fill"
+			app:tabMode="fixed"
+			app:tabIndicatorHeight="3dp"
+			app:tabIndicator="@drawable/m3_tab_custom" />
+		<LinearLayout
+			android:id="@+id/middleLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_weight="1">
+			<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+				android:id="@+id/swipeLayout"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="#FFFFFF">
+				<LinearLayout
+					android:id="@+id/swipeBody"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:orientation="vertical">
+					<LinearLayout
+						android:id="@+id/InboxChatMessagesLayout"
+						android:layout_width="match_parent"
+						android:layout_height="match_parent"
+						android:orientation="vertical">
+						<androidx.recyclerview.widget.RecyclerView
+							android:id="@+id/InboxRecyclerView"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:listSelector="@drawable/no_highlight"/>
+							tools:listitem="@layout/inbox_msg_list_cv_synapse" />
+						<TextView
+							android:id="@+id/noInbox"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:padding="8dp"
+							android:gravity="center_horizontal|center_vertical"
+							android:textSize="18sp"
+							android:textColor="#757575"
+							tools:replace="android:text"
+							android:text="@string/m_no_inbox" />
+					</LinearLayout>
+				</LinearLayout>
+			</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+			<LinearLayout
+				android:id="@+id/noInternetBody"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:padding="8dp"
+				android:gravity="center_horizontal|center_vertical"
+				android:orientation="vertical">
+				<ImageView
+					android:id="@+id/noInternetBodyIc"
+					android:layout_width="100dp"
+					android:layout_height="100dp"
+					android:layout_marginBottom="16dp"
+					android:src="@drawable/user_not_found_ic"
+					android:scaleType="centerInside" />
+				<TextView
+					android:id="@+id/noInternetBodyTitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="16dp"
+					android:text="Something went wrong"
+					android:textSize="20sp"
+					android:textStyle="bold"
+					android:textColor="#000000" />
+				<TextView
+					android:id="@+id/noInternetBodySubtitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="16dp"
+					android:text="Reasons may be:\n\n• You have no or weak internet connection.\n• The application may be under maintenance.\n• There may be technical problems on our side."
+					android:textSize="14sp"
+					android:textColor="#757575" />
+				<TextView
+					android:id="@+id/noInternetBodyRetry"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:paddingLeft="16dp"
+					android:paddingTop="8dp"
+					android:paddingRight="16dp"
+					android:paddingBottom="8dp"
+					android:background="#2196F3"
+					android:textSize="18sp"
+					android:textColor="#FFFFFF"
+					tools:replace="android:text"
+					android:text="@string/retry" />
+			</LinearLayout>
+			<LinearLayout
+				android:id="@+id/loadingBody"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:padding="8dp"
+				android:gravity="center_horizontal|center_vertical"
+				android:orientation="horizontal">
+				<com.google.android.material.progressindicator.CircularProgressIndicator
+					android:id="@+id/loading_bar"
+					android:layout_width="48dp"
+					android:layout_height="48dp"
+					android:indeterminate="true"
+					style="?attr/circularProgressIndicatorStyle"
+					app:waveSpeed="20dp"
+					app:wavelength="17dp"
+					app:waveAmplitude="2dp"
+					app:indicatorSize="60dp"
+					app:indicatorDirectionCircular="counterclockwise" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,136 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      build-type:
+        description: 'Build type (debug or release)'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+      skip-tests:
+        description: 'Skip running unit tests'
+        required: false
+        default: 'false'
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Find or Generate Gradle Wrapper
+      id: find-wrapper
+      run: |
+        if [ -f "gradlew" ]; then
+          echo "GRADLEW_PATH=./gradlew" >> $GITHUB_OUTPUT
+        elif [ -f "app/gradlew" ]; then
+          echo "GRADLEW_PATH=./app/gradlew" >> $GITHUB_OUTPUT
+        else
+          # Fallback to generating a wrapper if not found
+          echo "Gradle Wrapper not found. Generating a new one."
+          gradle wrapper --gradle-version 8.14.2 --distribution-type bin
+          echo "GRADLEW_PATH=./gradlew" >> $GITHUB_OUTPUT
+        fi
+        echo "Using Gradle Wrapper at: $(cat $GITHUB_OUTPUT | grep GRADLEW_PATH)"
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
+
+    # MODIFICATION: Added 'with' block to install the required Android 34 platform
+    - name: Set up Android SDK
+      uses: android-actions/setup-android@v3
+      with:
+        # Your project uses compileSdkVersion 34, so you must install the
+        # corresponding platform SDK on the runner.
+        packages: 'platforms;android-34'
+
+    - name: Create and Verify google-services.json
+      env:
+        GOOGLE_SERVICES: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        GRADLEW_PATH: ${{ steps.find-wrapper.outputs.GRADLEW_PATH }}
+      run: |
+        echo "Creating google-services.json file..."
+        # Using printf is safer for writing multi-line secrets
+        printf "%s\n" "$GOOGLE_SERVICES" > app/google-services.json
+        
+        echo "Verifying file was created and is not empty:"
+        if [ -s "app/google-services.json" ]; then
+          echo "File created successfully. Contents (first 5 lines):"
+          head -n 5 app/google-services.json
+        else
+          echo "::error::google-services.json was not created or is empty. Check your GOOGLE_SERVICES_JSON secret."
+          exit 1
+        fi
+        
+        # Make gradlew executable here to be used in the next step
+        chmod +x "$GRADLEW_PATH"
+
+    - name: Run Gradle Build
+      id: gradle-build
+      env:
+        GRADLEW_PATH: ${{ steps.find-wrapper.outputs.GRADLEW_PATH }}
+      run: |
+        # Set build parameters from workflow inputs
+        BUILD_TYPE=${{ github.event.inputs.build-type || 'debug' }}
+        TEST_FLAG=${{ github.event.inputs.skip-tests == 'true' && '-x test' || '' }}
+        
+        echo "Starting build for type: $BUILD_TYPE"
+        
+        # The ^ operator capitalizes the first letter (e.g., debug -> Debug)
+        # This is a standard Gradle task naming convention for Android
+        "$GRADLEW_PATH" clean assemble${BUILD_TYPE^} \
+          $TEST_FLAG \
+          --no-daemon \
+          --stacktrace \
+          --warning-mode all
+    
+    # MODIFICATION: Added 'if: success()' to ensure this only runs on a successful build
+    - name: Find APK
+      id: find-apk
+      if: success()
+      run: |
+        BUILD_TYPE=${{ github.event.inputs.build-type || 'debug' }}
+        APK_PATH=$(find app/build/outputs/apk/$BUILD_TYPE -name '*.apk' | head -n 1)
+        if [[ -z "$APK_PATH" ]]; then
+          echo "::error::APK not found after build. Please check the build logs for errors."
+          exit 1
+        fi
+        echo "Found APK: $APK_PATH"
+        echo "apk_path=$APK_PATH" >> $GITHUB_OUTPUT
+
+    # MODIFICATION: Added 'if: success()' to ensure this only runs on a successful build
+    - name: Upload APK as Artifact
+      if: success()
+      uses: actions/upload-artifact@v4
+      with:
+        name: synapse-${{ github.event.inputs.build-type || 'debug' }}.apk
+        path: ${{ steps.find-apk.outputs.apk_path }}
+        retention-days: 7
+        if-no-files-found: error
+
+    - name: Upload Build Reports on Failure
+      if: failure()
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-reports
+        path: |
+          **/build/reports/
+        retention-days: 3

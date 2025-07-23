@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy & Security - Synapse</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script>
+        // Configure Tailwind CSS
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], },
+                    colors: {
+                        primary: { DEFAULT: '#445E91', 50: '#E8EBF2', 100: '#D5DBE8', 200: '#B0BCD5', 300: '#8A9DC2', 400: '#657EAF', 500: '#445E91', 600: '#354873', 700: '#263255', 800: '#171D36', 900: '#080A18' },
+                        accent: { blue: '#3b82f6', purple: '#8b5cf6', green: '#22c55e', pink: '#ec4899', orange: '#f97316', red: '#ef4444' },
+                    },
+                    keyframes: {
+                        'sheet-in': { 'from': { transform: 'translateY(100%)' }, 'to': { transform: 'translateY(0)' } },
+                        'sheet-out': { 'from': { transform: 'translateY(0)' }, 'to': { transform: 'translateY(100%)' } },
+                        'fade-in': { 'from': { opacity: '0' }, 'to': { opacity: '1' } },
+                        'shake': { '0%, 100%': { transform: 'translateX(0)' }, '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-5px)' }, '20%, 40%, 60%, 80%': { transform: 'translateX(5px)' } }
+                    },
+                    animation: {
+                        'sheet-in': 'sheet-in 0.35s cubic-bezier(0.32, 0.72, 0, 1) forwards',
+                        'sheet-out': 'sheet-out 0.3s ease-out forwards',
+                        'fade-in': 'fade-in 0.3s ease-in-out forwards',
+                        'shake': 'shake 0.5s ease-in-out',
+                    }
+                },
+            },
+        };
+    </script>
+
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s ease, color 0.3s ease; overflow: hidden; }
+        #appContainer { height: 100vh; overflow-y: auto; }
+        .section-content { padding-top: 64px; }
+        header { display: flex; align-items: center; justify-content: space-between; }
+        #headerTitle { flex-grow: 1; text-align: left; transform: translateX(calc(40px - 1rem)); }
+
+        .setting-item { transition: background-color 0.2s ease, transform 0.2s ease; }
+        .setting-item:active { transform: scale(0.98); }
+        .setting-item.hidden { display: none; }
+
+        .toggle-switch { width: 3.25rem; height: 1.75rem; padding: 0.25rem; background-color: #e5e7eb; transition: background-color 0.3s ease;}
+        .dark .toggle-switch { background-color: #4b5563; }
+        .toggle-dot { width: 1.25rem; height: 1.25rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .peer:checked ~ .toggle-switch { background-color: var(--accent-color) !important; }
+        .peer:checked ~ .toggle-switch .toggle-dot { transform: translateX(1.5rem); }
+        
+        /* Dynamic Accent Color Theming */
+        .accent-text { color: var(--accent-color) !important; }
+        :root { --accent-color: #445E91; }
+        .accent-blue { --accent-color: #3b82f6; }
+        .accent-purple { --accent-color: #8b5cf6; }
+        .accent-green { --accent-color: #22c55e; }
+        .accent-pink { --accent-color: #ec4899; }
+        .accent-orange { --accent-color: #f97316; }
+        .accent-red { --accent-color: #ef4444; }
+
+        .bottom-sheet-overlay { background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(4px); transition: opacity 0.35s ease; }
+        .bottom-sheet { box-shadow: 0 -10px 30px -5px rgba(0,0,0,0.1); max-height: 70vh; overflow-y: auto; }
+        
+        .modal { transition: opacity 0.3s ease; backdrop-filter: blur(5px); }
+        .modal-content { transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease; }
+        .modal.hidden .modal-content { transform: scale(0.95); opacity: 0; }
+        
+        .passcode-dot { transition: all 0.2s ease; }
+        .passcode-dot.filled { transform: scale(1.1); background-color: var(--accent-color); }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <div id="loadingOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-300">
+        <i class="fa-solid fa-shield-halved text-4xl text-primary-500 animate-pulse"></i>
+    </div>
+
+    <div id="appContainer" class="max-w-xl mx-auto relative overflow-x-hidden bg-gray-100 dark:bg-gray-800 hidden">
+        <header class="fixed top-0 left-0 right-0 max-w-xl mx-auto h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm z-30 px-4">
+            <a href="SettingsActivity.html" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h1 id="headerTitle" class="text-lg font-bold text-gray-900 dark:text-gray-100 px-4 truncate">Privacy & Security</h1>
+            <div class="w-10 h-10 shrink-0"></div>
+        </header>
+
+        <div id="privacySettings" class="section-content"></div>
+    </div>
+
+    <div id="modal-container"></div>
+    
+    <div id="templates" class="hidden">
+        <!-- Sheet/Action Item -->
+        <li class="setting-item flex items-center p-4 cursor-pointer">
+            <span class="flex-1 overflow-hidden pr-2">
+                <p class="font-medium setting-title truncate"></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 setting-description truncate"></p>
+            </span>
+            <div class="setting-control flex-shrink-0 flex items-center gap-2">
+                <span class="font-medium text-gray-600 dark:text-gray-300 setting-value"></span>
+                <i class="fas fa-chevron-right text-gray-400"></i>
+            </div>
+        </li>
+        
+        <!-- Toggle Item -->
+        <li class="setting-item flex items-center p-4 cursor-pointer">
+             <span class="flex-1 overflow-hidden pr-2">
+                <p class="font-medium setting-title truncate"></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 setting-description truncate"></p>
+            </span>
+            <label class="toggle-control relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="toggle-switch rounded-full transition-colors"><div class="toggle-dot bg-white rounded-full shadow-md"></div></div>
+            </label>
+        </li>
+
+        <div id="bottomSheetTemplate" class="fixed inset-0 z-40 flex flex-col justify-end">
+            <div class="bottom-sheet-overlay absolute inset-0 opacity-0 animate-fade-in"></div>
+            <div class="bottom-sheet relative bg-white dark:bg-gray-800 rounded-t-2xl p-4 opacity-0 animate-sheet-in">
+                <div class="w-10 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full mx-auto mb-4"></div>
+                <h3 class="text-lg font-bold text-center mb-4 sheet-title"></h3>
+                <ul class="sheet-options-list space-y-1"></ul>
+            </div>
+        </div>
+        
+        <li class="bottom-sheet-option flex items-center p-3 rounded-lg cursor-pointer">
+            <span class="option-label flex-1 font-medium"></span>
+            <i class="fas fa-check text-lg accent-text opacity-0"></i>
+        </li>
+
+        <!-- Passcode Modal -->
+        <div id="passcodeModal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 opacity-0 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-xs shadow-xl text-center">
+                <h3 class="text-lg font-bold modal-title">Enter Passcode</h3>
+                <div class="flex justify-center space-x-4 my-6">
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    <div class="passcode-dot w-4 h-4 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                </div>
+                <p class="error-message text-red-500 text-sm h-5 mb-2"></p>
+                <div class="grid grid-cols-3 gap-4"></div>
+                <button class="modal-cancel w-full mt-6 py-2 text-sm text-gray-500 dark:text-gray-400">Cancel</button>
+            </div>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmActionModal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center z-40 p-4 opacity-0 hidden">
+            <div class="modal-content bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-sm shadow-xl">
+                <div class="text-center">
+                    <i class="fa-solid fa-triangle-exclamation text-4xl text-yellow-500 mb-4 modal-icon"></i>
+                    <h3 class="text-lg font-bold modal-title">Are you sure?</h3>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 my-4 modal-message">This action cannot be undone.</p>
+                </div>
+                <div class="flex gap-3 mt-4">
+                    <button class="modal-cancel w-full py-2 bg-gray-200 dark:bg-gray-700 rounded-lg">Cancel</button>
+                    <button class="modal-confirm w-full py-2 bg-red-500 text-white rounded-lg font-bold">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseConfig = { apiKey: "AIzaSyCvefmiD5UjOo7ZkoUKhwNd0XGrnK52quE", authDomain: "synapse-social-sai.firebaseapp.com", databaseURL: "https://synapse-social-sai-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "synapse-social-sai", storageBucket: "synapse-social-sai.firebasestorage.app", appId: "1:269633434355:android:67b44261499ca8b0a3bd86" };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        const dom = {
+            html: document.documentElement,
+            body: document.body,
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            appContainer: document.getElementById('appContainer'),
+            modalContainer: document.getElementById('modal-container'),
+            templates: document.getElementById('templates'),
+            privacySettings: document.getElementById('privacySettings'),
+        };
+
+        let currentUser = null, userSettings = {}, debounceTimer = null;
+
+        const defaultSettings = {
+            lastSeen: "followers", profilePhotoVisibility: "public", readReceipts: "followers", typingIndicator: true,
+            forwardedMessagesLink: true, callsPrivacy: "public", groupInvites: "public", p2pCalls: 'followers',
+            passcodeLock: false, passcode: null, autoLock: 300, twoStepVerification: false,
+            phoneNumberVisibility: "followers", showInSearchEngines: true, syncedContacts: true, paymentInfo: true,
+            theme: "system", accentColor: "primary",
+        };
+        
+        const settingsConfig = {
+            privacySettings: {
+                groups: [
+                    { title: 'Privacy', items: [
+                        { key: 'lastSeen', title: 'Last Seen & Online', desc: 'Control who can see your online status', type: 'sheet', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                        { key: 'profilePhotoVisibility', title: 'Profile Photo', desc: 'Control who can see your avatar', type: 'sheet', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                        { key: 'forwardedMessagesLink', title: 'Show Profile in Forwarded Messages', desc: 'Link to your account when messages are forwarded', type: 'toggle' },
+                        { key: 'readReceipts', title: 'Read Receipts', desc: 'Control who sees when you read messages', type: 'sheet', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                        { key: 'typingIndicator', title: 'Show Typing Indicator', desc: 'Let others see when you are typing', type: 'toggle' },
+                    ]},
+                    { title: 'Security', items: [
+                        { key: 'passcodeLock', title: 'Passcode Lock', desc: 'Secure the app with a 4-digit code', type: 'action', action: openPasscodeModal },
+                        { key: 'autoLock', title: 'Auto-Lock', desc: 'If inactive for a period of time', type: 'sheet', options: { 60: '1 Minute', 300: '5 Minutes', 3600: '1 Hour' }, dependsOn: 'passcodeLock' },
+                        { key: 'twoStepVerification', title: 'Two-Step Verification', desc: 'Require a password when logging in', type: 'toggle' },
+                        { key: 'blockedUsers', title: 'Blocked Users', desc: 'View and manage blocked users', type: 'action', href: 'BlockedUsers.html' },
+                        { key: 'activeSessions', title: 'Active Sessions', desc: 'Manage devices logged into your account', type: 'action', href: 'ActiveSessions.html' },
+                    ]},
+                    { title: 'Interactions & Discovery', items: [
+                        { key: 'callsPrivacy', title: 'Who can call me', desc: 'Control who can call you', type: 'sheet', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                        { key: 'p2pCalls', title: 'Peer-to-Peer Calls', desc: 'Used to improve call quality', type: 'sheet', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                        { key: 'groupInvites', title: 'Who can add me to groups', desc: 'Control who can add you to groups', type: 'sheet', options: { public: 'Everyone', followers: 'Followers' } },
+                        { key: 'phoneNumberVisibility', title: 'Who can find me by my number', desc: 'Control who can find you by your phone number', type: 'sheet', options: { public: 'Everyone', followers: 'Followers', private: 'Nobody' } },
+                        { key: 'showInSearchEngines', title: 'Visible on Search Engines', desc: 'Allow search engines to link to your profile', type: 'toggle' },
+                    ]},
+                    { title: 'Data Management', items: [
+                        { key: 'deleteSyncedContacts', title: 'Delete Synced Contacts', desc: 'Remove contacts uploaded from your device', type: 'action', action: () => openConfirmModal({ title: 'Delete Contacts?', message: 'All synced contacts will be removed from Synapse servers.', onConfirm: () => console.log("Contacts Deleted") }) },
+                        { key: 'clearPaymentInfo', title: 'Clear Payment & Shipping Info', desc: 'Remove all saved payment details', type: 'action', action: () => openConfirmModal({ title: 'Clear Payments?', message: 'All saved payment and shipping info will be permanently deleted.', onConfirm: () => console.log("Payments Cleared") }) },
+                    ]}
+                ]
+            }
+        };
+        
+        function init() {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadSettings(user.uid);
+                    buildUI();
+                    setTimeout(() => {
+                        dom.loadingOverlay.classList.add('opacity-0');
+                        dom.appContainer.classList.remove('hidden');
+                        setTimeout(() => dom.loadingOverlay.classList.add('hidden'), 300);
+                    }, 200);
+                } else { window.location.href = 'SettingsActivity.html'; }
+            });
+        }
+
+        async function loadSettings(uid) {
+            try {
+                const snapshot = await database.ref(`users/${uid}/settings`).once('value');
+                userSettings = { ...defaultSettings, ...snapshot.val() };
+            } catch (error) { userSettings = { ...defaultSettings }; }
+        }
+        
+        function updateSetting(key, value) {
+            userSettings[key] = value;
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(saveSettingsToFirebase, 1000);
+        }
+
+        async function saveSettingsToFirebase() {
+            if (!currentUser) return;
+            try { await database.ref(`users/${currentUser.uid}/settings`).update(userSettings); } catch (error) { console.error("Error saving settings:", error); }
+        }
+        
+        function buildUI() {
+            buildPrivacyPage();
+            applyTheme();
+            updateAllControlValues();
+        }
+
+        function buildPrivacyPage() {
+            dom.privacySettings.innerHTML = '';
+            const content = document.createElement('div');
+            content.className = 'p-4 space-y-6 pb-24';
+            
+            settingsConfig.privacySettings.groups.forEach((group) => {
+                const groupEl = document.createElement('div');
+                const title = document.createElement('h3');
+                title.className = 'px-4 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase';
+                title.textContent = group.title;
+                groupEl.appendChild(title);
+                
+                const list = document.createElement('ul');
+                list.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+                group.items.forEach(item => list.appendChild(buildSettingItem(item)));
+                groupEl.appendChild(list);
+                content.appendChild(groupEl);
+            });
+            dom.privacySettings.appendChild(content);
+        }
+        
+        function buildSettingItem(itemConfig) {
+            const isToggle = itemConfig.type === 'toggle';
+            const li = dom.templates.querySelector(isToggle ? 'li:has(.toggle-switch)' : 'li:has(.setting-value)').cloneNode(true);
+            
+            li.dataset.settingKey = itemConfig.key;
+            if (itemConfig.dependsOn) li.dataset.dependsOn = itemConfig.dependsOn;
+            li.querySelector('.setting-title').textContent = itemConfig.title;
+            if(li.querySelector('.setting-description')) li.querySelector('.setting-description').textContent = itemConfig.desc;
+            
+            li.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (itemConfig.type === 'sheet') {
+                    showBottomSheet(itemConfig.key, itemConfig.title, itemConfig.options, userSettings[itemConfig.key]);
+                } else if (isToggle) {
+                    const checkbox = li.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    updateSetting(itemConfig.key, checkbox.checked);
+                    if(itemConfig.key === 'passcodeLock') { // Special handling to open modal if enabling
+                        if(checkbox.checked) openPasscodeModal();
+                    }
+                } else if (itemConfig.type === 'action') {
+                    if (itemConfig.href) window.location.href = itemConfig.href;
+                    else if (itemConfig.action) itemConfig.action();
+                }
+            });
+            return li;
+        }
+
+        function updateAllControlValues() {
+            settingsConfig.privacySettings.groups.flatMap(g => g.items).forEach(item => {
+                const li = document.querySelector(`[data-setting-key="${item.key}"]`);
+                if (!li) return;
+                
+                const value = userSettings[item.key];
+                if (item.type === 'sheet') {
+                    li.querySelector('.setting-value').textContent = item.options[value] || 'N/A';
+                } else if (item.type === 'toggle') {
+                    li.querySelector('input[type="checkbox"]').checked = value;
+                }
+                if (item.dependsOn) {
+                    li.classList.toggle('hidden', !userSettings[item.dependsOn]);
+                }
+            });
+        }
+        
+        function applyTheme() {
+            const isDark = userSettings.theme === 'dark' || (userSettings.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            dom.html.classList.toggle('dark', isDark);
+            const accent = userSettings.accentColor || 'primary';
+            const bodyClasses = document.body.className.split(' ').filter(c => !c.startsWith('accent-'));
+            bodyClasses.push(`accent-${accent}`);
+            document.body.className = bodyClasses.join(' ');
+            document.documentElement.style.setProperty('--accent-color', tailwind.config.theme.extend.colors.accent[accent] || tailwind.config.theme.extend.colors.primary.DEFAULT);
+        }
+
+        function showBottomSheet(settingKey, title, options, currentValue) {
+            const sheet = dom.templates.querySelector("#bottomSheetTemplate").cloneNode(true);
+            sheet.querySelector('.sheet-title').textContent = title;
+            const list = sheet.querySelector('.sheet-options-list');
+            const overlay = sheet.querySelector('.bottom-sheet-overlay');
+            const sheetContent = sheet.querySelector('.bottom-sheet');
+
+            Object.entries(options).forEach(([value, label], index) => {
+                const item = dom.templates.querySelector('.bottom-sheet-option').cloneNode(true);
+                item.querySelector('.option-label').textContent = label;
+                if (String(value) === String(currentValue)) item.querySelector('.fa-check').classList.remove('opacity-0');
+                item.style.animation = `fade-in 0.5s ease ${index * 0.05 + 0.1}s forwards`;
+                item.addEventListener('click', () => {
+                    updateSetting(settingKey, (typeof currentValue === 'number') ? Number(value) : value);
+                    document.querySelector(`[data-setting-key="${settingKey}"] .setting-value`).textContent = label;
+                    closeSheet();
+                });
+                list.appendChild(item);
+            });
+            
+            const closeSheet = () => { sheetContent.classList.replace('animate-sheet-in', 'animate-sheet-out'); overlay.style.opacity = 0; setTimeout(() => sheet.remove(), 350); };
+            overlay.addEventListener('click', closeSheet);
+            dom.modalContainer.appendChild(sheet);
+            setTimeout(() => { overlay.style.opacity = 1; sheetContent.style.opacity = 1; }, 10);
+        }
+
+        function openConfirmModal({ title, message, onConfirm }) {
+            const modal = dom.templates.querySelector('#confirmActionModal').cloneNode(true);
+            modal.querySelector('.modal-title').textContent = title;
+            modal.querySelector('.modal-message').textContent = message;
+            const close = () => { modal.classList.add('opacity-0'); setTimeout(() => modal.remove(), 300); };
+            
+            modal.querySelector('.modal-cancel').addEventListener('click', close);
+            modal.querySelector('.modal-confirm').addEventListener('click', () => { onConfirm(); close(); });
+            
+            dom.modalContainer.appendChild(modal);
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function openPasscodeModal() {
+            const modal = dom.templates.querySelector('#passcodeModal').cloneNode(true);
+            const state = { input: "", mode: userSettings.passcodeLock ? "enter" : "set_new", tempPasscode: "" };
+            const elems = {
+                dots: Array.from(modal.querySelectorAll('.passcode-dot')),
+                title: modal.querySelector('.modal-title'),
+                errorMsg: modal.querySelector('.error-message'),
+                numpadContainer: modal.querySelector('.grid'),
+                modalContent: modal.querySelector('.modal-content'),
+                cancelBtn: modal.querySelector('.modal-cancel'),
+            };
+
+            const close = () => { modal.classList.add('opacity-0'); setTimeout(() => modal.remove(), 300); };
+            elems.cancelBtn.addEventListener('click', close);
+            
+            const updateDots = () => elems.dots.forEach((dot, i) => dot.classList.toggle('filled', i < state.input.length));
+
+            const resetInput = (message = "") => {
+                if (message) {
+                    elems.errorMsg.textContent = message;
+                    elems.modalContent.classList.add('animate-shake');
+                    setTimeout(() => elems.modalContent.classList.remove('animate-shake'), 500);
+                } else {
+                    elems.errorMsg.textContent = "";
+                }
+                state.input = "";
+                updateDots();
+            };
+
+            const processInput = () => {
+                if (state.input.length !== 4) return;
+                
+                setTimeout(() => {
+                    if (state.mode === 'enter') {
+                        if (state.input === atob(userSettings.passcode)) {
+                            updateSetting('passcodeLock', false);
+                            updateSetting('passcode', null);
+                            updateAllControlValues();
+                            close();
+                        } else {
+                            resetInput('Incorrect Passcode');
+                        }
+                    } else if (state.mode === 'set_new') {
+                        state.tempPasscode = state.input;
+                        state.mode = 'confirm_new';
+                        elems.title.textContent = 'Confirm Passcode';
+                        resetInput();
+                    } else if (state.mode === 'confirm_new') {
+                        if (state.input === state.tempPasscode) {
+                            updateSetting('passcodeLock', true);
+                            updateSetting('passcode', btoa(state.input)); // Base64 encode
+                            updateAllControlValues();
+                            close();
+                        } else {
+                            state.mode = 'set_new';
+                            elems.title.textContent = 'Set New Passcode';
+                            resetInput('Passcodes did not match');
+                        }
+                    }
+                }, 200);
+            };
+
+            const handleNumpadInput = (val) => {
+                if (state.input.length >= 4) return;
+                if (val === 'del') {
+                    state.input = state.input.slice(0, -1);
+                } else {
+                    state.input += val;
+                }
+                updateDots();
+                processInput();
+            };
+            
+            elems.numpadContainer.innerHTML = '';
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, '', 0, 'del'].forEach(val => {
+                const btn = document.createElement('button');
+                btn.className = "h-16 rounded-full text-2xl font-light flex items-center justify-center active:bg-gray-200 dark:active:bg-gray-700 transition-colors";
+                if(typeof val === 'number') {
+                    btn.textContent = val; btn.onclick = () => handleNumpadInput(val);
+                } else if (val === 'del') {
+                    btn.innerHTML = '<i class="fas fa-delete-left"></i>'; btn.onclick = () => handleNumpadInput('del');
+                }
+                elems.numpadContainer.appendChild(btn);
+            });
+
+            elems.title.textContent = userSettings.passcodeLock ? 'Enter Passcode to Disable' : 'Set New Passcode';
+            
+            dom.modalContainer.appendChild(modal);
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

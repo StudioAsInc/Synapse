@@ -1,0 +1,130 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<LinearLayout
+		android:id="@+id/main"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#FFFFFF"
+		android:orientation="vertical">
+		<LinearLayout
+			android:id="@+id/top"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="8dp"
+			android:background="#FFFFFF"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+			<ImageView
+				android:id="@+id/back"
+				android:layout_width="48dp"
+				android:layout_height="48dp"
+				android:layout_marginRight="8dp"
+				android:padding="12dp"
+				android:src="@drawable/ic_arrow_back_black"
+				android:scaleType="fitCenter" />
+			<TextView
+				android:id="@+id/title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="20sp"
+				android:textStyle="bold"
+				android:textColor="@color/md_theme_tertiary"
+				tools:replace="android:text" />
+			<LinearLayout
+				android:id="@+id/topSpc"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_marginLeft="8dp"
+				android:layout_marginRight="8dp"
+				android:padding="8dp"
+				android:orientation="vertical"
+				android:layout_weight="1" />
+			<Button
+				android:id="@+id/continueButton"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingLeft="30dp"
+				android:paddingTop="8dp"
+				android:paddingRight="30dp"
+				android:paddingBottom="8dp"
+				android:text="@string/continue_button"
+				android:textSize="18sp"
+				android:textColor="@color/colorSurface"
+				style="@style/Widget.Material3Expressive.Button" />
+		</LinearLayout>
+		<com.theartofdev.edmodo.cropper.CropImageView
+			android:id="@+id/cropImageView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#F5F5F5"
+			android:orientation="horizontal" />
+		<LinearLayout
+			android:id="@+id/urlImagePreview"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#F5F5F5"
+			android:orientation="horizontal">
+			<ImageView
+				android:id="@+id/urlImagePreviewImage"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:src="@drawable/default_image"
+				android:scaleType="centerCrop" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/body"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="#FFFFFF"
+			android:gravity="center_horizontal"
+			android:orientation="vertical">
+			<androidx.recyclerview.widget.RecyclerView
+				android:id="@+id/imagesView"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:paddingLeft="1dp"
+				android:paddingRight="1dp"
+				android:layout_weight="1"
+				tools:listitem="@layout/synapse_create_img_post_image_cv" />
+			<com.google.android.material.button.MaterialButtonGroup
+				android:id="@+id/bottomButtons"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="4dp"
+				android:orientation="horizontal"
+				android:spacing="4dp">
+				<Button
+					android:id="@+id/selectGallery"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:paddingLeft="30dp"
+					android:paddingTop="8dp"
+					android:paddingRight="30dp"
+					android:paddingBottom="8dp"
+					android:text="From Gallery"
+					android:textSize="18sp"
+					android:textColor="@color/colorSurface"
+					android:layout_weight="1"
+					style="@style/Widget.Material3Expressive.Button" />
+				<Button
+					android:id="@+id/From_url"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:paddingLeft="30dp"
+					android:paddingTop="8dp"
+					android:paddingRight="30dp"
+					android:paddingBottom="8dp"
+					android:text="From url"
+					android:textSize="18sp"
+					android:textColor="@color/colorSurface"
+					android:layout_weight="1"
+					style="@style/Widget.Material3Expressive.Button" />
+			</com.google.android.material.button.MaterialButtonGroup>
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,218 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<androidx.cardview.widget.CardView
+		android:id="@+id/roundLayoutBlockBS"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:cardBackgroundColor="#FFFFFF"
+		app:cardElevation="0dp"
+		app:cardCornerRadius="20dp">
+		<LinearLayout
+			android:id="@+id/linear4"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:paddingLeft="15dp"
+			android:paddingTop="10dp"
+			android:paddingRight="15dp"
+			android:paddingBottom="10dp"
+			android:background="@android:color/transparent"
+			android:gravity="center_horizontal"
+			android:orientation="vertical">
+			<LinearLayout
+				android:id="@+id/bs_bar"
+				android:layout_width="50dp"
+				android:layout_height="5dp"
+				android:padding="8dp"
+				android:background="#F5F5F5"
+				android:orientation="horizontal" />
+			<ImageView
+				android:id="@+id/imageview1"
+				android:focusable="false"
+				android:layout_width="70dp"
+				android:layout_height="70dp"
+				android:layout_marginTop="25dp"
+				android:src="@drawable/icon_workspace_premium_round"
+				android:scaleType="fitCenter" />
+			<TextView
+				android:id="@+id/title_with_username"
+				android:focusable="false"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="15dp"
+				android:text="Premium membership"
+				android:textSize="25sp"
+				android:textStyle="bold"
+				android:textColor="#445E91" />
+			<LinearLayout
+				android:id="@+id/linear23"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dp"
+				android:layout_marginBottom="8dp"
+				android:gravity="center_horizontal|center_vertical"
+				android:orientation="horizontal">
+				<ImageView
+					android:id="@+id/imageview15"
+					android:focusable="false"
+					android:layout_width="25dp"
+					android:layout_height="25dp"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="12dp"
+					android:src="@drawable/icon_storage_round"
+					android:scaleType="fitCenter" />
+				<LinearLayout
+					android:id="@+id/linear27"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:orientation="vertical"
+					android:layout_weight="1">
+					<TextView
+						android:id="@+id/textview20"
+						android:focusable="false"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Server access"
+						android:textSize="18sp"
+						android:textStyle="bold"
+						android:textColor="#000000" />
+					<TextView
+						android:id="@+id/textview21"
+						android:focusable="false"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="5dp"
+						android:text="Get access to the Synapse server for uploading photos and videos up to 15 GB"
+						android:textSize="14sp"
+						android:textColor="#616161" />
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout
+				android:id="@+id/linear28"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginBottom="8dp"
+				android:gravity="center_horizontal|center_vertical"
+				android:orientation="horizontal">
+				<ImageView
+					android:id="@+id/imageview16"
+					android:focusable="false"
+					android:layout_width="25dp"
+					android:layout_height="25dp"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="12dp"
+					android:src="@drawable/icon_do_disturb_on_round"
+					android:scaleType="fitCenter" />
+				<LinearLayout
+					android:id="@+id/linear29"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:orientation="vertical"
+					android:layout_weight="1">
+					<TextView
+						android:id="@+id/textview22"
+						android:focusable="false"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Block ads"
+						android:textSize="18sp"
+						android:textStyle="bold"
+						android:textColor="#000000" />
+					<TextView
+						android:id="@+id/textview23"
+						android:focusable="false"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="5dp"
+						android:text="Experience an add free seamless UI"
+						android:textSize="14sp"
+						android:textColor="#616161" />
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout
+				android:id="@+id/linear30"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_horizontal|center_vertical"
+				android:orientation="horizontal">
+				<ImageView
+					android:id="@+id/imageview17"
+					android:focusable="false"
+					android:layout_width="25dp"
+					android:layout_height="25dp"
+					android:layout_marginLeft="10dp"
+					android:layout_marginRight="12dp"
+					android:src="@drawable/icon_verified_round"
+					android:scaleType="fitCenter" />
+				<LinearLayout
+					android:id="@+id/linear31"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="8dp"
+					android:orientation="vertical"
+					android:layout_weight="1">
+					<TextView
+						android:id="@+id/textview24"
+						android:focusable="false"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:text="Become verified"
+						android:textSize="18sp"
+						android:textStyle="bold"
+						android:textColor="#000000" />
+					<TextView
+						android:id="@+id/textview25"
+						android:focusable="false"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="5dp"
+						android:text="Become a verified user, create your unique identity across Synapse."
+						android:textSize="14sp"
+						android:textColor="#616161" />
+				</LinearLayout>
+			</LinearLayout>
+			<LinearLayout
+				android:id="@+id/ProfilePageTabUserInfoSecondaryButtons"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dp"
+				android:layout_marginBottom="15dp"
+				android:orientation="vertical">
+				<TextView
+					android:id="@+id/Block_bs_btn"
+					android:focusable="false"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="17dp"
+					android:paddingTop="12dp"
+					android:paddingBottom="12dp"
+					android:background="#445E91"
+					android:gravity="center_horizontal|center_vertical"
+					android:text="Subscribe"
+					android:textSize="16sp"
+					android:textColor="#FFFFFF"
+					android:layout_weight="1" />
+				<TextView
+					android:id="@+id/notReadyToBlock_btn"
+					android:focusable="false"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:paddingTop="10dp"
+					android:paddingBottom="10dp"
+					android:background="@android:color/transparent"
+					android:gravity="center_horizontal|center_vertical"
+					android:text="See more features of premium"
+					android:textSize="16sp"
+					android:textStyle="bold"
+					android:textColor="#445E91"
+					android:layout_weight="1" />
+			</LinearLayout>
+		</LinearLayout>
+	</androidx.cardview.widget.CardView>
+</LinearLayout>

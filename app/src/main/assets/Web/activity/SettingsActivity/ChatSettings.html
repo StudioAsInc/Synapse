@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chat Settings - Synapse</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts for Premium Look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <script>
+        // Configure Tailwind CSS for Dark Mode and Customizations
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], },
+                    colors: {
+                        primary: { DEFAULT: '#445E91', 50: '#E8EBF2', 100: '#D5DBE8', 200: '#B0BCD5', 300: '#8A9DC2', 400: '#657EAF', 500: '#445E91', 600: '#354873', 700: '#263255', 800: '#171D36', 900: '#080A18' },
+                        accent: { blue: '#3b82f6', purple: '#8b5cf6', green: '#22c55e', pink: '#ec4899', orange: '#f97316', red: '#ef4444' },
+                    },
+                },
+            },
+        };
+    </script>
+
+    <style>
+        * { -webkit-tap-highlight-color: transparent; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+        html { scroll-behavior: smooth; }
+        body { transition: background-color 0.3s ease, color 0.3s ease; overflow: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: -1; background-color: inherit; transition: background-color 0.3s ease-in-out; }
+        #appContainer { height: 100vh; overflow-y: auto; }
+        .section-content { padding-top: 64px; }
+        header { display: flex; align-items: center; justify-content: space-between; }
+        #headerTitle { flex-grow: 1; text-align: left; transform: translateX(calc(40px - 1rem)); }
+
+        .setting-item { transition: background-color 0.2s ease, transform 0.2s ease; }
+        .setting-item:active { transform: scale(0.98); }
+
+        .toggle-switch { width: 3.25rem; height: 1.75rem; padding: 0.25rem; background-color: #e5e7eb; transition: background-color 0.3s ease;}
+        .dark .toggle-switch { background-color: #4b5563; }
+        .toggle-dot { width: 1.25rem; height: 1.25rem; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
+        .peer:checked ~ .toggle-switch { background-color: #445E91 !important; }
+        .peer:checked ~ .toggle-switch .toggle-dot { transform: translateX(1.5rem); }
+        
+        /* Dynamic Accent Color Theming */
+        .accent-text { color: #445E91 !important; }
+        .peer:checked ~ .toggle-switch, input[type="range"]::-webkit-slider-thumb { background-color: #445E91 !important; }
+
+        .accent-blue .peer:checked ~ .toggle-switch, .accent-blue input[type="range"]::-webkit-slider-thumb { background-color: #3b82f6 !important; }
+        .accent-blue .accent-text { color: #3b82f6 !important; }
+        .accent-purple .peer:checked ~ .toggle-switch, .accent-purple input[type="range"]::-webkit-slider-thumb { background-color: #8b5cf6 !important; }
+        .accent-purple .accent-text { color: #8b5cf6 !important; }
+        .accent-green .peer:checked ~ .toggle-switch, .accent-green input[type="range"]::-webkit-slider-thumb { background-color: #22c55e !important; }
+        .accent-green .accent-text { color: #22c55e !important; }
+        .accent-pink .peer:checked ~ .toggle-switch, .accent-pink input[type="range"]::-webkit-slider-thumb { background-color: #ec4899 !important; }
+        .accent-pink .accent-text { color: #ec4899 !important; }
+        .accent-orange .peer:checked ~ .toggle-switch, .accent-orange input[type="range"]::-webkit-slider-thumb { background-color: #f97316 !important; }
+        .accent-orange .accent-text { color: #f97316 !important; }
+        .accent-red .peer:checked ~ .toggle-switch, .accent-red input[type="range"]::-webkit-slider-thumb { background-color: #ef4444 !important; }
+        .accent-red .accent-text { color: #ef4444 !important; }
+
+        /* Range Input Styling */
+        input[type="range"] { -webkit-appearance: none; height: 6px; border-radius: 3px; background: #e5e7eb; }
+        .dark input[type="range"] { background: #4b5563; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: transform 0.1s ease, background-color 0.3s ease; }
+        input[type="range"]::-webkit-slider-thumb:active { transform: scale(1.2); }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 transition-opacity duration-300">
+        <i class="fa-solid fa-comments text-4xl accent-text animate-pulse"></i>
+    </div>
+
+    <!-- Main App Container -->
+    <div id="appContainer" class="max-w-xl mx-auto relative overflow-x-hidden bg-gray-100 dark:bg-gray-800 hidden">
+        
+        <!-- Fixed Header -->
+        <header class="fixed top-0 left-0 right-0 max-w-xl mx-auto h-16 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm z-30 px-4">
+            <a href="SettingsActivity.html" id="backButton" aria-label="Go back" class="w-10 h-10 flex items-center justify-center shrink-0 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+                <i class="fas fa-arrow-left text-lg"></i>
+            </a>
+            <h1 id="headerTitle" class="text-lg font-bold text-gray-900 dark:text-gray-100 px-4 truncate">
+                Chat Settings
+            </h1>
+            <div class="w-10 h-10 shrink-0"></div> <!-- Spacer -->
+        </header>
+
+        <!-- Settings Content -->
+        <div id="chatSettings" class="section-content">
+             <!-- Populated by JS -->
+        </div>
+    </div>
+    
+    <!-- =================================================================== -->
+    <!-- HIDDEN TEMPLATES FOR DYNAMIC CONTENT GENERATION -->
+    <!-- =================================================================== -->
+    <div id="templates" class="hidden">
+        
+        <!-- Toggle Switch Item -->
+        <li class="setting-item flex items-center p-4 cursor-pointer">
+             <span class="flex-1 overflow-hidden pr-2">
+                <p class="font-medium setting-title truncate"></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 setting-description truncate"></p>
+            </span>
+            <div class="setting-control flex-shrink-0">
+                <label class="toggle-control relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" class="sr-only peer">
+                    <div class="toggle-switch rounded-full transition-colors"><div class="toggle-dot bg-white rounded-full shadow-md"></div></div>
+                </label>
+            </div>
+        </li>
+        
+        <!-- Range Slider Item -->
+        <li class="setting-item p-4">
+            <div class="flex justify-between items-center mb-2">
+                <span class="font-medium setting-title"></span>
+                <span class="text-sm font-bold text-gray-500 dark:text-gray-400 setting-value"></span>
+            </div>
+            <input type="range" class="w-full">
+        </li>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        const firebaseConfig = { apiKey: "AIzaSyCvefmiD5UjOo7ZkoUKhwNd0XGrnK52quE", authDomain: "synapse-social-sai.firebaseapp.com", databaseURL: "https://synapse-social-sai-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "synapse-social-sai", storageBucket: "synapse-social-sai.firebasestorage.app", appId: "1:269633434355:android:67b44261499ca8b0a3bd86" };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const auth = firebase.auth();
+
+        const dom = {
+            html: document.documentElement,
+            body: document.body,
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            appContainer: document.getElementById('appContainer'),
+            templates: document.getElementById('templates'),
+            chatSettings: document.getElementById('chatSettings'),
+        };
+
+        let currentUser = null;
+        let userSettings = {};
+        let debounceTimer = null;
+
+        const defaultSettings = {
+            textSize: 16, bubbleShape: 12, chatFolders: true, autoPlayGifs: true, 
+            autoPlayVideos: false, linkPreviews: true, sendByEnter: false,
+            theme: "system", accentColor: "primary",
+        };
+        
+        const settingsConfig = {
+            chatSettings: {
+                title: 'Chat Settings',
+                groups: [
+                    { items: [
+                        { key: 'textSize', title: 'Message Text Size', desc: 'Adjust the font size in chats', type: 'range', min: 12, max: 24, unit: 'px' },
+                        { key: 'bubbleShape', title: 'Message Corners', desc: 'Change the shape of message bubbles', type: 'range', min: 5, max: 50, unit: 'px' },
+                        { key: 'chatFolders', title: 'Enable Chat Folders', desc: 'Organize chats into tabs for management', type: 'toggle' },
+                    ]},
+                    { title: 'Behavior', items: [
+                        { key: 'autoPlayGifs', title: 'Auto-Play GIFs', desc: 'Automatically play GIF animations', type: 'toggle' },
+                        { key: 'autoPlayVideos', title: 'Auto-Play Videos', desc: 'Automatically play videos', type: 'toggle' },
+                        { key: 'linkPreviews', title: 'Generate Link Previews', desc: 'Show a preview for links in messages', type: 'toggle' },
+                        { key: 'sendByEnter', title: 'Send by Enter', desc: 'The Enter key will send your message', type: 'toggle' },
+                    ]}
+                ]
+            }
+        };
+        
+        function init() {
+            auth.onAuthStateChanged(async (user) => {
+                if (user) {
+                    currentUser = user;
+                    await loadSettings(user.uid);
+                    buildUI();
+                    dom.loadingOverlay.classList.add('opacity-0');
+                    dom.appContainer.classList.remove('hidden');
+                    setTimeout(() => dom.loadingOverlay.classList.add('hidden'), 300);
+                } else {
+                    window.location.href = 'SettingsActivity.html';
+                }
+            });
+        }
+
+        async function loadSettings(uid) {
+            try {
+                const snapshot = await database.ref(`users/${uid}/settings`).once('value');
+                userSettings = { ...defaultSettings, ...snapshot.val() };
+            } catch (error) {
+                console.error("Failed to load settings:", error);
+                userSettings = { ...defaultSettings };
+            }
+        }
+        
+        function updateSetting(key, value) {
+            if (userSettings[key] === value) return;
+            userSettings[key] = value;
+            console.log(`Setting changed: ${key} =`, value);
+            
+            // Debounce saving to Firebase to avoid rapid writes.
+            // A 1-second delay waits for the user to finish interacting (e.g., sliding)
+            // before saving, which is more efficient.
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(saveSettingsToFirebase, 1000);
+        }
+
+        async function saveSettingsToFirebase() {
+            if (!currentUser) return;
+            try {
+                await database.ref(`users/${currentUser.uid}/settings`).update(userSettings);
+                console.log("Settings saved to Firebase.", userSettings);
+            } catch (error) { console.error("Error saving settings:", error); }
+        }
+        
+        function buildUI() {
+            buildChatSettingsPage();
+            applyTheme();
+            updateAllControlValues();
+            highlightSettingFromURL();
+        }
+
+        function buildChatSettingsPage() {
+            dom.chatSettings.innerHTML = '';
+            const content = document.createElement('div');
+            content.className = 'p-4 space-y-6 pb-24';
+            
+            settingsConfig.chatSettings.groups.forEach((group) => {
+                if(group.title) {
+                    const title = document.createElement('h3');
+                    title.className = 'px-4 pb-2 text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase';
+                    title.textContent = group.title;
+                    content.appendChild(title);
+                }
+                const list = document.createElement('ul');
+                list.className = 'bg-white dark:bg-gray-800 rounded-2xl shadow-sm divide-y divide-gray-100 dark:divide-gray-700';
+                group.items.forEach((item) => list.appendChild(buildSettingItem(item)));
+                content.appendChild(list);
+            });
+            dom.chatSettings.appendChild(content);
+        }
+        
+        function buildSettingItem(itemConfig) {
+            let li;
+            if (itemConfig.type === 'range') {
+                li = dom.templates.querySelector('li:has(input[type="range"])').cloneNode(true);
+                const rangeInput = li.querySelector('input[type="range"]');
+                rangeInput.min = itemConfig.min;
+                rangeInput.max = itemConfig.max;
+                rangeInput.addEventListener('input', (e) => {
+                    li.querySelector('.setting-value').textContent = `${e.target.value}${itemConfig.unit || ''}`;
+                });
+                // The 'change' event fires when the user releases the slider,
+                // this is the perfect time to save the final value.
+                rangeInput.addEventListener('change', (e) => {
+                    updateSetting(itemConfig.key, Number(e.target.value));
+                });
+            } else { // toggle
+                li = dom.templates.querySelector('li:has(.toggle-control)').cloneNode(true);
+                li.addEventListener('click', () => {
+                    const checkbox = li.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    updateSetting(itemConfig.key, checkbox.checked);
+                });
+            }
+            
+            li.dataset.settingKey = itemConfig.key;
+            li.querySelector('.setting-title').textContent = itemConfig.title;
+            if(li.querySelector('.setting-description')) li.querySelector('.setting-description').textContent = itemConfig.desc;
+            
+            return li;
+        }
+
+        function updateAllControlValues() {
+            settingsConfig.chatSettings.groups.forEach(group => {
+                group.items.forEach(item => {
+                    const li = document.querySelector(`[data-setting-key="${item.key}"]`);
+                    if (!li) return;
+                    
+                    const value = userSettings[item.key];
+                    if (item.type === 'range') {
+                        li.querySelector('input[type="range"]').value = value;
+                        li.querySelector('.setting-value').textContent = `${value}${item.unit || ''}`;
+                    } else if (item.type === 'toggle') {
+                        li.querySelector('input[type="checkbox"]').checked = value;
+                    }
+                });
+            });
+        }
+        
+        function applyTheme() {
+            if (!userSettings.theme) return;
+            const isDark = userSettings.theme === 'dark' || (userSettings.theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            dom.html.classList.toggle('dark', isDark);
+            const themeClasses = ['primary', 'blue', 'purple', 'green', 'pink', 'orange', 'red'].map(c => `accent-${c}`);
+            dom.body.classList.remove(...themeClasses);
+            dom.body.classList.add(`accent-${userSettings.accentColor}`);
+        }
+        
+        function highlightSettingFromURL() {
+            const keyToHighlight = new URLSearchParams(window.location.search).get('highlight');
+            if (keyToHighlight) {
+                const targetEl = document.querySelector(`[data-setting-key="${keyToHighlight}"]`);
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    targetEl.classList.add('bg-primary-50', 'dark:bg-primary-900', 'transition-all', 'duration-1000');
+                    setTimeout(() => targetEl.classList.remove('bg-primary-50', 'dark:bg-primary-900'), 1500);
+                }
+            }
+        }
+
+        // --- START THE APP ---
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

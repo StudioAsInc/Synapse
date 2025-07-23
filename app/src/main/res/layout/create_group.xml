@@ -1,0 +1,97 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/_coordinator"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:background="#FAFAFA">
+		<ScrollView
+			android:id="@+id/vscroll3"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:fillViewport="true">
+			<LinearLayout
+				android:id="@+id/body"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="20dp"
+				android:background="#FFFFFF"
+				android:orientation="vertical"
+				android:elevation="2dp">
+				<ImageView
+					android:id="@+id/back"
+					android:layout_width="36dp"
+					android:layout_height="36dp"
+					android:layout_marginBottom="12dp"
+					android:padding="6dp"
+					android:src="@drawable/ic_arrow_back_black"
+					android:scaleType="centerInside"
+					android:background="?android:selectableItemBackgroundBorderless" />
+				<TextView
+					android:id="@+id/title"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="6dp"
+					android:text="Create group"
+					android:textSize="26sp"
+					android:textStyle="bold"
+					android:textColor="#212121" />
+				<TextView
+					android:id="@+id/subtitle"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="24dp"
+					android:text="Create a community of users where everyone\ncan express themselves."
+					android:textSize="14sp"
+					android:textColor="#616161" />
+				<ImageView
+					android:id="@+id/group_picture"
+					android:layout_width="120dp"
+					android:layout_height="120dp"
+					android:layout_marginBottom="20dp"
+					android:background="@drawable/circle_bg"
+					android:src="@drawable/avatar"
+					android:scaleType="centerCrop"
+					android:layout_gravity="center_horizontal" />
+				<EditText
+					android:id="@+id/group_name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginBottom="16dp"
+					android:padding="14dp"
+					android:background="@drawable/edit_text_bg"
+					android:textSize="16sp"
+					android:textColor="#000000"
+					android:hint="Group name"
+					android:textColorHint="#9E9E9E"
+					android:singleLine="true"
+					android:imeOptions="actionNext" />
+				<EditText
+					android:id="@+id/group_describtion"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:padding="14dp"
+					android:background="@drawable/edit_text_bg"
+					android:textSize="16sp"
+					android:textColor="#000000"
+					android:hint="Description (optional)"
+					android:textColorHint="#9E9E9E"
+					android:singleLine="true"
+					android:imeOptions="actionDone" />
+			</LinearLayout>
+		</ScrollView>
+	</LinearLayout>
+	<com.google.android.material.floatingactionbutton.FloatingActionButton
+		android:id="@+id/_fab"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_gravity="right|bottom"
+		app:srcCompat="@drawable/back_ic"
+		android:rotation="180" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
