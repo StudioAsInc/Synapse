@@ -3,9 +3,9 @@
   
   # Synapse
   
-  **Next-Generation Open Source Social Platform**
+  **Express yourself in a better way**
   
-  *Connecting minds, sharing moments, building communities*
+ ⚠️ *This project is under development. Some features may not be available!*
   
   [![License](https://img.shields.io/badge/license-Custom-blue.svg)](#license)
   [![Release](https://img.shields.io/github/v/release/StudioAsInc/Synapse)](https://github.com/StudioAsInc/Synapse/releases)
@@ -19,13 +19,13 @@
 
 ---
 
-## 🌟 Overview
+##⚡️ Introduction
 
-Synapse represents the future of social networking - a lightning-fast, secure, and completely open-source platform designed for meaningful connections. Built with modern technologies and a privacy-first approach, Synapse offers users complete control over their social experience without compromising on performance or security.
+Synapse represents the future of social networking - a lightning-fast, secure, ad free, and completely open-source platform designed for every class of people. Built with modern technologies and a privacy-first approach, Synapse offers users complete control over their social experience without compromising security.
 
-Developed by StudioAs Inc. in 2025, Synapse combines the best aspects of contemporary social platforms while addressing their fundamental shortcomings through transparent, community-driven development.
+Developed by StudioAs Inc. The development was started in 2023 and we expect the final release in 2030.
 
-## ✨ Key Features
+## ✅️ Key Features
 
 **🚀 Performance & Speed**
 - Ultra-fast loading times with optimized codebase
@@ -63,7 +63,7 @@ Synapse is built using a modern, scalable architecture that ensures optimal perf
 
 **Frontend Technologies:**
 - **Java** - Core application logic and business layer
-- **Kotlin** - Modern Android development with enhanced safety
+- **Kotlin** - Modern Android development with enhanced safety⁷
 - **HTML5** - Semantic markup and web standards compliance
 - **CSS3** - Advanced styling with modern layout techniques
 - **JavaScript** - Dynamic interactions and real-time features
@@ -81,7 +81,7 @@ Synapse is built using a modern, scalable architecture that ensures optimal perf
 
 Before setting up Synapse, ensure you have the following installed:
 
-- **Java Development Kit (JDK) 11 or higher**
+- **Java Development Kit (JDK) 8 or higher**
 - **Android Studio** (for mobile development)
 - **Git** for version control
 - **Node.js** (for build tools and dependencies)
@@ -121,7 +121,7 @@ Before setting up Synapse, ensure you have the following installed:
 
 - **Package Name:** `com.synapse.social.studioasinc`
 - **Minimum Android Version:** API 21 (Android 5.0)
-- **Target Android Version:** API 34 (Android 14)
+- **Target Android Version:** API 36 (Android 16)
 
 ## 📱 Platform Support
 
@@ -130,14 +130,13 @@ Synapse is designed to provide a consistent experience across multiple platforms
 - **Android** - Native mobile application with full feature set
 - **Web** - Progressive web application with offline capabilities
 - **Desktop** - Cross-platform desktop application (planned)
+- - **iOS** - Cross-platform iOS application (planned)
 
 ## 🎯 Roadmap
 
 ### Current Version (v1.0)
 - Core social networking features
 - Real-time messaging system
-- Media sharing capabilities
-- Basic community tools
 
 ### Upcoming Features (v1.1-1.2)
 - Advanced AI-powered content recommendations
