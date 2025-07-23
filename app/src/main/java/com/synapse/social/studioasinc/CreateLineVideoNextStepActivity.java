@@ -1,4 +1,5 @@
 package com.synapse.social.studioasinc;
+
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -15,8 +16,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-//import android.support.customtabs.*;
-import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,36 +32,28 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
 import androidx.recyclerview.widget.*;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.swiperefreshlayout.*;
-import androidx.transition.*;
-/*
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
+import com.bumptech.glide.*;
 import com.bumptech.glide.Glide;
-import com.caverock.androidsvg.*;
-*/
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -73,24 +64,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.perf.*;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-/* import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -100,12 +80,8 @@ import java.util.*;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-/*
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
-*/
 import org.json.*;
+
 
 public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 	
@@ -116,6 +92,10 @@ public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 	private HashMap<String, Object> PostSendMap = new HashMap<>();
 	private String UniquePostKey = "";
 	private HashMap<String, Object> m = new HashMap<>();
+	private String filePath = "";
+	private String extension = "";
+	private String fileSize = "";
+	private String fileName = "";
 	
 	private LinearLayout main;
 	private LinearLayout top;
@@ -324,17 +304,17 @@ public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 				}
 				PostSendMap.put("publish_date", String.valueOf((long)(cc.getTimeInMillis())));
 				FirebaseDatabase.getInstance().getReference("skyline/line-posts").child(UniquePostKey).updateChildren(PostSendMap, new DatabaseReference.CompletionListener() {
-						@Override
-						public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-								if (databaseError == null) {
-							        	SketchwareUtil.showMessage(getApplicationContext(), getResources().getString(R.string.post_publish_success));
-							            _LoadingDialog(false);
-							            finish();
-								} else {
-										SketchwareUtil.showMessage(getApplicationContext(), databaseError.getMessage());
-							            _LoadingDialog(false);
-								}
+					@Override
+					public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+						if (databaseError == null) {
+							SketchwareUtil.showMessage(getApplicationContext(), getResources().getString(R.string.post_publish_success));
+							_LoadingDialog(false);
+							finish();
+						} else {
+							SketchwareUtil.showMessage(getApplicationContext(), databaseError.getMessage());
+							_LoadingDialog(false);
 						}
+					}
 				});
 				
 			}
@@ -494,13 +474,13 @@ public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 	}
 	
 	private void initializeLogic() {
-		_detect_theme();
 	}
 	
 	@Override
 	public void onBackPressed() {
 		finish();
 	}
+	
 	public void _LoadingDialog(final boolean _visibility) {
 		m = new HashMap<>();
 		m.put("title", "".concat(" has recently shared a video".concat(".")));
@@ -511,13 +491,13 @@ public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 		m.clear();
 		if (_visibility) {
 			if (SynapseLoadingDialog== null){
-					SynapseLoadingDialog = new ProgressDialog(this);
-					SynapseLoadingDialog.setCancelable(false);
-					SynapseLoadingDialog.setCanceledOnTouchOutside(false);
-					
-					SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
-					SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-					
+				SynapseLoadingDialog = new ProgressDialog(this);
+				SynapseLoadingDialog.setCancelable(false);
+				SynapseLoadingDialog.setCanceledOnTouchOutside(false);
+				
+				SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+				SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+				
 			}
 			SynapseLoadingDialog.show();
 			SynapseLoadingDialog.setContentView(R.layout.loading_synapse);
@@ -577,17 +557,17 @@ public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 			}
 			PostSendMap.put("publish_date", String.valueOf((long)(cc.getTimeInMillis())));
 			FirebaseDatabase.getInstance().getReference("skyline/line-posts").child(UniquePostKey).updateChildren(PostSendMap, new DatabaseReference.CompletionListener() {
-					@Override
-					public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
-							if (databaseError == null) {
-						        	SketchwareUtil.showMessage(getApplicationContext(), getResources().getString(R.string.post_publish_success));
-						            _LoadingDialog(false);
-						            finish();
-							} else {
-									SketchwareUtil.showMessage(getApplicationContext(), databaseError.getMessage());
-						            _LoadingDialog(false);
-							}
+				@Override
+				public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
+					if (databaseError == null) {
+						SketchwareUtil.showMessage(getApplicationContext(), getResources().getString(R.string.post_publish_success));
+						_LoadingDialog(false);
+						finish();
+					} else {
+						SketchwareUtil.showMessage(getApplicationContext(), databaseError.getMessage());
+						_LoadingDialog(false);
 					}
+				}
 			});
 			
 		} else {
@@ -608,117 +588,4 @@ public class CreateLineVideoNextStepActivity extends AppCompatActivity {
 		android.transition.AutoTransition autoTransition = new android.transition.AutoTransition(); autoTransition.setDuration((long)_duration); android.transition.TransitionManager.beginDelayedTransition(viewgroup, autoTransition);
 	}
 	
-	
-	public void _detect_theme() {
-		if (theme.contains("theme")) {
-			if (theme.getString("theme", "").equals("light")) {
-				_light_theme_settings();
-			} else {
-				if (theme.getString("theme", "").equals("dark")) {
-					_dark_theme_settings();
-				} else {
-					if (theme.getString("theme", "").equals("night")) {
-						_night_theme_settings();
-					} else {
-						if (theme.getString("theme", "").equals("amoled")) {
-							_amoled_theme_settings();
-						} else {
-							
-						}
-					}
-				}
-			}
-		} else {
-			_light_theme_settings();
-		}
-	}
-	
-	
-	public void _light_theme_settings() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
-		_stateColor(0xFFFFFFFF, 0xFFFFFFFF);
-		_viewGraphics(back, 0xFFFFFFFF, 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
-		_viewGraphics(continueButton, 0xFF2962FF, 0xFF2979FF, 300, 0, Color.TRANSPARENT);
-		continueButton.setElevation((float)1);
-		postDescription.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b, int c, int d) { this.setCornerRadius(a); this.setStroke(b, c); this.setColor(d); return this; } }.getIns((int)28, (int)3, 0xFFEEEEEE, 0xFFFFFFFF));
-		main.setBackgroundResource(R.drawable.bg_gradient_2);
-		title.setTextColor(0xFF000000);
-		subtitle.setTextColor(0xFF212121);
-		postDescription.setTextColor(0xFF000000);
-	}
-	
-	
-	public void _dark_theme_settings() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { Window w = getWindow();  w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS); };
-		_viewGraphics(continueButton, 0xFF2962FF, 0xFF2979FF, 300, 0, Color.TRANSPARENT);
-		continueButton.setElevation((float)2);
-		postDescription.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b, int c, int d) { this.setCornerRadius(a); this.setStroke(b, c); this.setColor(d); return this; } }.getIns((int)28, (int)3, 0xFF90A4AE, Color.TRANSPARENT));
-		title.setTextColor(0xFFFFFFFF);
-		subtitle.setTextColor(0xFFEEEEEE);
-		postDescription.setTextColor(0xFFFFFFFF);
-		main.setBackgroundResource(R.drawable.bgimage);
-		_ImageColor(back, 0xFFFFFFFF);
-	}
-	
-	
-	public void _night_theme_settings() {
-		
-	}
-	
-	
-	public void _amoled_theme_settings() {
-		
-	}
-	
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
-}
+}

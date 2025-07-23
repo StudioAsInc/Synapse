@@ -9,7 +9,6 @@ import android.graphics.drawable.*;
 import android.media.*;
 import android.net.*;
 import android.os.*;
-//import android.support.design.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -21,7 +20,6 @@ import android.widget.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
-import androidx.core.*;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -54,4 +52,4 @@ public class GlobalsearchActivity extends AppCompatActivity {
 	private void initializeLogic() {
 	}
 	
-}
+}

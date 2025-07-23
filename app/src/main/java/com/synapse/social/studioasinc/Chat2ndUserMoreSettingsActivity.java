@@ -12,7 +12,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-import android.support.customtabs.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -25,22 +24,22 @@ import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
-import androidx.swiperefreshlayout.*;
-import androidx.transition.*;
+import com.bumptech.glide.*;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,14 +50,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.perf.*;
+import com.theartofdev.edmodo.cropper.*;
+import com.yalantis.ucrop.*;
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
 import java.util.*;
 import java.util.HashMap;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
 import org.json.*;
 
 public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
@@ -137,14 +136,17 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 	private LinearLayout linear25;
 	private ImageView imageview14;
 	private LinearLayout linear26;
+	private Switch Read_recipt_switch;
 	private TextView textview18;
 	private TextView textview19;
 	private ImageView imageview15;
 	private LinearLayout linear27;
+	private Switch disapear_switch;
 	private TextView textview20;
 	private TextView textview21;
 	private ImageView imageview26;
 	private LinearLayout linear49;
+	private Switch autosavephoto_switch;
 	private TextView textview44;
 	private TextView textview45;
 	private ImageView imageview16;
@@ -181,7 +183,6 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 	private ChildEventListener _main_child_listener;
 	private DatabaseReference blocklist = _firebase.getReference("skyline/blocklist");
 	private ChildEventListener _blocklist_child_listener;
-	private com.google.android.material.bottomsheet.BottomSheetDialog bs;
 	private Intent i = new Intent();
 	private FirebaseAuth auth;
 	private OnCompleteListener<AuthResult> _auth_create_user_listener;
@@ -273,14 +274,17 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 		linear25 = findViewById(R.id.linear25);
 		imageview14 = findViewById(R.id.imageview14);
 		linear26 = findViewById(R.id.linear26);
+		Read_recipt_switch = findViewById(R.id.Read_recipt_switch);
 		textview18 = findViewById(R.id.textview18);
 		textview19 = findViewById(R.id.textview19);
 		imageview15 = findViewById(R.id.imageview15);
 		linear27 = findViewById(R.id.linear27);
+		disapear_switch = findViewById(R.id.disapear_switch);
 		textview20 = findViewById(R.id.textview20);
 		textview21 = findViewById(R.id.textview21);
 		imageview26 = findViewById(R.id.imageview26);
 		linear49 = findViewById(R.id.linear49);
+		autosavephoto_switch = findViewById(R.id.autosavephoto_switch);
 		textview44 = findViewById(R.id.textview44);
 		textview45 = findViewById(R.id.textview45);
 		imageview16 = findViewById(R.id.imageview16);
@@ -327,6 +331,13 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 				i.setClass(getApplicationContext(), ProfileActivity.class);
 				i.putExtra("uid", getIntent().getStringExtra("uid"));
 				startActivity(i);
+			}
+		});
+		
+		block_btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				_Block(getIntent().getStringExtra("uid"));
 			}
 		});
 		
@@ -500,18 +511,6 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 	
 	private void initializeLogic() {
 		_UI();
-		block_lay1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				_BlockBS();
-			}
-		});
-		block_btn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _view) {
-				_BlockBS();
-			}
-		});
 		_getUserReference();
 	}
 	
@@ -589,7 +588,7 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 						if (dataSnapshot.child("avatar").getValue(String.class).equals("null")) {
 							user_profile_picture.setImageResource(R.drawable.avatar);
 						} else {
-							
+							Glide.with(getApplicationContext()).load(Uri.parse(dataSnapshot.child("avatar").getValue(String.class))).into(user_profile_picture);
 						}
 					}
 					if (dataSnapshot.child("nickname").getValue(String.class).equals("null")) {
@@ -605,7 +604,7 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 			
 			@Override
 			public void onCancelled(@NonNull DatabaseError databaseError) {
-						
+				
 			}
 		});
 	}
@@ -618,8 +617,4 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 		block.clear();
 	}
 	
-	
-	public void _BlockBS() {
-		
-	}
-}
+}

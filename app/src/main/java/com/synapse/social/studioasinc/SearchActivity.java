@@ -14,7 +14,6 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-//import android.support.design.*;
 import android.text.*;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,7 +32,6 @@ import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
-import androidx.core.*;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -82,9 +80,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
-import java.util.Map;
-
-
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 	
@@ -865,4 +861,4 @@ public class SearchActivity extends AppCompatActivity {
 			}
 		}
 	}
-}
+}

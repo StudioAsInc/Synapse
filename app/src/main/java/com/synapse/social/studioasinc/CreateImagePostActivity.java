@@ -1,12 +1,11 @@
 package com.synapse.social.studioasinc;
+
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
-import android.app.Activity;
 import android.content.*;
 import android.content.ClipData;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.*;
 import android.graphics.*;
@@ -16,8 +15,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-//import android.support.customtabs.*;
-import androidx.browser.customtabs.CustomTabsIntent;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -27,51 +24,32 @@ import android.view.View.*;
 import android.view.animation.*;
 import android.webkit.*;
 import android.widget.*;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
 import androidx.recyclerview.widget.*;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.swiperefreshlayout.*;
-import androidx.transition.*;
-/*
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
+import com.bumptech.glide.*;
 import com.bumptech.glide.Glide;
-import com.caverock.androidsvg.*;
-*/
 import com.google.android.material.*;
+import com.google.android.material.button.MaterialButtonGroup;
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
-import com.google.firebase.perf.*;
-/*
-import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
 import com.theartofdev.edmodo.cropper.CropImageView;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
-*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -79,11 +57,6 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-/*
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
-*/
 import org.json.*;
 import android.content.ContentResolver;
 import android.graphics.Bitmap;
@@ -94,8 +67,7 @@ import android.provider.MediaStore;
 import com.bumptech.glide.request.RequestOptions;
 import java.net.URL;
 import java.net.MalformedURLException;
-import com.google.android.material.textfield.TextInputLayout;
-
+import com.google.android.material.textfield.TextInputLayout;
 
 public class CreateImagePostActivity extends AppCompatActivity {
 	
@@ -103,63 +75,63 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	
 	private ProgressDialog SynapseLoadingDialog;
 	private void saveBitmapAsPng(Bitmap bitmap) throws IOException {
-			_LoadingDialog(true);
-			Calendar cc = Calendar.getInstance();
+		_LoadingDialog(true);
+		Calendar cc = Calendar.getInstance();
+		
+		File getCacheDir = getExternalCacheDir();
+		String getCacheDirName = "cropped_images";
+		File getCacheFolder = new File(getCacheDir, getCacheDirName);
+		getCacheFolder.mkdirs();
+		File getImageFile = new File(getCacheFolder, cc.getTimeInMillis() + ".png");
+		String savedFilePath = getImageFile.getAbsolutePath();
+		
+		final FileOutputStream outStream;
+		try {
+			outStream = new FileOutputStream(getImageFile);
+			final Bitmap finalBitmap = bitmap;
 			
-			File getCacheDir = getExternalCacheDir();
-			String getCacheDirName = "cropped_images";
-			File getCacheFolder = new File(getCacheDir, getCacheDirName);
-			getCacheFolder.mkdirs();
-			File getImageFile = new File(getCacheFolder, cc.getTimeInMillis() + ".png");
-			String savedFilePath = getImageFile.getAbsolutePath();
-			
-			final FileOutputStream outStream;
-			try {
-					outStream = new FileOutputStream(getImageFile);
-					final Bitmap finalBitmap = bitmap;
-					
-					new Thread(new Runnable() {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+						outStream.flush();
+						outStream.close();
+						
+						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-									try {
-											finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-											outStream.flush();
-											outStream.close();
-											
-											runOnUiThread(new Runnable() {
-													@Override
-													public void run() {
-															_LoadingDialog(false);
-															intent.setClass(getApplicationContext(), CreateImagePostNextStepActivity.class);
-								                            intent.putExtra("type", "local");
-															intent.putExtra("path", savedFilePath);
-															startActivity(intent);
-								                            finish();
-													}
-											});
-									} catch (IOException e) {
-											runOnUiThread(new Runnable() {
-													@Override
-													public void run() {
-															_LoadingDialog(false);
-															Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_SHORT).show();
-													}
-											});
-											e.printStackTrace();
-									}
+								_LoadingDialog(false);
+								intent.setClass(getApplicationContext(), CreateImagePostNextStepActivity.class);
+								intent.putExtra("type", "local");
+								intent.putExtra("path", savedFilePath);
+								startActivity(intent);
+								finish();
 							}
-					}).start();
-					
-			} catch (IOException e) {
-					runOnUiThread(new Runnable() {
+						});
+					} catch (IOException e) {
+						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-									_LoadingDialog(false);
-									Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_SHORT).show();
+								_LoadingDialog(false);
+								Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_SHORT).show();
 							}
-					});
-					throw e;
-			}
+						});
+						e.printStackTrace();
+					}
+				}
+			}).start();
+			
+		} catch (IOException e) {
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					_LoadingDialog(false);
+					Toast.makeText(getApplicationContext(), "Something went wrong.", Toast.LENGTH_SHORT).show();
+				}
+			});
+			throw e;
+		}
 	}
 	
 	private String AddFromUrlStr = null;
@@ -168,22 +140,21 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	
 	private LinearLayout main;
 	private LinearLayout top;
-	//private CropImageView cropImageView;
+	private CropImageView cropImageView;
 	private LinearLayout urlImagePreview;
 	private LinearLayout body;
 	private ImageView back;
 	private TextView title;
 	private LinearLayout topSpc;
-	private TextView continueButton;
+	private Button continueButton;
 	private ImageView urlImagePreviewImage;
 	private RecyclerView imagesView;
-	private LinearLayout bottomButtons;
-	private TextView selectImageWithGallery;
-	private TextView addFromUrl;
+	private MaterialButtonGroup bottomButtons;
+	private Button selectGallery;
+	private Button From_url;
 	
 	private Intent intent = new Intent();
 	private Intent IMAGE_PICKER = new Intent(Intent.ACTION_GET_CONTENT);
-	private SharedPreferences Premium;
 	private AlertDialog cd;
 	
 	@Override
@@ -211,7 +182,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	private void initialize(Bundle _savedInstanceState) {
 		main = findViewById(R.id.main);
 		top = findViewById(R.id.top);
-	//	cropImageView = findViewById(R.id.cropImageView);
+		cropImageView = findViewById(R.id.cropImageView);
 		urlImagePreview = findViewById(R.id.urlImagePreview);
 		body = findViewById(R.id.body);
 		back = findViewById(R.id.back);
@@ -221,11 +192,10 @@ public class CreateImagePostActivity extends AppCompatActivity {
 		urlImagePreviewImage = findViewById(R.id.urlImagePreviewImage);
 		imagesView = findViewById(R.id.imagesView);
 		bottomButtons = findViewById(R.id.bottomButtons);
-		selectImageWithGallery = findViewById(R.id.selectImageWithGallery);
-		addFromUrl = findViewById(R.id.addFromUrl);
+		selectGallery = findViewById(R.id.selectGallery);
+		From_url = findViewById(R.id.From_url);
 		IMAGE_PICKER.setType("image/*");
 		IMAGE_PICKER.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-		Premium = getSharedPreferences("Premium", Activity.MODE_PRIVATE);
 		
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -235,58 +205,42 @@ public class CreateImagePostActivity extends AppCompatActivity {
 		});
 		
 		continueButton.setOnClickListener(new View.OnClickListener() {
-	@Override
-	public void onClick(View _view) {
-		if (AddFromUrlStr == null) {
-			// The problematic try-catch block has been removed.
-			// The line below is still commented out.
-			// saveBitmapAsPng(cropImageView.getCroppedImage());
-
-			// WARNING: With this change, the button will do NOTHING when a user
-			// has cropped an image from their gallery. You will need to add
-			// the correct logic here later.
-			
-		} else {
-			intent.setClass(getApplicationContext(), CreateImagePostNextStepActivity.class);
-			intent.putExtra("type", "url");
-			intent.putExtra("path", AddFromUrlStr);
-			startActivity(intent);
-			finish();
-		}
-	}
-});
-		
-		selectImageWithGallery.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				if (Premium.contains("premium")) {
-					if (Premium.getString("premium", "").equals("true")) {
-						if (Build.VERSION.SDK_INT >= 23) {
-								if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED) {
-										requestPermissions(new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
-								} else {
-										Intent sendImgInt = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-								        startActivityForResult(sendImgInt, REQ_CD_IMAGE_PICKER);
-								}
-						} else {
-								Intent sendImgInt = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-							    startActivityForResult(sendImgInt, REQ_CD_IMAGE_PICKER);
-						}
-					} else {
-						if (Premium.getString("premium", "").equals("false")) {
-							SketchwareUtil.showMessage(getApplicationContext(), "Buy premium to use this feature");
-						} else {
-							SketchwareUtil.showMessage(getApplicationContext(), "Something went wrong");
-						}
+				if (AddFromUrlStr == null) {
+					try {
+						saveBitmapAsPng(cropImageView.getCroppedImage());
+					} catch (IOException e) {
+						
 					}
 				} else {
-					Premium.edit().putString("premium", "false").commit();
-					SketchwareUtil.showMessage(getApplicationContext(), "This is strange");
+					intent.setClass(getApplicationContext(), CreateImagePostNextStepActivity.class);
+					intent.putExtra("type", "url");
+					intent.putExtra("path", AddFromUrlStr);
+					startActivity(intent);
+					finish();
 				}
 			}
 		});
 		
-		addFromUrl.setOnClickListener(new View.OnClickListener() {
+		selectGallery.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				if (Build.VERSION.SDK_INT >= 23) {
+					if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED) {
+						requestPermissions(new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+					} else {
+						Intent sendImgInt = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+						startActivityForResult(sendImgInt, REQ_CD_IMAGE_PICKER);
+					}
+				} else {
+					Intent sendImgInt = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+					startActivityForResult(sendImgInt, REQ_CD_IMAGE_PICKER);
+				}
+			}
+		});
+		
+		From_url.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
 				_AddFromUrlDialog();
@@ -300,27 +254,24 @@ public class CreateImagePostActivity extends AppCompatActivity {
 		int desiredHeight = screenHeight * 1 / 2 - 24;
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, desiredHeight);
 		
-	//	cropImageView.setLayoutParams(params);
-	//	urlImagePreview.setLayoutParams(params);
+		cropImageView.setLayoutParams(params);
+		urlImagePreview.setLayoutParams(params);
 		_stateColor(0xFFFFFFFF, 0xFFFFFFFF);
 		_viewGraphics(back, 0xFFFFFFFF, 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
-		_viewGraphics(continueButton, getResources().getColor(R.color.colorPrimary), 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
-		_viewGraphics(selectImageWithGallery, getResources().getColor(R.color.colorPrimary), 0xFF1565C0, 300, 0, Color.TRANSPARENT);
-		_viewGraphics(addFromUrl, getResources().getColor(R.color.colorPrimary), 0xFF388E3C, 300, 0, Color.TRANSPARENT);
 		imagesView.setAdapter(new ImagesViewAdapter(imagesListMap));
 		GridLayoutManager imagesViewGridLayout = new GridLayoutManager(this, 4);
 		imagesView.setLayoutManager(imagesViewGridLayout);
 		if (Build.VERSION.SDK_INT >= 23) {
-				if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED) {
-						requestPermissions(new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
-				} else {
-				        _getImageFiles();
-				}
+			if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED) {
+				requestPermissions(new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+			} else {
+				_getImageFiles();
+			}
 		} else {
-			    _getImageFiles();
+			_getImageFiles();
 		}
-	//	cropImageView.setAspectRatio(4, 3);
-//		cropImageView.setFixedAspectRatio(true);
+		cropImageView.setAspectRatio(4, 3);
+		cropImageView.setFixedAspectRatio(false);
 	}
 	
 	@Override
@@ -342,11 +293,11 @@ public class CreateImagePostActivity extends AppCompatActivity {
 						_filePath.add(FileUtil.convertUriToFilePath(getApplicationContext(), _data.getData()));
 					}
 				}
-				if (_filePath.get((int)(0)).endsWith(".png") || (_filePath.get((int)(0)).endsWith(".jpg") || _filePath.get((int)(0)).endsWith(".jpeg"))) {
-					_loadCropImage(_filePath.get((int)(0)), false);
-				} else {
-					SketchwareUtil.showMessage(getApplicationContext(), "Invalid File Type");
-				}
+				intent.setClass(getApplicationContext(), CreateImagePostNextStepActivity.class);
+				intent.putExtra("type", "url");
+				intent.putExtra("path", _filePath.get((int)(0)));
+				startActivity(intent);
+				finish();
 			}
 			else {
 				
@@ -361,8 +312,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
-
+	
 	public void _ImageColor(final ImageView _image, final int _color) {
 		_image.setColorFilter(_color,PorterDuff.Mode.SRC_ATOP);
 	}
@@ -380,21 +330,21 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	
 	public void _getImageFiles() {
 		String[] projection = {
-			    MediaStore.Images.Media.DATA
+			MediaStore.Images.Media.DATA
 		};
 		Cursor imagesCursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,projection,null,null,null);
 		
 		if (imagesCursor != null && imagesCursor.moveToFirst()) {
-				do {
-						String imagePath = imagesCursor.getString(imagesCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-						if (imagePath.endsWith(".png") || (imagePath.endsWith(".jpg") || imagePath.endsWith(".jpeg"))) {
-								HashMap<String, Object> mediaItem = new HashMap<>();
-								mediaItem.put("type", "Image");
-								mediaItem.put("path", imagePath);
-								imagesListMap.add(mediaItem);
-						}
-				} while (imagesCursor.moveToNext());
-				imagesCursor.close();
+			do {
+				String imagePath = imagesCursor.getString(imagesCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+				if (imagePath.endsWith(".png") || (imagePath.endsWith(".jpg") || imagePath.endsWith(".jpeg"))) {
+					HashMap<String, Object> mediaItem = new HashMap<>();
+					mediaItem.put("type", "Image");
+					mediaItem.put("path", imagePath);
+					imagesListMap.add(mediaItem);
+				}
+			} while (imagesCursor.moveToNext());
+			imagesCursor.close();
 		}
 		
 		imagesView.getAdapter().notifyDataSetChanged();
@@ -412,13 +362,13 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	public void _LoadingDialog(final boolean _visibility) {
 		if (_visibility) {
 			if (SynapseLoadingDialog== null){
-					SynapseLoadingDialog = new ProgressDialog(this);
-					SynapseLoadingDialog.setCancelable(false);
-					SynapseLoadingDialog.setCanceledOnTouchOutside(false);
-					
-					SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
-					SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-					
+				SynapseLoadingDialog = new ProgressDialog(this);
+				SynapseLoadingDialog.setCancelable(false);
+				SynapseLoadingDialog.setCanceledOnTouchOutside(false);
+				
+				SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+				SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+				
 			}
 			SynapseLoadingDialog.show();
 			SynapseLoadingDialog.setContentView(R.layout.loading_synapse);
@@ -441,14 +391,14 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			AddFromUrlStr = null;
 			java.io.File file = new java.io.File(_path);
 			Uri uri = Uri.fromFile(file);
-		//	cropImageView.setImageUriAsync(uri);
+			cropImageView.setImageUriAsync(uri);
 			urlImagePreview.setVisibility(View.GONE);
-		//	cropImageView.setVisibility(View.VISIBLE);
+			cropImageView.setVisibility(View.VISIBLE);
 		} else {
 			AddFromUrlStr = _path;
-			// Glide.with(getApplicationContext()).load(Uri.parse(_path)).into(urlImagePreviewImage);
+			Glide.with(getApplicationContext()).load(Uri.parse(_path)).into(urlImagePreviewImage);
 			urlImagePreview.setVisibility(View.VISIBLE);
-		//	cropImageView.setVisibility(View.GONE);
+			cropImageView.setVisibility(View.GONE);
 		}
 	}
 	
@@ -490,10 +440,10 @@ public class CreateImagePostActivity extends AppCompatActivity {
 	
 	public boolean _checkValidUrl(final String _url) {
 		try {
-				new URL(_url);
-				return true;
+			new URL(_url);
+			return true;
 		} catch (MalformedURLException e) {
-				return false;
+			return false;
 		}
 	}
 	
@@ -521,7 +471,7 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			final RelativeLayout relative = _view.findViewById(R.id.relative);
 			final androidx.cardview.widget.CardView main = _view.findViewById(R.id.main);
 			final LinearLayout relativeTop = _view.findViewById(R.id.relativeTop);
-	//		final com.theophrast.ui.widget.SquareImageView image = _view.findViewById(R.id.image);
+			final ImageView image = _view.findViewById(R.id.image);
 			final LinearLayout relativeSpc = _view.findViewById(R.id.relativeSpc);
 			final ImageView typeIcon = _view.findViewById(R.id.typeIcon);
 			final LinearLayout rvtSpc = _view.findViewById(R.id.rvtSpc);
@@ -530,28 +480,15 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			_ImageColor(typeIcon, 0xFFFFFFFF);
 			typeIcon.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)24, 0x7B000000));
 			mediaDuration.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)24, 0x7B000000));
-			// Glide.with(getApplicationContext()).load(_data.get((int)_position).get("path").toString()).into(image);
 			typeIcon.setImageResource(R.drawable.image_ic);
 			mediaDuration.setVisibility(View.GONE);
 			relative.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View _view) {
-					if (Premium.contains("premium")) {
-						if (Premium.getString("premium", "").equals("true")) {
-							_loadCropImage(_data.get((int)_position).get("path").toString(), false);
-						} else {
-							if (Premium.getString("premium", "").equals("false")) {
-								SketchwareUtil.showMessage(getApplicationContext(), "Buy premium to use this feature");
-							} else {
-								SketchwareUtil.showMessage(getApplicationContext(), "Something went wrong");
-							}
-						}
-					} else {
-						Premium.edit().putString("premium", "false").commit();
-						SketchwareUtil.showMessage(getApplicationContext(), "This is strange");
-					}
+					_loadCropImage(_data.get((int)_position).get("path").toString(), false);
 				}
 			});
+			image.setImageBitmap(FileUtil.decodeSampleBitmapFromPath(_data.get((int)_position).get("path").toString(), 1024, 1024));
 		}
 		
 		@Override
@@ -565,55 +502,4 @@ public class CreateImagePostActivity extends AppCompatActivity {
 			}
 		}
 	}
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
-}
+}

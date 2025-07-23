@@ -1,4 +1,5 @@
 package com.synapse.social.studioasinc;
+
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -13,7 +14,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-import android.support.customtabs.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -27,40 +27,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
 import androidx.recyclerview.widget.*;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.swiperefreshlayout.*;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener;
-import androidx.transition.*;
-/*
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
+import com.bumptech.glide.*;
 import com.bumptech.glide.Glide;
-import com.caverock.androidsvg.*;
-*/
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -71,24 +63,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.perf.*;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-/* import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.File;
 import java.io.InputStream;
@@ -99,17 +80,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-/*
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
-*/
 import org.json.*;
 import com.google.firebase.database.Query;
 import java.net.URL;
-import java.net.MalformedURLException;
-
-
+import java.net.MalformedURLException;
 
 public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 	
@@ -413,9 +387,7 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
-
-
+	
 	public void _stateColor(final int _statusColor, final int _navigationColor) {
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 		getWindow().setStatusBarColor(_statusColor);
@@ -441,13 +413,13 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 	public void _LoadingDialog(final boolean _visibility) {
 		if (_visibility) {
 			if (SynapseLoadingDialog== null){
-					SynapseLoadingDialog = new ProgressDialog(this);
-					SynapseLoadingDialog.setCancelable(false);
-					SynapseLoadingDialog.setCanceledOnTouchOutside(false);
-					
-					SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
-					SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-					
+				SynapseLoadingDialog = new ProgressDialog(this);
+				SynapseLoadingDialog.setCancelable(false);
+				SynapseLoadingDialog.setCanceledOnTouchOutside(false);
+				
+				SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+				SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+				
 			}
 			SynapseLoadingDialog.show();
 			SynapseLoadingDialog.setContentView(R.layout.loading_synapse);
@@ -482,7 +454,7 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 			
 			@Override
 			public void onCancelled(@NonNull DatabaseError databaseError) {
-						
+				
 			}
 		});
 		Query getProfileHistoryRef = FirebaseDatabase.getInstance().getReference("skyline/cover-image-history").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -496,13 +468,13 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 					mLoadingBody.setVisibility(View.GONE);
 					ProfileHistoryList.clear();
 					try {
-							GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
-							for (DataSnapshot _data : dataSnapshot.getChildren()) {
-									HashMap<String, Object> _map = _data.getValue(_ind);
-									ProfileHistoryList.add(_map);
-							}
+						GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
+						for (DataSnapshot _data : dataSnapshot.getChildren()) {
+							HashMap<String, Object> _map = _data.getValue(_ind);
+							ProfileHistoryList.add(_map);
+						}
 					} catch (Exception _e) {
-							_e.printStackTrace();
+						_e.printStackTrace();
 					}
 					
 					SketchwareUtil.sortListMap(ProfileHistoryList, "upload_date", false, false);
@@ -514,10 +486,10 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 					mLoadingBody.setVisibility(View.GONE);
 				}
 			}
-			 
+			
 			@Override
 			public void onCancelled(@NonNull DatabaseError databaseError) {
-						
+				
 			}
 		});
 		mSwipeLayout.setRefreshing(false);
@@ -526,10 +498,10 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 	
 	public boolean _checkValidUrl(final String _url) {
 		try {
-				new URL(_url);
-				return true;
+			new URL(_url);
+			return true;
 		} catch (MalformedURLException e) {
-				return false;
+			return false;
 		}
 	}
 	
@@ -555,30 +527,30 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 			_viewGraphics(add_button, 0xFF2196F3, 0xFF1976D2, 300, 0, Color.TRANSPARENT);
 			_viewGraphics(cancel_button, 0xFFF5F5F5, 0xFFE0E0E0, 300, 0, Color.TRANSPARENT);
 			user_avatar_url_input.addTextChangedListener(new TextWatcher() {
-					@Override
-					public void onTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
-							final String _charSeq = _param1.toString();
-							
-							if (!_charSeq.trim().equals("")) {
-									if (_checkValidUrl(_charSeq.trim())) {
-											// Glide.with(getApplicationContext()).load(Uri.parse(_charSeq.trim())).into(user_avatar_image);
-									} else {
-											((EditText)user_avatar_url_input).setError("Invalid URL");
-									}
-							} else {
-									((EditText)user_avatar_url_input).setError("Enter Profile Image URL");
-							}
-					}
+				@Override
+				public void onTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
+					final String _charSeq = _param1.toString();
 					
-					@Override
-					public void beforeTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
-							
+					if (!_charSeq.trim().equals("")) {
+						if (_checkValidUrl(_charSeq.trim())) {
+							Glide.with(getApplicationContext()).load(Uri.parse(_charSeq.trim())).into(user_avatar_image);
+						} else {
+							((EditText)user_avatar_url_input).setError("Invalid URL");
+						}
+					} else {
+						((EditText)user_avatar_url_input).setError("Enter Profile Image URL");
 					}
+				}
+				
+				@Override
+				public void beforeTextChanged(CharSequence _param1, int _param2, int _param3, int _param4) {
 					
-					@Override
-					public void afterTextChanged(Editable _param1) {
-							
-					}
+				}
+				
+				@Override
+				public void afterTextChanged(Editable _param1) {
+					
+				}
 			});
 			
 			add_button.setOnClickListener(new View.OnClickListener() {
@@ -697,7 +669,7 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 			card.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)28, Color.TRANSPARENT));
 			checked.setBackgroundColor(0x50000000);
 			_ImageColor(checked_ic, 0xFFFFFFFF);
-			// Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("image_url").toString())).into(profile);
+			Glide.with(getApplicationContext()).load(Uri.parse(_data.get((int)_position).get("image_url").toString())).into(profile);
 			if (_data.get((int)_position).get("image_url").toString().equals(CurrentAvatarUri)) {
 				checked.setVisibility(View.VISIBLE);
 			} else {
@@ -745,55 +717,4 @@ public class ProfileCoverPhotoHistoryActivity extends AppCompatActivity {
 			}
 		}
 	}
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
-}
+}

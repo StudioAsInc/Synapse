@@ -1,4 +1,5 @@
 package com.synapse.social.studioasinc;
+
 import android.animation.*;
 import android.app.*;
 import android.app.Activity;
@@ -17,7 +18,6 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.customtabs.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -30,33 +30,26 @@ import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.Switch;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
 import androidx.recyclerview.widget.*;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.swiperefreshlayout.*;
-import androidx.transition.*;
-/*
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
-import com.caverock.androidsvg.*;
-*/
+import com.bumptech.glide.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
+import com.google.android.material.color.MaterialColors;
 import com.google.android.material.slider.Slider;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,36 +60,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.perf.*;
-//import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-//import com.sigma.niceswitch.*;
-//import com.sigma.niceswitch.NiceSwitch;
 import com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect;
-/*
 import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
-*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
 import java.util.*;
 import java.util.HashMap;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-//import me.dm7.barcodescanner.core.*;
-//import org.jetbrains.kotlin.*;
 import org.json.*;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.slider.Slider;
-
+import com.google.android.material.slider.Slider;
 
 public class ChatsettingsActivity extends AppCompatActivity {
 	
@@ -179,17 +154,17 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	private LinearLayout linear33;
 	private ImageView imageview16;
 	private LinearLayout linear30;
-//	private NiceSwitch switch1;
+	private Switch switch1;
 	private TextView textview24;
 	private TextView textview25;
 	private ImageView imageview17;
 	private LinearLayout linear32;
-//	private NiceSwitch switch2;
+	private Switch switch2;
 	private TextView textview26;
 	private TextView textview27;
 	private ImageView imageview18;
 	private LinearLayout linear34;
-//	private NiceSwitch switch3;
+	private Switch switch3;
 	private TextView textview29;
 	private TextView textview30;
 	private LinearLayout linear39;
@@ -198,16 +173,16 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	private LinearLayout linear12;
 	private ImageView imageview21;
 	private LinearLayout linear40;
-//	private NiceSwitch switch5;
+	private Switch switch5;
 	private TextView textview35;
 	private ImageView imageview22;
 	private LinearLayout linear42;
-//	private NiceSwitch switch6;
+	private Switch switch6;
 	private TextView textview37;
 	private TextView textview38;
 	private ImageView imageview23;
 	private LinearLayout linear44;
-//	private NiceSwitch switch7;
+	private Switch switch7;
 	private TextView textview39;
 	private TextView textview40;
 	private ImageView imageview10;
@@ -236,7 +211,7 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	private TextView textview45;
 	private ImageView imageview26;
 	private LinearLayout linear51;
-//	private NiceSwitch switch10;
+	private Switch switch10;
 	private TextView textview46;
 	private TextView textview47;
 	private LinearLayout linear53;
@@ -355,17 +330,17 @@ public class ChatsettingsActivity extends AppCompatActivity {
 		linear33 = findViewById(R.id.linear33);
 		imageview16 = findViewById(R.id.imageview16);
 		linear30 = findViewById(R.id.linear30);
-	//	switch1 = findViewById(R.id.switch1);
+		switch1 = findViewById(R.id.switch1);
 		textview24 = findViewById(R.id.textview24);
 		textview25 = findViewById(R.id.textview25);
 		imageview17 = findViewById(R.id.imageview17);
 		linear32 = findViewById(R.id.linear32);
-	//	switch2 = findViewById(R.id.switch2);
+		switch2 = findViewById(R.id.switch2);
 		textview26 = findViewById(R.id.textview26);
 		textview27 = findViewById(R.id.textview27);
 		imageview18 = findViewById(R.id.imageview18);
 		linear34 = findViewById(R.id.linear34);
-	//	switch3 = findViewById(R.id.switch3);
+		switch3 = findViewById(R.id.switch3);
 		textview29 = findViewById(R.id.textview29);
 		textview30 = findViewById(R.id.textview30);
 		linear39 = findViewById(R.id.linear39);
@@ -374,16 +349,16 @@ public class ChatsettingsActivity extends AppCompatActivity {
 		linear12 = findViewById(R.id.linear12);
 		imageview21 = findViewById(R.id.imageview21);
 		linear40 = findViewById(R.id.linear40);
-	//	switch5 = findViewById(R.id.switch5);
+		switch5 = findViewById(R.id.switch5);
 		textview35 = findViewById(R.id.textview35);
 		imageview22 = findViewById(R.id.imageview22);
 		linear42 = findViewById(R.id.linear42);
-	//	switch6 = findViewById(R.id.switch6);
+		switch6 = findViewById(R.id.switch6);
 		textview37 = findViewById(R.id.textview37);
 		textview38 = findViewById(R.id.textview38);
 		imageview23 = findViewById(R.id.imageview23);
 		linear44 = findViewById(R.id.linear44);
-	//	switch7 = findViewById(R.id.switch7);
+		switch7 = findViewById(R.id.switch7);
 		textview39 = findViewById(R.id.textview39);
 		textview40 = findViewById(R.id.textview40);
 		imageview10 = findViewById(R.id.imageview10);
@@ -412,7 +387,7 @@ public class ChatsettingsActivity extends AppCompatActivity {
 		textview45 = findViewById(R.id.textview45);
 		imageview26 = findViewById(R.id.imageview26);
 		linear51 = findViewById(R.id.linear51);
-	//	switch10 = findViewById(R.id.switch10);
+		switch10 = findViewById(R.id.switch10);
 		textview46 = findViewById(R.id.textview46);
 		textview47 = findViewById(R.id.textview47);
 		linear53 = findViewById(R.id.linear53);
@@ -451,7 +426,6 @@ public class ChatsettingsActivity extends AppCompatActivity {
 		Language_btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View _view) {
-				intent.setClass(getApplicationContext(), LanguagesActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -588,108 +562,108 @@ public class ChatsettingsActivity extends AppCompatActivity {
 	private void initializeLogic() {
 		try{
 			try {
-				    // Text size slider
-				    Slider textSizeSlider = findViewById(R.id.seekbar6);
-				    String savedTextSize = appSettings.getString("ChatTextSize", "16");
-				    int initialTextSizeSliderValue;
+				// Text size slider
+				Slider textSizeSlider = findViewById(R.id.seekbar6);
+				String savedTextSize = appSettings.getString("ChatTextSize", "16");
+				int initialTextSizeSliderValue;
 				
-				    try {
-					        initialTextSizeSliderValue = (int) Double.parseDouble(savedTextSize);
-					    } catch (NumberFormatException e) {
-					        Log.e("ChatTextSize", "Error parsing text size", e);
-					        initialTextSizeSliderValue = 16;
-					    }
+				try {
+					initialTextSizeSliderValue = (int) Double.parseDouble(savedTextSize);
+				} catch (NumberFormatException e) {
+					Log.e("ChatTextSize", "Error parsing text size", e);
+					initialTextSizeSliderValue = 16;
+				}
 				
-				    Log.d("ChatTextSize", "Using text size: " + initialTextSizeSliderValue);
-				    textSizeSlider.setValue(initialTextSizeSliderValue);
+				Log.d("ChatTextSize", "Using text size: " + initialTextSizeSliderValue);
+				textSizeSlider.setValue(initialTextSizeSliderValue);
 				
-				    txt_msg1.setTextSize(initialTextSizeSliderValue);
-				    message_text.setTextSize(initialTextSizeSliderValue);
-				    mRepliedMessageLayoutMessage.setTextSize(initialTextSizeSliderValue);
+				txt_msg1.setTextSize(initialTextSizeSliderValue);
+				message_text.setTextSize(initialTextSizeSliderValue);
+				mRepliedMessageLayoutMessage.setTextSize(initialTextSizeSliderValue);
 				
-				    textSizeSlider.addOnChangeListener(new Slider.OnChangeListener() {
-					        @Override
-					        public void onValueChange(Slider slider, float value, boolean fromUser) {
-						            int progress = (int) value;
-						            txt_msg1.setTextSize(progress);
-						            message_text.setTextSize(progress);
-						            mRepliedMessageLayoutMessage.setTextSize(progress);
-						            appSettings.edit().putString("ChatTextSize", String.valueOf(progress)).commit();
-						        }
-					    });
+				textSizeSlider.addOnChangeListener(new Slider.OnChangeListener() {
+					@Override
+					public void onValueChange(Slider slider, float value, boolean fromUser) {
+						int progress = (int) value;
+						txt_msg1.setTextSize(progress);
+						message_text.setTextSize(progress);
+						mRepliedMessageLayoutMessage.setTextSize(progress);
+						appSettings.edit().putString("ChatTextSize", String.valueOf(progress)).commit();
+					}
+				});
 				
-				    // Corner radius slider
-				    Slider cornerRadiusSlider = findViewById(R.id.round_seekbar);
-				    String savedCornerRadius = appSettings.getString("ChatCornerRadius", "20");
-				    int initialCornerRadiusSliderValue;
+				// Corner radius slider
+				Slider cornerRadiusSlider = findViewById(R.id.round_seekbar);
+				String savedCornerRadius = appSettings.getString("ChatCornerRadius", "20");
+				int initialCornerRadiusSliderValue;
 				
-				    try {
-					        initialCornerRadiusSliderValue = (int) Double.parseDouble(savedCornerRadius);
-					    } catch (NumberFormatException e) {
-					        Log.e("ChatCornerRadius", "Error parsing corner radius", e);
-					        initialCornerRadiusSliderValue = 16;
-					    }
+				try {
+					initialCornerRadiusSliderValue = (int) Double.parseDouble(savedCornerRadius);
+				} catch (NumberFormatException e) {
+					Log.e("ChatCornerRadius", "Error parsing corner radius", e);
+					initialCornerRadiusSliderValue = 16;
+				}
 				
-				    Log.d("ChatCornerRadius", "Using corner radius: " + initialCornerRadiusSliderValue);
-				    cornerRadiusSlider.setValue(initialCornerRadiusSliderValue);
+				Log.d("ChatCornerRadius", "Using corner radius: " + initialCornerRadiusSliderValue);
+				cornerRadiusSlider.setValue(initialCornerRadiusSliderValue);
 				
-				    // Apply corner radius to message backgrounds
-				    cornerRadiusSlider.addOnChangeListener(new Slider.OnChangeListener() {
-					        @Override
-					        public void onValueChange(Slider slider, float value, boolean fromUser) {
-						            int progress = (int) value;
+				// Apply corner radius to message backgrounds
+				cornerRadiusSlider.addOnChangeListener(new Slider.OnChangeListener() {
+					@Override
+					public void onValueChange(Slider slider, float value, boolean fromUser) {
+						int progress = (int) value;
 						
-						            // Apply corner radius to messageBG and messageBG1
-						            {
-							                android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-							                int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-							                SketchUi.setColor(0xFF6B4CFF);
-							                SketchUi.setCornerRadius(d * progress);
-							                android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-							                messageBG1.setBackground(SketchUiRD);
-							                messageBG1.setClickable(true);
-							            }
-						            {
-							                android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-							                int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-							                SketchUi.setColor(0xFFFFFFFF);
-							                SketchUi.setCornerRadius(d * progress);
-							                SketchUi.setStroke(d * 2, 0xFFDFDFDF);
-							                android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-							                messageBG.setBackground(SketchUiRD);
-							                messageBG.setClickable(true);
-							            }
+						// Apply corner radius to messageBG and messageBG1
+						{
+							android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+							int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
+							SketchUi.setColor(0xFF6B4CFF);
+							SketchUi.setCornerRadius(d * progress);
+							android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+							messageBG1.setBackground(SketchUiRD);
+							messageBG1.setClickable(true);
+						}
+						{
+							android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+							int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
+							SketchUi.setColor(0xFFFFFFFF);
+							SketchUi.setCornerRadius(d * progress);
+							SketchUi.setStroke(d * 2, 0xFFDFDFDF);
+							android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+							messageBG.setBackground(SketchUiRD);
+							messageBG.setClickable(true);
+						}
 						
-						            // Save the corner radius setting
-						            appSettings.edit().putString("ChatCornerRadius", String.valueOf(progress)).commit();
-						        }
-					    });
+						// Save the corner radius setting
+						appSettings.edit().putString("ChatCornerRadius", String.valueOf(progress)).commit();
+					}
+				});
 				
-				    // Initial setup for messageBG and messageBG1
-				    {
-					        android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-					        int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-					        SketchUi.setColor(0xFF6B4CFF);
-					        SketchUi.setCornerRadius(d * initialCornerRadiusSliderValue);
-					        android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-					        messageBG1.setBackground(SketchUiRD);
-					        messageBG1.setClickable(true);
-					    }
-				    {
-					        android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
-					        int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
-					        SketchUi.setColor(0xFFFFFFFF);
-					        SketchUi.setCornerRadius(d * initialCornerRadiusSliderValue);
-					        SketchUi.setStroke(d * 2, 0xFFDFDFDF);
-					        android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
-					        messageBG.setBackground(SketchUiRD);
-					        messageBG.setClickable(true);
-					    }
+				// Initial setup for messageBG and messageBG1
+				{
+					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+					int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
+					SketchUi.setColor(0xFF6B4CFF);
+					SketchUi.setCornerRadius(d * initialCornerRadiusSliderValue);
+					android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+					messageBG1.setBackground(SketchUiRD);
+					messageBG1.setClickable(true);
+				}
+				{
+					android.graphics.drawable.GradientDrawable SketchUi = new android.graphics.drawable.GradientDrawable();
+					int d = (int) getApplicationContext().getResources().getDisplayMetrics().density;
+					SketchUi.setColor(0xFFFFFFFF);
+					SketchUi.setCornerRadius(d * initialCornerRadiusSliderValue);
+					SketchUi.setStroke(d * 2, 0xFFDFDFDF);
+					android.graphics.drawable.RippleDrawable SketchUiRD = new android.graphics.drawable.RippleDrawable(new android.content.res.ColorStateList(new int[][]{new int[]{}}, new int[]{0xFFE0E0E0}), SketchUi, null);
+					messageBG.setBackground(SketchUiRD);
+					messageBG.setClickable(true);
+				}
 			} catch (Exception e) {
-				    e.printStackTrace();
+				e.printStackTrace();
 			}
 		}catch(Exception e){
-			 
+			
 		}
 		_stateColor(0xFFFFFFFF, 0xFFFAFAFA);
 		application_stage.setBackground(new GradientDrawable() { public GradientDrawable getIns(int a, int b) { this.setCornerRadius(a); this.setColor(b); return this; } }.getIns((int)35, 0xFFFFFFFF));
@@ -766,7 +740,7 @@ public class ChatsettingsActivity extends AppCompatActivity {
 			
 			@Override
 			public void onCancelled(@NonNull DatabaseError databaseError) {
-						
+				
 			}
 		});
 	}
@@ -810,55 +784,4 @@ public class ChatsettingsActivity extends AppCompatActivity {
 		_view.setBackground(s);
 	}
 	
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
-}
+}

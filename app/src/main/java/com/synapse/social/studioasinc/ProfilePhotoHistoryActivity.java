@@ -14,12 +14,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-//import android.support.design.*;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -36,7 +30,6 @@ import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
-import androidx.core.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -90,9 +83,7 @@ import java.util.regex.*;
 import org.json.*;
 import com.google.firebase.database.Query;
 import java.net.URL;
-import java.net.MalformedURLException;
-
-
+import java.net.MalformedURLException;
 
 public class ProfilePhotoHistoryActivity extends AppCompatActivity {
 	
@@ -397,9 +388,7 @@ public class ProfilePhotoHistoryActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
-
-
+	
 	public void _ImageColor(final ImageView _image, final int _color) {
 		_image.setColorFilter(_color,PorterDuff.Mode.SRC_ATOP);
 	}
@@ -727,4 +716,4 @@ public class ProfilePhotoHistoryActivity extends AppCompatActivity {
 			}
 		}
 	}
-}
+}

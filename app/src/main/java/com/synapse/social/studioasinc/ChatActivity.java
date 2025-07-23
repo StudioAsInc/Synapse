@@ -22,7 +22,6 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-//import android.support.design.*;
 import android.text.*;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -41,7 +40,6 @@ import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
 import androidx.cardview.widget.CardView;
-import androidx.core.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -94,7 +92,6 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.*;
-//import org.jetbrains.kotlin.*;
 import org.json.*;
 import com.google.firebase.database.Query;
 import android.os.Handler;
@@ -115,9 +112,7 @@ import android.content.SharedPreferences;
 import com.synapse.social.studioasinc.ImageUploader;
 import androidx.browser.customtabs.CustomTabsIntent;
 
-import com.synapse.social.studioasinc.styling.TextStylingUtil;
-
-
+import com.synapse.social.studioasinc.styling.TextStylingUtil;
 
 public class ChatActivity extends AppCompatActivity {
 	
@@ -1020,9 +1015,7 @@ public class ChatActivity extends AppCompatActivity {
 	
 	
 	public void _messageOverviewPopup(final View _view, final double _position, final ArrayList<HashMap<String, Object>> _data) {
-		View pop1V = getLayoutInflater().inflate(R.layout.chat_msg_options_popup_cv_synapse, null);
-
-
+		View pop1V = getLayoutInflater().inflate(R.layout.chat_msg_options_popup_cv_synapse, null);
 		final PopupWindow pop1 = new PopupWindow(pop1V, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
 		pop1.setFocusable(true);
 		pop1.setInputMethodMode(ListPopupWindow.INPUT_METHOD_NOT_NEEDED);
@@ -2297,4 +2290,4 @@ _textview_mh(message_text, _data.get((int)_position).get("message_text").toStrin
 			}
 		}
 	}
-}
+}

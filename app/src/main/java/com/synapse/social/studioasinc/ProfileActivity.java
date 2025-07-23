@@ -17,7 +17,6 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-//import android.support.design.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -36,7 +35,6 @@ import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
 import androidx.cardview.widget.CardView;
-import androidx.core.*;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -80,13 +78,11 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.*;
-// import org.jetbrains.kotlin.*;
 import org.json.*;
 import androidx.core.widget.NestedScrollView;
 import com.google.firebase.database.Query;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class ProfileActivity extends AppCompatActivity {
 	
@@ -206,24 +202,24 @@ public class ProfileActivity extends AppCompatActivity {
 	private ChildEventListener _main_child_listener;
 	private Vibrator vbr;
 	private Calendar cc = Calendar.getInstance();
-	
-	class c {
-		Context co;
-		public <T extends Activity> c(T a) {
-			co = a;
-		}
-		public <T extends Fragment> c(T a) {
-			co = a.getActivity();
-		}
-		public <T extends DialogFragment> c(T a) {
-			co = a.getActivity();
-		}
-		
-		public Context getContext() {
-			return co;
-		}
-		
+
+class c {
+	Context co;
+	public <T extends Activity> c(T a) {
+		co = a;
 	}
+	public <T extends Fragment> c(T a) {
+		co = a.getActivity();
+	}
+	public <T extends DialogFragment> c(T a) {
+		co = a.getActivity();
+	}
+	
+	public Context getContext() {
+		return co;
+	}
+	
+}
 	private RequestNetwork req;
 	private RequestNetwork.RequestListener _req_request_listener;
 	private Calendar JoinDateCC = Calendar.getInstance();
@@ -1875,4 +1871,4 @@ public class ProfileActivity extends AppCompatActivity {
 			}
 		}
 	}
-}
+}

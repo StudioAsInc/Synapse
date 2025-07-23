@@ -15,12 +15,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-//import android.support.design.*;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -36,7 +30,6 @@ import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
-import androidx.core.*;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -94,9 +87,7 @@ import android.view.ViewGroup;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
-import androidx.appcompat.app.AppCompatDelegate;
-
-
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class MessagesActivity extends AppCompatActivity {
 	
@@ -868,4 +859,4 @@ FirebaseDatabase.getInstance().getReference("skyline/inbox")
 			}
 		}
 	}
-}
+}

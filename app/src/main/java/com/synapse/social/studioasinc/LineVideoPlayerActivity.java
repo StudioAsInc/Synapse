@@ -12,7 +12,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-import android.support.customtabs.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -25,30 +24,24 @@ import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
 import androidx.recyclerview.widget.*;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.swiperefreshlayout.*;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener;
-import androidx.transition.*;
-//import com.blogspot.atifsoftwares.animatoolib.*;
-//import com.budiyev.android.codescanner.*;
-//import com.caverock.androidsvg.*;
+import com.bumptech.glide.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,19 +52,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.perf.*;
-//import com.jsibbold.zoomage.*;
-//import com.shobhitpuri.custombuttons.*;
-//import com.sigma.niceswitch.*;
-//import com.theartofdev.edmodo.cropper.*;
-//import com.theophrast.ui.widget.*;
-//import com.wuyr.rippleanimation.*;
-//import com.yalantis.ucrop.*;
-//import eightbitlab.com.blurview.*;
-//import io.noties.markwon.*;
-//import io.noties.markwon.ext.strikethrough.*;
-//import io.noties.markwon.ext.tables.*;
-//import io.noties.markwon.ext.tasklist.*;
+import com.theartofdev.edmodo.cropper.*;
+import com.yalantis.ucrop.*;
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -79,12 +61,8 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.*;
-//import kr.co.prnd.readmore.*;
-//import me.dm7.barcodescanner.core.*;
-//import org.jetbrains.kotlin.*;
 import org.json.*;
-import com.google.firebase.database.Query;
-
+import com.google.firebase.database.Query;
 
 public class LineVideoPlayerActivity extends AppCompatActivity {
 	
@@ -245,26 +223,26 @@ public class LineVideoPlayerActivity extends AppCompatActivity {
 				noInternetBody.setVisibility(View.GONE);
 				Query getLineVideosRef = FirebaseDatabase.getInstance().getReference("skyline/line-posts").orderByChild("post_type").equalTo("LINE_VIDEO").limitToLast(50);
 				getLineVideosRef.addListenerForSingleValueEvent(new ValueEventListener() {
-						@Override
-						public void onDataChange(DataSnapshot _dataSnapshot) {
-								lineVideosListMap.clear();
-								try {
-										GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
-										for (DataSnapshot _data : _dataSnapshot.getChildren()) {
-												HashMap<String, Object> _map = _data.getValue(_ind);
-												lineVideosListMap.add(_map);
-										}
-										mLineVideosRecyclerViewAdapter = new LineVideosRecyclerViewAdapter(getApplicationContext(), getSupportFragmentManager(),  lineVideosListMap);
-										videosRecyclerView.setAdapter(mLineVideosRecyclerViewAdapter);
-								} catch (Exception e) {
-										e.printStackTrace();
-								}
+					@Override
+					public void onDataChange(DataSnapshot _dataSnapshot) {
+						lineVideosListMap.clear();
+						try {
+							GenericTypeIndicator<HashMap<String, Object>> _ind = new GenericTypeIndicator<HashMap<String, Object>>() {};
+							for (DataSnapshot _data : _dataSnapshot.getChildren()) {
+								HashMap<String, Object> _map = _data.getValue(_ind);
+								lineVideosListMap.add(_map);
+							}
+							mLineVideosRecyclerViewAdapter = new LineVideosRecyclerViewAdapter(getApplicationContext(), getSupportFragmentManager(),  lineVideosListMap);
+							videosRecyclerView.setAdapter(mLineVideosRecyclerViewAdapter);
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
+					}
+					
+					@Override
+					public void onCancelled(DatabaseError _databaseError) {
 						
-						@Override
-						public void onCancelled(DatabaseError _databaseError) {
-								
-						}
+					}
 				});
 				
 				middleRelativeTopSwipe.setRefreshing(false);
@@ -468,55 +446,4 @@ public class LineVideoPlayerActivity extends AppCompatActivity {
 		request.startRequestNetwork(RequestNetworkController.POST, "https://google.com", "google", _request_request_listener);
 	}
 	
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
-}
+}

@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.support.customtabs.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -30,32 +29,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
 import androidx.recyclerview.widget.*;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.Adapter;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-import androidx.swiperefreshlayout.*;
-import androidx.transition.*;
-/*
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
+import com.bumptech.glide.*;
 import com.bumptech.glide.Glide;
-import com.caverock.androidsvg.*;
-*/
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,23 +57,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.perf.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-/*
-import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-//import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*;
-*/
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
@@ -90,9 +68,6 @@ import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-//import me.dm7.barcodescanner.core.*;
-//import org.jetbrains.kotlin.*;
 import org.json.*;
 
 public class SelectRegionActivity extends AppCompatActivity {
@@ -357,21 +332,21 @@ public class SelectRegionActivity extends AppCompatActivity {
 		boolean _default = false;
 		
 		ViewGroup.LayoutParams p = _view.getLayoutParams();
-		    if (p instanceof LinearLayout.LayoutParams) {
-			        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)p;
-			        lp.setMargins(left, top, right, bottom);
-			        _view.setLayoutParams(lp);
-			    }
-		    else if (p instanceof RelativeLayout.LayoutParams) {
-			        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)p;
-			        lp.setMargins(left, top, right, bottom);
-			        _view.setLayoutParams(lp);
-			    }
-		    else if (p instanceof TableRow.LayoutParams) {
-			        TableRow.LayoutParams lp = (TableRow.LayoutParams)p;
-			        lp.setMargins(left, top, right, bottom);
-			        _view.setLayoutParams(lp);
-			    }
+		if (p instanceof LinearLayout.LayoutParams) {
+			LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)p;
+			lp.setMargins(left, top, right, bottom);
+			_view.setLayoutParams(lp);
+		}
+		else if (p instanceof RelativeLayout.LayoutParams) {
+			RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)p;
+			lp.setMargins(left, top, right, bottom);
+			_view.setLayoutParams(lp);
+		}
+		else if (p instanceof TableRow.LayoutParams) {
+			TableRow.LayoutParams lp = (TableRow.LayoutParams)p;
+			lp.setMargins(left, top, right, bottom);
+			_view.setLayoutParams(lp);
+		}
 		
 		
 	}
@@ -416,21 +391,21 @@ public class SelectRegionActivity extends AppCompatActivity {
 	public void _getCurrentRegionRef() {
 		DatabaseReference checkRegion = FirebaseDatabase.getInstance().getReference("skyline/users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("user_region");
 		checkRegion.addValueEventListener(new ValueEventListener() {
-				@Override
-				public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-						if(dataSnapshot.exists()) {
-								CurrentRegionCode = dataSnapshot.getValue(String.class);
-					            appSavedData.edit().putString("user_region_data", dataSnapshot.getValue(String.class)).commit();
-						} else {
-								CurrentRegionCode = "none";
-					            appSavedData.edit().putString("user_region_data", "none").commit();
-						}
-				        mRegionList.getAdapter().notifyDataSetChanged();
+			@Override
+			public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+				if(dataSnapshot.exists()) {
+					CurrentRegionCode = dataSnapshot.getValue(String.class);
+					appSavedData.edit().putString("user_region_data", dataSnapshot.getValue(String.class)).commit();
+				} else {
+					CurrentRegionCode = "none";
+					appSavedData.edit().putString("user_region_data", "none").commit();
 				}
-				@Override
-				public void onCancelled(@NonNull DatabaseError databaseError) {
-						
-				}
+				mRegionList.getAdapter().notifyDataSetChanged();
+			}
+			@Override
+			public void onCancelled(@NonNull DatabaseError databaseError) {
+				
+			}
 		});
 	}
 	
@@ -469,7 +444,7 @@ public class SelectRegionActivity extends AppCompatActivity {
 			} else {
 				_setMargin(body, 14, 14, 0, 14);
 			}
-			// Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(_data.get((int)_position).get("code").toString().concat(".png")))).into(flag);
+			Glide.with(getApplicationContext()).load(Uri.parse("https://flagcdn.com/w640/".concat(_data.get((int)_position).get("code").toString().concat(".png")))).into(flag);
 			name.setText(_data.get((int)_position).get("name").toString());
 			if (CurrentRegionCode.equals(_data.get((int)_position).get("code").toString())) {
 				checkbox.setImageResource(R.drawable.icon_check_circle_round);
@@ -498,55 +473,4 @@ public class SelectRegionActivity extends AppCompatActivity {
 			}
 		}
 	}
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
-}
+}

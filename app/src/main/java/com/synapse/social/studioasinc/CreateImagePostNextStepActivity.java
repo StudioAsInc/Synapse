@@ -18,7 +18,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Vibrator;
-//import android.support.design.*;
 import android.text.*;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,7 +39,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.browser.*;
 import androidx.cardview.widget.CardView;
-import androidx.core.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -84,9 +82,7 @@ import java.util.HashMap;
 import java.util.regex.*;
 import org.json.*;
 import androidx.appcompat.widget.SwitchCompat;
-import com.synapse.social.studioasinc.ImageUploader;
-
-
+import com.synapse.social.studioasinc.ImageUploader;
 
 public class CreateImagePostNextStepActivity extends AppCompatActivity {
 	
@@ -854,9 +850,7 @@ public class CreateImagePostNextStepActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
-
-
+	
 	public void _setStatusBarColor(final boolean _isLight, final int _stateColor, final int _navigationColor) {
 		if (_isLight) {
 			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
@@ -909,4 +903,4 @@ public class CreateImagePostNextStepActivity extends AppCompatActivity {
 		android.transition.AutoTransition autoTransition = new android.transition.AutoTransition(); autoTransition.setDuration((long)_duration); android.transition.TransitionManager.beginDelayedTransition(viewgroup, autoTransition);
 	}
 	
-}
+}

@@ -22,8 +22,6 @@ import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
 import android.os.Vibrator;
-//import android.support.design.*;
-import com.google.android.material.*;
 import android.text.*;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,7 +44,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
 import androidx.cardview.widget.CardView;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -131,8 +128,7 @@ import androidx.browser.customtabs.CustomTabsIntent;
 
 import com.synapse.social.studioasinc.animations.layout.layoutshaker;
 // For Java
-import com.synapse.social.studioasinc.styling.TextStylingUtil;
-
+import com.synapse.social.studioasinc.styling.TextStylingUtil;
 
 public class HomeActivity extends AppCompatActivity {
 	
@@ -246,24 +242,24 @@ public class HomeActivity extends AppCompatActivity {
 	private RequestNetwork req;
 	private RequestNetwork.RequestListener _req_request_listener;
 	private Calendar cc = Calendar.getInstance();
-	
-	class c {
-		Context co;
-		public <T extends Activity> c(T a) {
-			co = a;
-		}
-		public <T extends Fragment> c(T a) {
-			co = a.getActivity();
-		}
-		public <T extends DialogFragment> c(T a) {
-			co = a.getActivity();
-		}
-		
-		public Context getContext() {
-			return co;
-		}
-		
+
+class c {
+	Context co;
+	public <T extends Activity> c(T a) {
+		co = a;
 	}
+	public <T extends Fragment> c(T a) {
+		co = a.getActivity();
+	}
+	public <T extends DialogFragment> c(T a) {
+		co = a.getActivity();
+	}
+	
+	public Context getContext() {
+		return co;
+	}
+	
+}
 	private MediaPlayer mp;
 	private DatabaseReference rootdb = _firebase.getReference("/");
 	private ChildEventListener _rootdb_child_listener;
@@ -3305,4 +3301,4 @@ public class HomeActivity extends AppCompatActivity {
 			}
 		}
 	}
-}
+}

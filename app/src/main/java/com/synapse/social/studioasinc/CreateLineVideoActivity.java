@@ -1,4 +1,5 @@
 package com.synapse.social.studioasinc;
+
 import android.Manifest;
 import android.animation.*;
 import android.app.*;
@@ -16,7 +17,6 @@ import android.net.*;
 import android.net.Uri;
 import android.os.*;
 import android.os.Bundle;
-import android.support.customtabs.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -29,54 +29,28 @@ import android.widget.*;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-//import androidmads.library.qrgenearator.*;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.asynclayoutinflater.*;
+import androidx.browser.*;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.interpolator.*;
-import androidx.swiperefreshlayout.*;
-import androidx.transition.*;
-/*
-import com.blogspot.atifsoftwares.animatoolib.*;
-import com.budiyev.android.codescanner.*;
-import com.caverock.androidsvg.*;
-*/
+import com.bumptech.glide.*;
 import com.google.android.material.*;
+import com.google.android.material.color.MaterialColors;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.playintegrity.*;
-import com.google.firebase.perf.*;
-/* import com.jsibbold.zoomage.*;
-import com.shobhitpuri.custombuttons.*;
-import com.sigma.niceswitch.*;
 import com.theartofdev.edmodo.cropper.*;
-import com.theophrast.ui.widget.*;
-import com.wuyr.rippleanimation.*;
 import com.yalantis.ucrop.*;
-import eightbitlab.com.blurview.*;
-import io.noties.markwon.*;
-import io.noties.markwon.ext.strikethrough.*;
-import io.noties.markwon.ext.tables.*;
-import io.noties.markwon.ext.tasklist.*; */
 import java.io.*;
 import java.io.InputStream;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
-import kr.co.prnd.readmore.*;
-/*
-import me.dm7.barcodescanner.core.*;
-import org.jetbrains.kotlin.*;
-*/
 import org.json.*;
 import java.net.URL;
-import java.net.MalformedURLException;
-
-
+import java.net.MalformedURLException;
 
 public class CreateLineVideoActivity extends AppCompatActivity {
 	
@@ -181,15 +155,15 @@ public class CreateLineVideoActivity extends AppCompatActivity {
 				if (Premium.contains("premium")) {
 					if (Premium.getString("premium", "").equals("true")) {
 						if (Build.VERSION.SDK_INT >= 23) {
-								if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED) {
-										requestPermissions(new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
-								} else {
-										Intent sendVideoInt = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-								        startActivityForResult(sendVideoInt, REQ_CD_VIDEO_PICKER);
-								}
-						} else {
+							if (checkSelfPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED || checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == android.content.pm.PackageManager.PERMISSION_DENIED) {
+								requestPermissions(new String[] {android.Manifest.permission.READ_EXTERNAL_STORAGE,android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+							} else {
 								Intent sendVideoInt = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-							    startActivityForResult(sendVideoInt, REQ_CD_VIDEO_PICKER);
+								startActivityForResult(sendVideoInt, REQ_CD_VIDEO_PICKER);
+							}
+						} else {
+							Intent sendVideoInt = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+							startActivityForResult(sendVideoInt, REQ_CD_VIDEO_PICKER);
 						}
 					} else {
 						if (Premium.getString("premium", "").equals("false")) {
@@ -255,9 +229,7 @@ public class CreateLineVideoActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
-
-
+	
 	public void _stateColor(final int _statusColor, final int _navigationColor) {
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 		getWindow().setStatusBarColor(_statusColor);
@@ -283,13 +255,13 @@ public class CreateLineVideoActivity extends AppCompatActivity {
 	public void _LoadingDialog(final boolean _visibility) {
 		if (_visibility) {
 			if (SynapseLoadingDialog== null){
-					SynapseLoadingDialog = new ProgressDialog(this);
-					SynapseLoadingDialog.setCancelable(false);
-					SynapseLoadingDialog.setCanceledOnTouchOutside(false);
-					
-					SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
-					SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
-					
+				SynapseLoadingDialog = new ProgressDialog(this);
+				SynapseLoadingDialog.setCancelable(false);
+				SynapseLoadingDialog.setCanceledOnTouchOutside(false);
+				
+				SynapseLoadingDialog.requestWindowFeature(Window.FEATURE_NO_TITLE); 
+				SynapseLoadingDialog.getWindow().setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(Color.TRANSPARENT));
+				
 			}
 			SynapseLoadingDialog.show();
 			SynapseLoadingDialog.setContentView(R.layout.loading_synapse);
@@ -392,62 +364,11 @@ NewCustomDialog.show();
 	
 	public boolean _checkValidUrl(final String _url) {
 		try {
-				new URL(_url);
-				return true;
+			new URL(_url);
+			return true;
 		} catch (MalformedURLException e) {
-				return false;
+			return false;
 		}
 	}
 	
-	
-	@Deprecated
-	public void showMessage(String _s) {
-		Toast.makeText(getApplicationContext(), _s, Toast.LENGTH_SHORT).show();
-	}
-	
-	@Deprecated
-	public int getLocationX(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[0];
-	}
-	
-	@Deprecated
-	public int getLocationY(View _v) {
-		int _location[] = new int[2];
-		_v.getLocationInWindow(_location);
-		return _location[1];
-	}
-	
-	@Deprecated
-	public int getRandom(int _min, int _max) {
-		Random random = new Random();
-		return random.nextInt(_max - _min + 1) + _min;
-	}
-	
-	@Deprecated
-	public ArrayList<Double> getCheckedItemPositionsToArray(ListView _list) {
-		ArrayList<Double> _result = new ArrayList<Double>();
-		SparseBooleanArray _arr = _list.getCheckedItemPositions();
-		for (int _iIdx = 0; _iIdx < _arr.size(); _iIdx++) {
-			if (_arr.valueAt(_iIdx))
-			_result.add((double)_arr.keyAt(_iIdx));
-		}
-		return _result;
-	}
-	
-	@Deprecated
-	public float getDip(int _input) {
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, _input, getResources().getDisplayMetrics());
-	}
-	
-	@Deprecated
-	public int getDisplayWidthPixels() {
-		return getResources().getDisplayMetrics().widthPixels;
-	}
-	
-	@Deprecated
-	public int getDisplayHeightPixels() {
-		return getResources().getDisplayMetrics().heightPixels;
-	}
-}
+}
