@@ -105,6 +105,7 @@ dependencies {
     
     // Correct AAR dependency declaration
     implementation files('libs/android-image-cropper-2.8.0.aar')
+    implementation files('libs/ucrop-2.2.8.aar')
     
  //   implementation "org.jetbrains.kotlin:kotlin-stdlib:2.0.0"
  //   implementation 'com.github.shobhitpuri:custom-google-signin-button:2.0.0"
