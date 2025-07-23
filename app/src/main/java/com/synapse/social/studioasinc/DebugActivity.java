@@ -14,7 +14,6 @@ import android.media.*;
 import android.net.*;
 import android.os.*;
 import android.os.Vibrator;
-//import android.support.design.*;
 import android.text.*;
 import android.text.style.*;
 import android.util.*;
@@ -31,7 +30,6 @@ import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.*;
-import androidx.core.*;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -45,9 +43,9 @@ import java.io.*;
 import java.text.*;
 import java.util.*;
 import java.util.regex.*;
-//import org.jetbrains.kotlin.*;
 import org.json.*;
-import java.io.*;
+import java.io.*;
+
 
 public class DebugActivity extends AppCompatActivity {
 	
@@ -122,7 +120,8 @@ public class DebugActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		finish();
 	}
-	
+	
+
 	public void _stateColor(final int _statusColor, final int _navigationColor) {
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
 		getWindow().setStatusBarColor(_statusColor);
@@ -156,4 +155,4 @@ public class DebugActivity extends AppCompatActivity {
 	{
 	}
 	
-}
+}
