@@ -28,7 +28,7 @@ Developed by StudioAs Inc. The development was started in 2023 and we expect the
 
 ## License
 
-Synapse is released under a custom open-source license that promotes community collaboration while protecting the project's integrity. For complete license terms and conditions, please see the [LICENSE](LICENSE) file in the repository.
+Synapse is released under a custom open-source license that promotes community collaboration while protecting the project's integrity. For complete license terms and conditions, please see the [LICENSE](LICENCE.md) file in the repository.
 
 ## Community Support
 - **GitHub Issues** - [Report bugs and request features](https://github.com/StudioAsInc/Synapse/issues)
