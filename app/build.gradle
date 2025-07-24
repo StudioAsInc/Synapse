@@ -48,7 +48,7 @@ android {
     defaultConfig {
         applicationId "com.synapse.social.studioasinc"
         minSdk 23
-        targetSdk 35
+        targetSdk 36
         versionCode getGitCommitCount() + 1
         versionName "debug-${getGitCommitHash()}"
         multiDexEnabled true
