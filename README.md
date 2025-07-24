@@ -19,7 +19,7 @@
 
 ---
 
-##⚡️ Introduction
+## ⚡️ Introduction
 
 Synapse represents the future of social networking - a lightning-fast, secure, ad free, and completely open-source platform designed for every class of people. Built with modern technologies and a privacy-first approach, Synapse offers users complete control over their social experience without compromising security.
 
@@ -28,7 +28,7 @@ Developed by StudioAs Inc. The development was started in 2023 and we expect the
 ## ✅️ Key Features
 
 **🚀 Performance & Speed**
-- Ultra-fast loading times with optimized codebase
+- Fast & secure with optimized codebase
 - Smooth animations and responsive UI interactions
 - Efficient memory management and battery optimization
 - Seamless offline functionality with intelligent caching
@@ -59,7 +59,7 @@ Developed by StudioAs Inc. The development was started in 2023 and we expect the
 
 ## 🏗️ Architecture
 
-Synapse is built using a modern, scalable architecture that ensures optimal performance across all platforms:
+Synapse is built using a modern, scalable architecture that ensures optimal performance across all platforms,
 
 **Frontend Technologies:**
 - **Java** - Core application logic and business layer
@@ -75,47 +75,121 @@ Synapse is built using a modern, scalable architecture that ensures optimal perf
 - **Security by Design** - Built-in security measures at every layer
 - **Scalable Architecture** - Designed to handle growing user bases
 
-## 🚀 Getting Started
 
-### Prerequisites
+# 🤝 CONTRIBUTING
 
-Before setting up Synapse, ensure you have the following installed:
+## Getting Started
+### 1. Fork and Clone
+```bash
+git clone https://github.com/YOUR-USERNAME/Synapse.git
+cd Synapse
+```
 
-- **Java Development Kit (JDK) 8 or higher**
-- **Android Studio** (for mobile development)
-- **Git** for version control
-- **Node.js** (for build tools and dependencies)
+### 2. Environment Setup
+```bash
+./gradlew build
+cp config/development.properties.example config/development.properties
+```
 
-### Installation
+### 3. Build Commands
+```bash
+# Android
+./gradlew assembleDebug
 
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/StudioAsInc/Synapse.git
-   cd Synapse
-   ```
+# Web components
+npm install && npm run build
+```
 
-2. **Set Up Development Environment**
-   ```bash
-   # Install dependencies
-   ./gradlew build
-   
-   # Configure development settings
-   cp config/development.properties.example config/development.properties
-   ```
+### 4. Run Application
+**Android Studio Method:**
+1. Open project → Connect device → Click Run button  
+**CLI Method:**
+```bash
+./gradlew installDebug
+adb shell am start -n com.studioasinc.synapse/.MainActivity
+```
 
-3. **Build and Run**
-   ```bash
-   # For Android
-   ./gradlew assembleDebug
-   
-   # For web components
-   npm install && npm run build
-   ```
+---
 
-4. **Launch the Application**
-   - Open the project in Android Studio
-   - Connect your device or start an emulator
-   - Run the application using the play button or `./gradlew installDebug`
+## 🔧 Development Standards
+### Commit Message Guidelines
+Follow [Conventional Commits](https://www.conventionalcommits.org):
+### Commit Prefixes Explained  
+
+- **`fix:`** – Bug fixes (patch version bump)  
+- **`feat:`** – New features (minor version bump)  
+- **`chore:`** – Maintenance (no version bump, e.g., dependencies, config)  
+- **`docs:`** – Documentation changes  
+- **`refactor:`** – Code changes without behavior impact  
+- **`test:`** – Test-related updates  
+- **`perf:`** – Performance improvements  
+- **`remove`** - When removing a file or code snippet.
+
+**Note:** You can always introduce new prefix that describes your commits better.
+
+```  
+type(scope): description  
+```  
+Example:  
+```  
+fix(login): handle null auth tokens  
+```
+
+### 📐 Code Requirements
+1. **Android Code:**
+   - Kotlin preferred (Java allowed with justification)
+   - Follow [Kotlin Style Guide](https://developer.android.com/kotlin/style-guide)
+   - Max 100 characters/line
+   - Use Material 3 Expressive libraries exclusively
+
+
+### 🧪 Testing Requirements
+**Mandatory Test Coverage:**
+```bash
+# Run all tests
+./gradlew test connectedCheck
+
+# Generate coverage report
+./gradlew jacocoTestReport
+```
+- Minimum 80% coverage for new features
+- UI: Espresso for Android, React Testing Library for web
+- Unit: JUnit5 + MockK for Kotlin, Jest for TypeScript
+- Snapshot testing for all UI components
+
+---
+
+## 🔁 CI/CD Pipeline (GitHub Actions)
+Our pipeline validates:
+```yaml
+- Linting (KTlint/ESLint)
+- Build checks (Android/Web)
+- Unit tests
+- UI integration tests
+- Code coverage enforcement
+- APK artifact generation
+```
+**Pro Tip:**  
+Run `./gradlew check` locally before pushing to avoid CI failures.
+
+---
+
+## 🛠 Recommended Tools
+| Purpose          | Tool                          |
+|------------------|-------------------------------|
+| Android Dev      | Android Studio (latest)       |
+| Web Dev          | VS Code / WebStorm            |
+| Text Editing     | Notepad++ / Sublime Text      |
+| Version Control  | GitHub Desktop / CLI          |
+| CI/CD            | GitHub Actions                |
+| Performance      | Android Profiler + Chrome DevTools |
+
+**Before submitting PR:**
+1. Rebase onto latest `main` branch
+2. Ensure all tests passed
+3. Update documentation if needed
+4. Include screenshots for UI changes
+5. Provide download url
 
 ### Package Information
 
@@ -136,7 +210,7 @@ Synapse is designed to provide a consistent experience across multiple platforms
 
 ### Current Version (v1.0)
 - Core social networking features
-- Real-time messaging system
+- Release the app
 
 ### Upcoming Features (v1.1-1.2)
 - Advanced AI-powered content recommendations
@@ -147,8 +221,7 @@ Synapse is designed to provide a consistent experience across multiple platforms
 ### Future Innovations (v2.0+)
 - Decentralized identity management
 - Blockchain-based content verification
-- Advanced machine learning integrations
-- Cross-platform virtual reality support
+- Host in your VPS and fully decentralised
 
 ## 🤝 Contributing
 
@@ -200,7 +273,7 @@ Special thanks to the open-source community for providing the foundational tools
 
 ## 📊 Project Statistics
 
-- **Development Started:** 2025
+- **Development span:** 2023 - Now
 - **License Type:** Custom Open Source
 - **Primary Languages:** Java, Kotlin, JavaScript, HTML, CSS, XML
 - **Architecture:** Modular, Scalable, Security-First
