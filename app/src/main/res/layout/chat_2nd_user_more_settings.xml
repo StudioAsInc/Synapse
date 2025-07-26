@@ -27,7 +27,7 @@
 				android:layout_height="match_parent"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="16dp"
-				android:src="@drawable/icon_arrow_back_ios_round"
+				android:src="@drawable/ic_arrow_back_ios_new_48px"
 				android:scaleType="fitCenter" />
 			<TextView
 				android:id="@+id/invisible_txt_appbar"
@@ -49,7 +49,7 @@
 				android:layout_height="25dp"
 				android:layout_marginLeft="8dp"
 				android:layout_marginRight="8dp"
-				android:src="@drawable/icon_menu_open_round"
+				android:src="@drawable/hand_package_24px"
 				android:scaleType="fitCenter" />
 		</LinearLayout>
 		<ScrollView
@@ -91,33 +91,19 @@
 							android:textSize="30sp"
 							android:textStyle="bold"
 							android:textColor="#000000" />
-						<LinearLayout
-							android:id="@+id/e2e_is_on"
+						<Button
+							android:id="@+id/button1"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:paddingLeft="20dp"
 							android:paddingTop="10dp"
 							android:paddingRight="20dp"
 							android:paddingBottom="10dp"
-							android:background="#F5F5F5"
-							android:gravity="center_horizontal|center_vertical"
-							android:orientation="horizontal">
-							<ImageView
-								android:id="@+id/imageview5"
-								android:layout_width="12dp"
-								android:layout_height="12dp"
-								android:src="@drawable/lock_ic"
-								android:scaleType="fitCenter" />
-							<TextView
-								android:id="@+id/textview3"
-								android:layout_width="wrap_content"
-								android:layout_height="wrap_content"
-								android:layout_marginLeft="8dp"
-								android:text="End-to-end encrypted"
-								android:textSize="14sp"
-								android:textStyle="bold"
-								android:textColor="#000000" />
-						</LinearLayout>
+							android:text="End-to-end encrypted"
+							android:textSize="14sp"
+							android:textColor="#000000"
+							style="@style/Widget.Material3.Button.TonalButton.Icon"
+							app:icon="@drawable/encrypted_24px" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/action_btn_container"
@@ -147,7 +133,7 @@
 									android:id="@+id/imageview6"
 									android:layout_width="23dp"
 									android:layout_height="23dp"
-									android:src="@drawable/icon_phone_round"
+									android:src="@drawable/ic_call_48px"
 									android:scaleType="fitCenter" />
 							</LinearLayout>
 							<TextView
@@ -181,7 +167,7 @@
 									android:id="@+id/imageview7"
 									android:layout_width="23dp"
 									android:layout_height="23dp"
-									android:src="@drawable/icon_video_call_round"
+									android:src="@drawable/ic_video_chat_48px"
 									android:scaleType="fitCenter" />
 							</LinearLayout>
 							<TextView
@@ -214,7 +200,7 @@
 									android:id="@+id/imageview8"
 									android:layout_width="23dp"
 									android:layout_height="23dp"
-									android:src="@drawable/icon_notifications_round"
+									android:src="@drawable/ic_block_48px"
 									android:scaleType="fitCenter" />
 							</LinearLayout>
 							<TextView
@@ -246,7 +232,7 @@
 									android:id="@+id/imageview9"
 									android:layout_width="23dp"
 									android:layout_height="23dp"
-									android:src="@drawable/icon_account_circle_round"
+									android:src="@drawable/ic_account_circle_48px"
 									android:scaleType="fitCenter" />
 							</LinearLayout>
 							<TextView
@@ -298,7 +284,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_palette_round"
+										android:src="@drawable/ic_category"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear13"
@@ -337,7 +323,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_drive_file_rename_outline_round"
+										android:src="@drawable/ic_edit_note_48px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear16"
@@ -374,7 +360,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_auto_awesome_round"
+										android:src="@drawable/filter_vintage_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear18"
@@ -412,7 +398,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_emoji_emotions_round"
+										android:src="@drawable/ic_thumb_up_48px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear20"
@@ -432,7 +418,7 @@
 											android:layout_width="wrap_content"
 											android:layout_height="wrap_content"
 											android:layout_marginTop="5dp"
-											android:text="❤️"
+											android:text="👍"
 											android:textSize="14sp"
 											android:textColor="#616161" />
 									</LinearLayout>
@@ -473,7 +459,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_remove_red_eye_round"
+										android:src="@drawable/mark_chat_read_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear26"
@@ -498,13 +484,12 @@
 											android:textSize="14sp"
 											android:textColor="#616161" />
 									</LinearLayout>
-									<Switch
+									<com.google.android.material.materialswitch.MaterialSwitch
 										android:id="@+id/Read_recipt_switch"
-										android:layout_width="50dp"
-										android:layout_height="30dp"
+										android:layout_width="wrap_content"
+										android:layout_height="wrap_content"
+										android:layout_marginLeft="3dp"
 										android:layout_marginRight="10dp"
-										android:padding="8dp"
-										android:text="Switch"
 										android:textSize="12sp"
 										android:textColor="#000000"
 										android:checked="true" />
@@ -523,7 +508,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_auto_delete_round"
+										android:src="@drawable/auto_delete_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear27"
@@ -548,13 +533,12 @@
 											android:textSize="14sp"
 											android:textColor="#616161" />
 									</LinearLayout>
-									<Switch
+									<com.google.android.material.materialswitch.MaterialSwitch
 										android:id="@+id/disapear_switch"
-										android:layout_width="50dp"
-										android:layout_height="30dp"
+										android:layout_width="wrap_content"
+										android:layout_height="wrap_content"
+										android:layout_marginLeft="3dp"
 										android:layout_marginRight="10dp"
-										android:padding="8dp"
-										android:text="Switch"
 										android:textSize="12sp"
 										android:textColor="#000000" />
 								</LinearLayout>
@@ -571,7 +555,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_download_round"
+										android:src="@drawable/file_save_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear49"
@@ -596,12 +580,12 @@
 											android:textSize="14sp"
 											android:textColor="#616161" />
 									</LinearLayout>
-									<Switch
+									<com.google.android.material.materialswitch.MaterialSwitch
 										android:id="@+id/autosavephoto_switch"
 										android:layout_width="50dp"
 										android:layout_height="30dp"
+										android:layout_marginLeft="3dp"
 										android:layout_marginRight="10dp"
-										android:padding="8dp"
 										android:text="Switch"
 										android:textSize="12sp"
 										android:textColor="#000000" />
@@ -618,7 +602,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_push_pin_round"
+										android:src="@drawable/keep_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear28"
@@ -656,7 +640,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_search_round"
+										android:src="@drawable/ic_search_48px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear29"
@@ -717,7 +701,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_lock_round_themed"
+										android:src="@drawable/encrypted_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear44"
@@ -757,7 +741,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_share_round"
+										android:src="@drawable/ic_forward"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear45"
@@ -795,7 +779,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_block_round"
+										android:src="@drawable/mobile_block_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/block_lay1"
@@ -834,7 +818,7 @@
 										android:layout_height="25dp"
 										android:layout_marginLeft="10dp"
 										android:layout_marginRight="12dp"
-										android:src="@drawable/icon_report_problem_round"
+										android:src="@drawable/report_24px"
 										android:scaleType="fitCenter" />
 									<LinearLayout
 										android:id="@+id/linear47"

@@ -85,7 +85,7 @@
 					android:layout_width="16dp"
 					android:layout_height="16dp"
 					android:layout_marginRight="6dp"
-					android:src="@drawable/default_image"
+					android:src="@drawable/ic_male"
 					android:scaleType="centerInside" />
 				<ImageView
 					android:id="@+id/badge"

@@ -103,7 +103,7 @@
 							android:layout_width="14dp"
 							android:layout_height="14dp"
 							android:layout_marginLeft="4dp"
-							android:src="@drawable/icon_lock_person_round"
+							android:src="@drawable/ic_lock"
 							android:scaleType="centerInside" />
 					</LinearLayout>
 				</LinearLayout>

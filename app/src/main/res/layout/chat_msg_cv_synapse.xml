@@ -7,7 +7,6 @@
 	android:orientation="vertical">
 	<ProgressBar
 		android:id="@+id/showOldMessagesProgress"
-		android:focusable="false"
 		android:layout_width="match_parent"
 		android:layout_height="28dp"
 		android:paddingTop="2dp"
@@ -15,7 +14,8 @@
 		android:background="@android:color/transparent"
 		android:indeterminate="false"
 		style="?android:progressBarStyle"
-		android:layout_gravity="center_horizontal" />
+		android:layout_gravity="center_horizontal"
+		android:focusable="false" />
 	<LinearLayout
 		android:id="@+id/body"
 		android:layout_width="match_parent"
@@ -35,11 +35,11 @@
 			android:visibility="gone">
 			<ImageView
 				android:id="@+id/mProfileImage"
-				android:focusable="false"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:src="@drawable/avatar"
-				android:scaleType="centerCrop" />
+				android:scaleType="centerCrop"
+				android:focusable="false" />
 		</androidx.cardview.widget.CardView>
 		<LinearLayout
 			android:id="@+id/message_layout"
@@ -87,16 +87,15 @@
 						android:orientation="vertical">
 						<TextView
 							android:id="@+id/mRepliedMessageLayoutUsername"
-							android:focusable="false"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:text="TextView"
 							android:textSize="12sp"
 							android:textColor="#445E91"
-							android:singleLine="true" />
+							android:singleLine="true"
+							android:focusable="false" />
 						<TextView
 							android:id="@+id/mRepliedMessageLayoutMessage"
-							android:focusable="false"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:paddingRight="4dp"
@@ -104,6 +103,7 @@
 							android:textSize="16sp"
 							android:textColor="#424242"
 							android:singleLine="true"
+							android:focusable="false"
 							android:autoLink="all" />
 					</LinearLayout>
 				</LinearLayout>
@@ -115,38 +115,38 @@
 					app:cardCornerRadius="6dp">
 					<ImageView
 						android:id="@+id/mMessageImageView"
-						android:focusable="false"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:src="@drawable/default_image"
 						android:scaleType="fitCenter"
-						android:minWidth="250dp" />
+						android:focusable="false"
+						android:maxHeight="200dp"
+						android:minWidth="200dp" />
 				</androidx.cardview.widget.CardView>
 				<ImageView
 					android:id="@+id/typingStatusIcon"
-					android:focusable="false"
 					android:layout_width="48dp"
 					android:layout_height="18dp"
 					android:padding="4dp"
 					android:src="@drawable/more_h_ic"
-					android:scaleType="centerCrop" />
+					android:scaleType="centerCrop"
+					android:focusable="false" />
 				<com.airbnb.lottie.LottieAnimationView
 					android:id="@+id/lottie1"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:padding="8dp"
-					android:scaleType="fitCenter"
-					android:layout_centerInParent="true"
 					app:lottie_fileName="loading.json"
 					app:lottie_loop="true"
-					app:lottie_autoPlay="true" />
+					app:lottie_autoPlay="true"
+					android:layout_centerInParent="true" />
 				<TextView
 					android:id="@+id/message_text"
-					android:focusable="false"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="Message"
 					android:textSize="16sp"
+					android:focusable="false"
 					android:autoLink="all"
 					android:textColorLink="#FFFF00" />
 			</LinearLayout>
@@ -162,23 +162,22 @@
 				android:layout_gravity="right">
 				<TextView
 					android:id="@+id/date"
-					android:focusable="false"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginLeft="4dp"
 					android:layout_marginRight="4dp"
 					android:text="00:00"
 					android:textColor="#000000"
-					tools:replace="android:textSize"
-					android:textSize="10dp" />
+					android:focusable="false"
+					tools:replace="android:textSize" />
 				<ImageView
 					android:id="@+id/message_state"
-					android:focusable="false"
 					android:layout_width="14dp"
 					android:layout_height="14dp"
 					android:layout_marginRight="4dp"
 					android:src="@drawable/ic_check_black"
-					android:scaleType="centerInside" />
+					android:scaleType="centerInside"
+					android:focusable="false" />
 			</LinearLayout>
 		</LinearLayout>
 	</LinearLayout>

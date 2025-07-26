@@ -164,7 +164,8 @@
 							android:textColorHint="#757575"
 							android:singleLine="true"
 							android:imeOptions="actionSearch"
-							android:layout_weight="1" />
+							android:layout_weight="1"
+							android:fontFamily="@font/product_sans" />
 						<ImageView
 							android:id="@+id/topLayoutBarMiddleSearchLayoutIc"
 							android:layout_width="0dp"

@@ -137,7 +137,7 @@
 							android:layout_width="38dp"
 							android:layout_height="38dp"
 							android:padding="8dp"
-							android:src="@drawable/icon_drive_file_rename_outline_round"
+							android:src="@drawable/ic_edit_note_48px"
 							android:scaleType="fitCenter" />
 						<TextView
 							android:id="@+id/edit_title"
@@ -167,7 +167,7 @@
 							android:layout_width="38dp"
 							android:layout_height="38dp"
 							android:padding="8dp"
-							android:src="@drawable/icon_reply_round_themed"
+							android:src="@drawable/ic_reply_48px"
 							android:scaleType="fitCenter" />
 						<TextView
 							android:id="@+id/reply_title"
@@ -197,7 +197,7 @@
 							android:layout_width="38dp"
 							android:layout_height="38dp"
 							android:padding="8dp"
-							android:src="@drawable/icon_content_copy_round"
+							android:src="@drawable/ic_content_copy_48px"
 							android:scaleType="fitCenter" />
 						<TextView
 							android:id="@+id/copy_title"
@@ -227,7 +227,7 @@
 							android:layout_width="38dp"
 							android:layout_height="38dp"
 							android:padding="8dp"
-							android:src="@drawable/icon_auto_delete_round"
+							android:src="@drawable/ic_delete_48px"
 							android:scaleType="fitCenter" />
 						<TextView
 							android:id="@+id/delete_title"

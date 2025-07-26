@@ -1,0 +1,32 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+	<com.google.android.material.textfield.TextInputLayout
+		android:id="@+id/textinputlayout1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="18dp"
+		android:layout_marginTop="10dp"
+		android:layout_marginRight="18dp"
+		android:layout_marginBottom="10dp"
+		style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+		app:boxCornerRadiusTopStart="18dp"
+		app:boxCornerRadiusTopEnd="18dp"
+		app:boxCornerRadiusBottomStart="18dp"
+		app:boxCornerRadiusBottomEnd="18dp">
+		<EditText
+			android:id="@+id/edittext1"
+			android:focusable="false"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="15dp"
+			android:textSize="16sp"
+			android:hint="Edit Text"
+			android:textColorHint="#607D8B"
+			android:textColor="?attr/colorSecondary" />
+	</com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>

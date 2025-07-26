@@ -27,9 +27,8 @@
 				android:layout_width="48dp"
 				android:layout_height="48dp"
 				android:padding="12dp"
-				android:src="@drawable/arrow_icms_2"
-				android:scaleType="fitCenter"
-				android:rotation="180" />
+				android:src="@drawable/ic_arrow_back_ios_new_48px"
+				android:scaleType="fitCenter" />
 			<TextView
 				android:id="@+id/mTitle"
 				android:layout_width="wrap_content"
@@ -95,7 +94,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="8dp"
-							android:src="@drawable/icon_format_size_round"
+							android:src="@drawable/ic_text_fields_48px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear60"
@@ -349,7 +348,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_fitbit_round"
+							android:src="@drawable/ic_photo_library_48px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear26"
@@ -379,7 +378,7 @@
 							android:layout_width="25dp"
 							android:layout_height="20dp"
 							android:layout_marginRight="20dp"
-							android:src="@drawable/icon_arrow_back_ios_round"
+							android:src="@drawable/ic_arrow_back_ios_new_48px"
 							android:scaleType="fitCenter"
 							android:rotation="180" />
 					</LinearLayout>
@@ -395,8 +394,9 @@
 							android:layout_width="25dp"
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
+							android:layout_marginTop="4dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_color_lens_round"
+							android:src="@drawable/ic_rounded_corner"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear28"
@@ -441,15 +441,16 @@
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
 						android:layout_marginTop="8dp"
-						android:gravity="center_horizontal|center_vertical"
+						android:gravity="top"
 						android:orientation="horizontal">
 						<ImageView
 							android:id="@+id/imageview13"
 							android:layout_width="25dp"
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
+							android:layout_marginTop="8dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_color_lens_round"
+							android:src="@drawable/ic_category"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear20"
@@ -526,7 +527,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_next_plan_round"
+							android:src="@drawable/ic_touch"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear30"
@@ -552,13 +553,12 @@
 								android:textColor="#9E9E9E"
 								android:lines="2" />
 						</LinearLayout>
-						<Switch
+						<com.google.android.material.materialswitch.MaterialSwitch
 							android:id="@+id/switch1"
-							android:layout_width="50dp"
-							android:layout_height="30dp"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
 							android:layout_marginRight="10dp"
-							android:padding="8dp"
-							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
 							android:checked="true" />
@@ -577,7 +577,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_speaker_phone_round"
+							android:src="@drawable/ic_lift_device"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear32"
@@ -603,13 +603,12 @@
 								android:textColor="#9E9E9E"
 								android:lines="2" />
 						</LinearLayout>
-						<Switch
+						<com.google.android.material.materialswitch.MaterialSwitch
 							android:id="@+id/switch2"
-							android:layout_width="50dp"
-							android:layout_height="30dp"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
 							android:layout_marginRight="10dp"
-							android:padding="8dp"
-							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
 							android:checked="true" />
@@ -626,7 +625,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_music_off_round"
+							android:src="@drawable/ic_music_off"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear34"
@@ -653,13 +652,12 @@
 								android:textColor="#9E9E9E"
 								android:lines="2" />
 						</LinearLayout>
-						<Switch
+						<com.google.android.material.materialswitch.MaterialSwitch
 							android:id="@+id/switch3"
-							android:layout_width="50dp"
-							android:layout_height="30dp"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
 							android:layout_marginRight="10dp"
-							android:padding="8dp"
-							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
 							android:checked="true" />
@@ -693,7 +691,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_lock_round_themed"
+							android:src="@drawable/ic_lock"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear40"
@@ -710,13 +708,12 @@
 								android:textSize="18sp"
 								android:textColor="#000000" />
 						</LinearLayout>
-						<Switch
+						<com.google.android.material.materialswitch.MaterialSwitch
 							android:id="@+id/switch5"
-							android:layout_width="50dp"
-							android:layout_height="30dp"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
 							android:layout_marginRight="10dp"
-							android:padding="8dp"
-							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000" />
 					</LinearLayout>
@@ -734,7 +731,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_miscellaneous_services_round"
+							android:src="@drawable/component_exchange_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear42"
@@ -759,13 +756,12 @@
 								android:textSize="14sp"
 								android:textColor="#9E9E9E" />
 						</LinearLayout>
-						<Switch
+						<com.google.android.material.materialswitch.MaterialSwitch
 							android:id="@+id/switch6"
-							android:layout_width="50dp"
-							android:layout_height="30dp"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
 							android:layout_marginRight="10dp"
-							android:padding="8dp"
-							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000"
 							android:checked="true" />
@@ -782,7 +778,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_electrical_services_round"
+							android:src="@drawable/tab_inactive_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear44"
@@ -807,13 +803,12 @@
 								android:textSize="14sp"
 								android:textColor="#9E9E9E" />
 						</LinearLayout>
-						<Switch
+						<com.google.android.material.materialswitch.MaterialSwitch
 							android:id="@+id/switch7"
-							android:layout_width="50dp"
-							android:layout_height="30dp"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
 							android:layout_marginRight="10dp"
-							android:padding="8dp"
-							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000" />
 					</LinearLayout>
@@ -830,7 +825,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_delete_forever_round"
+							android:src="@drawable/ic_category"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear13"
@@ -886,7 +881,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_translate_round"
+							android:src="@drawable/language_chinese_array_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear36"
@@ -955,7 +950,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_storage_round"
+							android:src="@drawable/data_table_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear49"
@@ -1004,7 +999,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_data_saver_off_round"
+							android:src="@drawable/data_usage_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear50"
@@ -1052,7 +1047,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_stream_round"
+							android:src="@drawable/cast_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear51"
@@ -1077,13 +1072,12 @@
 								android:textSize="14sp"
 								android:textColor="#9E9E9E" />
 						</LinearLayout>
-						<Switch
+						<com.google.android.material.materialswitch.MaterialSwitch
 							android:id="@+id/switch10"
-							android:layout_width="50dp"
-							android:layout_height="30dp"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:layout_marginLeft="3dp"
 							android:layout_marginRight="10dp"
-							android:padding="8dp"
-							android:text="Switch"
 							android:textSize="12sp"
 							android:textColor="#000000" />
 					</LinearLayout>
@@ -1116,7 +1110,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_star_round"
+							android:src="@drawable/star_shine_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear56"
@@ -1148,7 +1142,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_currency_bitcoin_round"
+							android:src="@drawable/credit_card_heart_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear57"
@@ -1178,7 +1172,7 @@
 							android:layout_height="25dp"
 							android:layout_marginLeft="10dp"
 							android:layout_marginRight="12dp"
-							android:src="@drawable/icon_card_giftcard_round"
+							android:src="@drawable/hand_package_24px"
 							android:scaleType="fitCenter" />
 						<LinearLayout
 							android:id="@+id/linear58"

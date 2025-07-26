@@ -11,7 +11,8 @@
 		android:layout_height="match_parent"
 		android:background="@drawable/default_pattern"
 		android:gravity="center_horizontal|center_vertical"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:animateLayoutChanges="true">
 		<com.synapse.social.studioasinc.CenterCropLinearLayoutNoEffect
 			android:id="@+id/top"
 			android:layout_width="match_parent"
@@ -138,7 +139,8 @@
 			android:layout_height="match_parent"
 			android:background="@android:color/transparent"
 			android:orientation="vertical"
-			android:layout_weight="1">
+			android:layout_weight="1"
+			android:animateLayoutChanges="true">
 			<LinearLayout
 				android:id="@+id/bannedUserInfo"
 				android:layout_width="match_parent"
@@ -263,7 +265,8 @@
 			android:paddingBottom="8dp"
 			android:background="@android:color/transparent"
 			android:gravity="center_horizontal|center_vertical"
-			android:orientation="horizontal">
+			android:orientation="horizontal"
+			android:animateLayoutChanges="true">
 			<LinearLayout
 				android:id="@+id/message_input_outlined_round"
 				android:layout_width="match_parent"
@@ -299,7 +302,7 @@
 						android:id="@+id/remove_selected_img_icon"
 						android:layout_width="23dp"
 						android:layout_height="23dp"
-						android:src="@drawable/remove_ic"
+						android:src="@drawable/ic_close_48px"
 						android:scaleType="fitCenter"
 						android:translationX="-23.0dp"
 						android:translationY="-23.0dp" />
@@ -455,7 +458,7 @@
 				android:layout_width="44dp"
 				android:layout_height="44dp"
 				android:padding="10dp"
-				android:src="@drawable/ic_block_48px"
+				android:src="@drawable/ic_close_48px"
 				android:scaleType="fitCenter" />
 			<TextView
 				android:id="@+id/bottomAudioRecorderTime"
