@@ -9,6 +9,7 @@
 		android:id="@+id/vscroll1"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:background="@color/md_theme_background"
 		android:scrollbars="none">
 		<LinearLayout
 			android:id="@+id/parentLayout"
@@ -18,7 +19,7 @@
 			android:paddingTop="46dp"
 			android:paddingRight="18dp"
 			android:paddingBottom="18dp"
-			android:background="#FAF9F7"
+			android:background="@android:color/transparent"
 			android:orientation="vertical"
 			android:animateLayoutChanges="true">
 			<com.synapse.social.studioasinc.animations.textview.TVeffects
@@ -28,15 +29,16 @@
 				android:text="Hello, I'm Synapse AI"
 				android:textSize="30sp"
 				android:textStyle="bold"
-				android:textColor="?colorOnSurface"
-				android:fontFamily="@font/latin_mid" />
+				android:textColor="@color/md_theme_onBackground"
+				android:fontFamily="@font/product_sans" />
 			<com.synapse.social.studioasinc.animations.textview.TVeffects
 				android:id="@+id/aiResponseTextView_1"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="15dp"
 				android:textSize="18sp"
-				android:textColor="#000000" />
+				android:textColor="#000000"
+				android:fontFamily="@font/product_sans" />
 			<LinearLayout
 				android:id="@+id/mainHiddenLayout"
 				android:layout_width="match_parent"
@@ -75,7 +77,7 @@
 								android:layout_height="50dp"
 								android:gravity="center_horizontal|center_vertical"
 								android:orientation="vertical"
-								android:background="@drawable/shape_profile_circle_letter">
+								android:background="@drawable/circlelayout">
 								<TextView
 									android:id="@+id/nameFirstLetterTextView"
 									android:layout_width="wrap_content"
@@ -98,7 +100,7 @@
 								android:text="Nice to meet you, I'm..."
 								android:textSize="16sp"
 								android:textColor="#000000"
-								android:fontFamily="@font/styreneblc_regular" />
+								android:fontFamily="@font/product_sans" />
 							<LinearLayout
 								android:id="@+id/EditTextContainerLayout"
 								android:layout_width="match_parent"
@@ -118,7 +120,7 @@
 									android:hint="Enter your name"
 									android:textColorHint="#9E9E9E"
 									android:singleLine="true"
-									android:fontFamily="@font/latin_mid" />
+									android:fontFamily="@font/product_sans" />
 							</LinearLayout>
 						</LinearLayout>
 					</LinearLayout>
@@ -156,7 +158,7 @@
 							android:textSize="12sp"
 							android:textStyle="bold"
 							android:textColor="?colorOnSurface"
-							android:fontFamily="@font/styreneblc_regular" />
+							android:fontFamily="@font/product_sans" />
 					</LinearLayout>
 					<LinearLayout
 						android:id="@+id/continueBtnHolderLayout"
@@ -172,10 +174,9 @@
 							android:padding="8dp"
 							android:text="Continue"
 							android:textSize="16sp"
-							android:textStyle="bold"
 							android:textColor="?colorSurface"
 							style="@style/Widget.Material3.Button"
-							android:fontFamily="@font/latin_mid" />
+							android:fontFamily="@font/product_sans_bold" />
 					</LinearLayout>
 					<TextView
 						android:id="@+id/infoTextView_1"
@@ -185,9 +186,9 @@
 						android:gravity="center_horizontal|center_vertical"
 						android:text="You can always change your name later"
 						android:textSize="12sp"
-						android:textColor="?colorOnTertiaryContainer"
+						android:textColor="@color/md_theme_onBackground"
 						android:drawableStart="@drawable/ic_mtrl_info"
-						android:fontFamily="@font/styreneblc_regular" />
+						android:fontFamily="@font/product_sans" />
 				</LinearLayout>
 			</LinearLayout>
 			<LinearLayout
@@ -205,7 +206,7 @@
 					android:text="Hello"
 					android:textSize="16sp"
 					android:textColor="#000000"
-					android:fontFamily="@font/latin_mid" />
+					android:fontFamily="@font/product_sans" />
 				<LinearLayout
 					android:id="@+id/linear4"
 					android:layout_width="match_parent"
@@ -230,7 +231,7 @@
 								android:id="@+id/ic_rule_1"
 								android:layout_width="25dp"
 								android:layout_height="30dp"
-								android:src="@drawable/icon_assignment_round"
+								android:src="@drawable/star_shine_24px"
 								android:scaleType="fitCenter" />
 						</LinearLayout>
 						<LinearLayout
@@ -246,7 +247,7 @@
 								android:padding="4dp"
 								android:textSize="16sp"
 								android:textColor="#000000"
-								android:fontFamily="@font/nthropic_sans" />
+								android:fontFamily="@font/product_sans" />
 						</LinearLayout>
 					</LinearLayout>
 					<LinearLayout
@@ -265,7 +266,7 @@
 								android:id="@+id/ic_rule_2"
 								android:layout_width="25dp"
 								android:layout_height="30dp"
-								android:src="@drawable/icon_newspaper_round"
+								android:src="@drawable/ic_docs_48px"
 								android:scaleType="fitCenter" />
 						</LinearLayout>
 						<LinearLayout
@@ -281,7 +282,7 @@
 								android:text="You own the content you share, but you give Synapse permission to display and share it inside the app. Do not post anything illegal, offensive, or harmful. Spamming, impersonation, hate speech, or harassment of any kind is not allowed and may lead to account suspension."
 								android:textSize="16sp"
 								android:textColor="#000000"
-								android:fontFamily="@font/nthropic_sans" />
+								android:fontFamily="@font/product_sans" />
 						</LinearLayout>
 					</LinearLayout>
 					<LinearLayout
@@ -300,7 +301,7 @@
 								android:id="@+id/ic_rule_3"
 								android:layout_width="25dp"
 								android:layout_height="30dp"
-								android:src="@drawable/icon_privacy_tip_round"
+								android:src="@drawable/encrypted_24px"
 								android:scaleType="fitCenter" />
 						</LinearLayout>
 						<LinearLayout
@@ -316,7 +317,7 @@
 								android:text="We respect your privacy. Synapse collects only the minimum data needed to run and improve the app. We do not sell your information. By continuing to use Synapse, you accept future updates to these terms. For questions, contact our support team."
 								android:textSize="16sp"
 								android:textColor="#000000"
-								android:fontFamily="@font/nthropic_sans" />
+								android:fontFamily="@font/product_sans" />
 						</LinearLayout>
 					</LinearLayout>
 				</LinearLayout>
@@ -328,10 +329,9 @@
 					android:padding="8dp"
 					android:text="I agree"
 					android:textSize="16sp"
-					android:textStyle="bold"
 					android:textColor="?colorSurface"
 					style="@style/Widget.Material3Expressive.Button"
-					android:fontFamily="@font/latin_mid" />
+					android:fontFamily="@font/product_sans_bold" />
 			</LinearLayout>
 			<LinearLayout
 				android:id="@+id/section3Layout"
@@ -371,7 +371,7 @@
 								android:layout_height="50dp"
 								android:gravity="center_horizontal|center_vertical"
 								android:orientation="vertical"
-								android:background="@drawable/shape_profile_circle_letter">
+								android:background="@drawable/circlelayout">
 								<TextView
 									android:id="@+id/textview1"
 									android:layout_width="wrap_content"
@@ -394,7 +394,7 @@
 								android:text="Give me your email address"
 								android:textSize="16sp"
 								android:textColor="#000000"
-								android:fontFamily="@font/styreneblc_regular" />
+								android:fontFamily="@font/product_sans" />
 							<LinearLayout
 								android:id="@+id/linear22"
 								android:layout_width="match_parent"
@@ -414,7 +414,7 @@
 									android:hint="Enter your email"
 									android:textColorHint="#9E9E9E"
 									android:singleLine="true"
-									android:fontFamily="@font/latin_mid" />
+									android:fontFamily="@font/product_sans" />
 							</LinearLayout>
 						</LinearLayout>
 					</LinearLayout>
@@ -456,7 +456,7 @@
 									android:layout_height="50dp"
 									android:gravity="center_horizontal|center_vertical"
 									android:orientation="vertical"
-									android:background="@drawable/shape_profile_circle_letter">
+									android:background="@drawable/circlelayout">
 									<TextView
 										android:id="@+id/textview14"
 										android:layout_width="wrap_content"
@@ -464,7 +464,8 @@
 										android:text="A"
 										android:textSize="20sp"
 										android:textStyle="bold"
-										android:textColor="?colorSurface" />
+										android:textColor="?colorSurface"
+										android:fontFamily="@font/product_sans" />
 								</LinearLayout>
 							</LinearLayout>
 							<LinearLayout
@@ -476,10 +477,10 @@
 									android:id="@+id/askForPassTV"
 									android:layout_width="wrap_content"
 									android:layout_height="wrap_content"
-									android:text="After that, your password goes here"
+									android:text="Now, your password"
 									android:textSize="16sp"
 									android:textColor="#000000"
-									android:fontFamily="@font/styreneblc_regular" />
+									android:fontFamily="@font/product_sans" />
 								<LinearLayout
 									android:id="@+id/linear60"
 									android:layout_width="match_parent"
@@ -499,7 +500,7 @@
 										android:hint="Enter your password"
 										android:textColorHint="#9E9E9E"
 										android:singleLine="true"
-										android:fontFamily="@font/latin_mid" />
+										android:fontFamily="@font/product_sans" />
 								</LinearLayout>
 							</LinearLayout>
 						</LinearLayout>
@@ -518,10 +519,9 @@
 							android:padding="8dp"
 							android:text="Continue"
 							android:textSize="16sp"
-							android:textStyle="bold"
 							android:textColor="?colorSurface"
 							style="@style/Widget.Material3Expressive.Button"
-							android:fontFamily="@font/latin_mid" />
+							android:fontFamily="@font/product_sans_bold" />
 					</LinearLayout>
 				</LinearLayout>
 			</LinearLayout>
