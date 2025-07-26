@@ -69,13 +69,13 @@ public class AuthActivity extends AppCompatActivity {
     // System services
     private Vibrator vib;
     private SoundPool sfx;
-    
+
     // Sound IDs
     private int sfxClickId;
     private int sfxSuccessId;
     private int sfxUserInputEndId;
     private int sfxErrorId;
-    
+
     // Firebase
     private FirebaseAuth fauth;
     private final OnCompleteListener<AuthResult> authCreateUserListener = createAuthCreateUserListener();
@@ -122,7 +122,7 @@ public class AuthActivity extends AppCompatActivity {
 
     private void initializeServices() {
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        
+
         // Initialize SoundPool with Builder for better control
         SoundPool.Builder builder = new SoundPool.Builder()
                 .setMaxStreams(4)
@@ -131,7 +131,7 @@ public class AuthActivity extends AppCompatActivity {
                         .setContentType(android.media.AudioAttributes.CONTENT_TYPE_SONIFICATION)
                         .build());
         sfx = builder.build();
-        
+
         // Load sounds
         sfxClickId = sfx.load(getApplicationContext(), R.raw.sfx_scifi_click, 1);
         sfxSuccessId = sfx.load(getApplicationContext(), R.raw.success, 1);
@@ -156,7 +156,7 @@ public class AuthActivity extends AppCompatActivity {
         continueButton.setOnClickListener(this::handleContinueClick);
         finishButton.setOnClickListener(this::handleFinishClick);
         button1.setOnClickListener(this::handleSignUpClick);
-        
+
         emailLayout.setOnClickListener(v -> email_et.requestFocus());
         passLayout.setOnClickListener(v -> pass_et.requestFocus());
     }
@@ -189,7 +189,7 @@ public class AuthActivity extends AppCompatActivity {
 
     private void handleContinueClick(View view) {
         String username = usernameEditText.getText().toString().trim();
-        
+
         if (username.isEmpty()) {
             layoutshaker.shake(nameLayout);
             vib.vibrate(100);
@@ -213,14 +213,14 @@ public class AuthActivity extends AppCompatActivity {
 
         hideKeyboard();
         usernameEditText.setEnabled(false);
-        
+
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             findViewById(R.id.linear4).setVisibility(View.VISIBLE);
         }, 2000);
 
         // Set first letter of username
         nameFirstLetterTextView.setText(String.valueOf(username.charAt(0)).toUpperCase());
-        
+
         continueButton.setEnabled(false);
         confirmAgeCheckBox.setEnabled(false);
     }
@@ -229,11 +229,11 @@ public class AuthActivity extends AppCompatActivity {
         section2Layout.setVisibility(View.GONE);
         mainHiddenLayout.setVisibility(View.GONE);
         section3Layout.setVisibility(View.VISIBLE);
-        
+
         aiNameTextView.setTotalDuration(500L);
         aiNameTextView.setFadeDuration(150L);
         aiNameTextView.startTyping("We are almost done!");
-        
+
         aiResponseTextView_1.setTotalDuration(1300L);
         aiResponseTextView_1.setFadeDuration(150L);
         aiResponseTextView_1.startTyping("Okay brother, believe me... We are going to finish this boring process within a few seconds. Just like instant noodles. First, you have to...");
@@ -292,7 +292,7 @@ public class AuthActivity extends AppCompatActivity {
 
     private void handleRegistrationError(Exception exception) {
         if (exception == null) return;
-        
+
         String errorMessage = exception.getMessage();
         if ("The email address is already in use by another account.".equals(errorMessage)) {
             handleExistingAccount();
