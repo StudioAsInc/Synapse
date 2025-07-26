@@ -1,9 +1,11 @@
 plugins {
+    id 'org.jetbrains.kotlin.android' // Should be first
     id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
-    //id 'com.google.firebase.firebase-perf'
+    // id 'com.google.firebase.firebase-perf'
+    id 'kotlin-parcelize' // For Parcelable support
+    id 'kotlin-kapt'      // For annotation processing
 }
 
 def keystoreProperties = new Properties()
@@ -52,13 +54,23 @@ android {
         versionCode getGitCommitCount() + 1
         versionName "debug-${getGitCommitHash()}"
         multiDexEnabled true
-        
-        // Enable vector drawable support
+
         vectorDrawables.useSupportLibrary = true
-        
-        // Enable Java 8 features
+
+        // Java 8 features
         compileOptions {
             coreLibraryDesugaringEnabled true
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+        }
+
+        // Kotlin compiler args
+        kotlinOptions {
+            jvmTarget = '17'
+            freeCompilerArgs += [
+                '-Xjvm-default=all',
+                '-opt-in=kotlin.RequiresOptIn'
+            ]
         }
     }
 
@@ -75,15 +87,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
-    }
-
     buildFeatures {
         viewBinding true
         buildConfig true
@@ -95,21 +98,31 @@ android {
     }
 
     packagingOptions {
-        resources.excludes.add("META-INF/*")
-        resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.addAll([
+            "META-INF/*",
+            "META-INF/DEPENDENCIES",
+            "**/kotlin/**",
+        ])
     }
 }
 
 dependencies {
-    // AndroidX Core
-    implementation 'androidx.core:core-ktx:1.17.0-beta01'
-    implementation 'androidx.appcompat:appcompat:1.7.1'
+    // Kotlin
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.22'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3'
+    implementation 'androidx.core:core-ktx:1.12.0'
+
+    // AndroidX
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.activity:activity-ktx:1.8.2'
     implementation 'androidx.fragment:fragment-ktx:1.6.2'
-    implementation 'com.google.android.material:material:1.14.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.2'
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     implementation 'androidx.multidex:multidex:2.0.1'
-    
+
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:32.7.2')
     implementation 'com.google.firebase:firebase-auth-ktx'
@@ -120,30 +133,26 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx'
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
-    
-    // Image Loading
+
+    // Image Loading (consider Coil for Kotlin)
     implementation 'com.github.bumptech.glide:glide:4.16.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
-    
+    kapt 'com.github.bumptech.glide:compiler:4.16.0' // Changed from annotationProcessor
+
     // Networking
     implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.google.code.gson:gson:2.10.1'
-    
+
     // UI Components
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.airbnb.android:lottie:6.3.0'
-    
+
     // Local AARs
     implementation files('libs/android-image-cropper-2.8.0.aar')
     implementation files('libs/ucrop-2.2.8.aar')
-    
-    // Kotlin
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3'
-    
-    // Desugaring for Java 8+ APIs
+
+    // Desugaring
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
-    
+
     // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
