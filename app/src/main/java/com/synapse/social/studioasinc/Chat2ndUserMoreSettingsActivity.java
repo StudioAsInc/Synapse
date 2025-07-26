@@ -21,10 +21,10 @@ import android.view.View.*;
 import android.view.animation.*;
 import android.webkit.*;
 import android.widget.*;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.*;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.*;
 import com.google.android.material.color.MaterialColors;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -82,9 +83,7 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 	private LinearLayout settings_container;
 	private ImageView user_profile_picture;
 	private TextView username;
-	private LinearLayout e2e_is_on;
-	private ImageView imageview5;
-	private TextView textview3;
+	private Button button1;
 	private LinearLayout audio_call_btn;
 	private LinearLayout video_call_btn;
 	private LinearLayout mute_btn;
@@ -136,17 +135,17 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 	private LinearLayout linear25;
 	private ImageView imageview14;
 	private LinearLayout linear26;
-	private Switch Read_recipt_switch;
+	private MaterialSwitch Read_recipt_switch;
 	private TextView textview18;
 	private TextView textview19;
 	private ImageView imageview15;
 	private LinearLayout linear27;
-	private Switch disapear_switch;
+	private MaterialSwitch disapear_switch;
 	private TextView textview20;
 	private TextView textview21;
 	private ImageView imageview26;
 	private LinearLayout linear49;
-	private Switch autosavephoto_switch;
+	private MaterialSwitch autosavephoto_switch;
 	private TextView textview44;
 	private TextView textview45;
 	private ImageView imageview16;
@@ -220,9 +219,7 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 		settings_container = findViewById(R.id.settings_container);
 		user_profile_picture = findViewById(R.id.user_profile_picture);
 		username = findViewById(R.id.username);
-		e2e_is_on = findViewById(R.id.e2e_is_on);
-		imageview5 = findViewById(R.id.imageview5);
-		textview3 = findViewById(R.id.textview3);
+		button1 = findViewById(R.id.button1);
 		audio_call_btn = findViewById(R.id.audio_call_btn);
 		video_call_btn = findViewById(R.id.video_call_btn);
 		mute_btn = findViewById(R.id.mute_btn);
@@ -322,6 +319,13 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View _view) {
 				finish();
+			}
+		});
+		
+		button1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View _view) {
+				
 			}
 		});
 		
@@ -569,7 +573,6 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 		vscroll1.setHorizontalScrollBarEnabled(false);
 		vscroll1.setVerticalScrollBarEnabled(false);
 		_stateColor(0xFFFFFFFF, 0xFFFFFFFF);
-		_rippleRoundStroke(e2e_is_on, "#F5F5F5", "#F4F4F4", 300, 0, "#000000");
 	}
 	
 	
@@ -617,4 +620,4 @@ public class Chat2ndUserMoreSettingsActivity extends AppCompatActivity {
 		block.clear();
 	}
 	
-}
+}
