@@ -51,7 +51,7 @@
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">?attr/isLightTheme</item>
         <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:fontFamily">@font/varelaround_regular</item>
+        <item name="android:fontFamily">@font/product_sans</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
@@ -108,16 +108,32 @@
     </style>
     <style name="CollapsingTextExpanded.Material3" parent="TextAppearance.Material3.HeadlineMedium">
         <item name="android:textSize">28sp</item>
-        <item name="fontFamily">@font/varelaround_regular</item>
+        <item name="fontFamily">@font/product_sans</item>
     </style>
     <style name="CollapsingTextCollapsed.Material3" parent="TextAppearance.Material3.TitleLarge">
         <item name="android:textSize">23sp</item>
-        <item name="fontFamily">@font/varelaround_regular</item>
+        <item name="fontFamily">@font/product_sans</item>
     </style>
     <style name="ToolbarTitleFont" parent="TextAppearance.Material3.TitleLarge">
-        <item name="fontFamily">@font/varelaround_regular</item>
+        <item name="fontFamily">@font/product_sans</item>
     </style>
-<style name="AppTheme.TransparentBottomSheetDialog" parent="Theme.Material3.DayNight.BottomSheetDialog">
-    <item name="bottomSheetStyle">@style/Widget.Design.BottomSheet.Modal</item>
+    <style name="MaterialAlertDialog.Rounded" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+    <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.Dialog.Rounded</item>
+    <item name="materialAlertDialogTitleTextStyle">@style/DialogTitleTextAppearance</item>
+    <item name="materialAlertDialogBodyTextStyle">@style/DialogBodyTextAppearance</item>
+</style>
+
+<style name="ShapeAppearanceOverlay.Dialog.Rounded" parent="">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSize">16dp</item>
+</style>
+
+<style name="DialogTitleTextAppearance" parent="MaterialAlertDialog.Material3.Title.Text">
+    <item name="android:textSize">18sp</item>
+    <item name="android:textColor">?attr/colorOnSurface</item>
+</style>
+
+<style name="DialogBodyTextAppearance" parent="MaterialAlertDialog.Material3.Body.Text">
+    <item name="android:textSize">14sp</item>
 </style>
 </resources>

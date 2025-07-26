@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="lang">en</string>
     <string name="app_name">Synapse</string>
+    <string name="lang">en</string>
     <string name="login_skyline_community">Get into the Synapse community</string>
     <string name="sign_with_email">Sign in with Email</string>
     <string name="sign_with_google">Continue with Google</string>
@@ -164,7 +163,7 @@
     <string name="maintenance_dialog_title">Maintenance</string>
     <string name="maintenance_dialog_subtitle">The app is temporarily under maintenance! please try again later.</string>
     <string name="banned_access_denied">Access Denied</string>
-    <string name="banned_access_denied_subtext">We recently observed suspicious activity in your account. As a result, your account @username has been suspended due to violation of our community guidelines. If you think it was a mistake, create  a token request</string>
+    <string name="banned_access_denied_subtext">Recently, we observed that you have been doing activities against our community guidelines on your account, and as a result, we have blocked your account.</string>
     <string name="banned_create_request">Create Request</string>
     <string name="banned_user_info_text">Bu kullanıcının hesabı engellendi</string>
     <string name="delete_post_dialog_message">Are you sure you want to permanently delete this post? This action cannot be undone.</string>
@@ -218,6 +217,8 @@
     <string name="status_text_week">week ago</string>
     <string name="status_text_month">month ago</string>
     <string name="status_text_years">year ago</string>
-    <string name="title_settings_and_privacy">Settings &amp; Privacy</string>
-    <string name="Title_create_post">Create post</string>
+    <!-- Placeholder texts -->
+    <string name="placeholder_button_text">Button Text</string>
+    <string name="placeholder_title">Title</string>
+    <string name="placeholder_subtitle">Subtitle</string>
 </resources>
