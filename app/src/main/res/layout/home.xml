@@ -28,7 +28,7 @@
 					android:orientation="vertical"
 					android:background="@null"
 					app:elevation="0dp">
-					<com.google.android.material.appbar.CollapsingToolbarLayout
+					<synapse_collapsing_layout
 						android:id="@+id/m_coordinator_layout_collapsing_toolbar"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
@@ -67,7 +67,8 @@
 										android:text="Synapse"
 										android:textSize="40sp"
 										android:textStyle="bold"
-										android:textColor="@color/colorPrimary" />
+										android:textColor="@color/colorPrimary"
+										android:fontFamily="@font/product_sans_bold" />
 									<LinearLayout
 										android:id="@+id/topBarSpace"
 										android:layout_width="wrap_content"
@@ -79,7 +80,7 @@
 										android:id="@+id/imageview1"
 										android:layout_width="25dp"
 										android:layout_height="25dp"
-										android:src="@drawable/ic_menu_48px"
+										android:src="@drawable/menu_24px"
 										android:scaleType="fitCenter" />
 								</LinearLayout>
 								<LinearLayout
@@ -99,7 +100,7 @@
 											android:id="@+id/bottom_home_ic"
 											android:layout_width="30dp"
 											android:layout_height="30dp"
-											android:src="@drawable/ic_newsmode_48px"
+											android:src="@drawable/home_24px"
 											android:scaleType="centerCrop" />
 									</LinearLayout>
 									<LinearLayout
@@ -128,7 +129,7 @@
 											android:id="@+id/bottom_videos_ic"
 											android:layout_width="30dp"
 											android:layout_height="30dp"
-											android:src="@drawable/ic_movie_info_48px"
+											android:src="@drawable/ic_video_library_48px"
 											android:scaleType="centerCrop" />
 									</LinearLayout>
 									<LinearLayout
@@ -143,7 +144,7 @@
 											android:id="@+id/bottom_chats_ic"
 											android:layout_width="30dp"
 											android:layout_height="30dp"
-											android:src="@drawable/ic_chat_48px"
+											android:src="@drawable/ic_comment_48px"
 											android:scaleType="centerCrop" />
 									</LinearLayout>
 									<LinearLayout
@@ -247,7 +248,7 @@
 										android:layout_height="32dp"
 										android:layout_marginRight="8dp"
 										android:padding="6dp"
-										android:src="@drawable/ic_library_music_48px"
+										android:src="@drawable/ic_newsmode_48px"
 										android:scaleType="fitCenter" />
 									<ImageView
 										android:id="@+id/miniPostLayoutMoreButton"
@@ -276,7 +277,8 @@
 										android:background="#757575"
 										android:text="Share"
 										android:textSize="16sp"
-										android:textColor="#FFFFFF" />
+										android:textColor="#FFFFFF"
+										android:fontFamily="@font/product_sans" />
 								</LinearLayout>
 								<LinearLayout
 									android:id="@+id/miniPostLayoutBottomSpc"
@@ -309,7 +311,7 @@
 										android:paddingRight="14dp"
 										android:paddingBottom="6dp"
 										android:background="@android:color/transparent"
-										android:text="Regional"
+										android:text="AI based"
 										android:textSize="16sp"
 										android:textColor="#616161" />
 									<TextView
@@ -324,7 +326,8 @@
 										android:background="#445E91"
 										android:text="Global"
 										android:textSize="16sp"
-										android:textColor="#FAFAFA" />
+										android:textColor="#FAFAFA"
+										android:fontFamily="@font/product_sans" />
 									<TextView
 										android:id="@+id/miniPostLayoutFiltersScrollBodyFilterFOLLOWED"
 										android:layout_width="wrap_content"
@@ -357,10 +360,10 @@
 							android:id="@+id/topSpc14"
 							android:layout_width="match_parent"
 							android:layout_height="1dp"
-							android:padding="8dp"
+							android:padding="4dp"
 							android:background="#F5F5F5"
 							android:orientation="horizontal" />
-					</com.google.android.material.appbar.CollapsingToolbarLayout>
+					</synapse_collapsing_layout>
 					<LinearLayout
 						android:id="@+id/topCollapsingSpc"
 						android:layout_width="match_parent"
@@ -380,27 +383,6 @@
 						android:layout_height="match_parent"
 						android:orientation="vertical">
 						<LinearLayout
-							android:id="@+id/LocalPostsBody"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:orientation="vertical">
-							<androidx.recyclerview.widget.RecyclerView
-								android:id="@+id/LocalPostsBodyList"
-								android:layout_width="match_parent"
-								android:layout_height="wrap_content"
-								tools:listitem="@layout/synapse_post_cv" />
-							<TextView
-								android:id="@+id/LocalPostsBodyNoPosts"
-								android:layout_width="match_parent"
-								android:layout_height="350dp"
-								android:padding="8dp"
-								android:gravity="center_horizontal|center_vertical"
-								android:text="NO POST YET"
-								android:textSize="16sp"
-								android:textStyle="bold"
-								android:textColor="#445E91" />
-						</LinearLayout>
-						<LinearLayout
 							android:id="@+id/PublicPostsBody"
 							android:layout_width="match_parent"
 							android:layout_height="wrap_content"
@@ -417,55 +399,6 @@
 								android:padding="8dp"
 								android:gravity="center_horizontal|center_vertical"
 								android:text="There are no public posts available \nat the moment."
-								android:textSize="16sp"
-								android:textColor="#757575" />
-						</LinearLayout>
-						<LinearLayout
-							android:id="@+id/FollowedUsersPostsBody"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:orientation="vertical">
-							<androidx.recyclerview.widget.RecyclerView
-								android:id="@+id/FollowedUsersPostsList"
-								android:layout_width="match_parent"
-								android:layout_height="wrap_content"
-								tools:listitem="@layout/synapse_post_cv" />
-							<TextView
-								android:id="@+id/FollowedUsersPostsFollowedUserNotFound"
-								android:layout_width="match_parent"
-								android:layout_height="350dp"
-								android:padding="8dp"
-								android:gravity="center_horizontal|center_vertical"
-								android:text="You don't follow anyone yet."
-								android:textSize="16sp"
-								android:textColor="#757575" />
-							<TextView
-								android:id="@+id/FollowedUsersPostsNotFound"
-								android:layout_width="match_parent"
-								android:layout_height="350dp"
-								android:padding="8dp"
-								android:gravity="center_horizontal|center_vertical"
-								android:text="No posts available from the people you \nfollow at this time."
-								android:textSize="16sp"
-								android:textColor="#757575" />
-						</LinearLayout>
-						<LinearLayout
-							android:id="@+id/FavoritesPostsBody"
-							android:layout_width="match_parent"
-							android:layout_height="wrap_content"
-							android:orientation="vertical">
-							<androidx.recyclerview.widget.RecyclerView
-								android:id="@+id/FavoritesPostsList"
-								android:layout_width="match_parent"
-								android:layout_height="wrap_content"
-								tools:listitem="@layout/synapse_post_cv" />
-							<TextView
-								android:id="@+id/FavoritesPostsNotFound"
-								android:layout_width="match_parent"
-								android:layout_height="350dp"
-								android:padding="8dp"
-								android:gravity="center_horizontal|center_vertical"
-								android:text="It appears that you do not have any favourite\n posts at this time."
 								android:textSize="16sp"
 								android:textColor="#757575" />
 						</LinearLayout>
