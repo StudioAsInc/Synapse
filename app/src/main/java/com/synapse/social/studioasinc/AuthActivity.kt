@@ -159,13 +159,15 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun startIntroAnimation() {
-        aiNameTextView.totalDuration = 450L
-        aiNameTextView.fadeDuration = 150L
+        // Use setter methods instead of direct property access
+        aiNameTextView.setTotalDuration(450L)
+        aiNameTextView.setFadeDuration(150L)
         aiNameTextView.startTyping("Hello, I'm Synapse AI")
 
         Handler(Looper.getMainLooper()).postDelayed({
-            aiResponseTextView_1.totalDuration = 1000L
-            aiResponseTextView_1.fadeDuration = 150L
+            // Use setter methods instead of direct property access
+            aiResponseTextView_1.setTotalDuration(1000L)
+            aiResponseTextView_1.setFadeDuration(150L)
             aiResponseTextView_1.startTyping(
                 "I'm a next generation AI built to assist you in Synapse and to be safe, accurate and secure.\n\n" +
                         "I would love to get to know each other before we get started"
@@ -196,13 +198,15 @@ class AuthActivity : AppCompatActivity() {
         profileHolderLayout.visibility = View.VISIBLE
 
         Handler(Looper.getMainLooper()).postDelayed({
-            aiResponseTextView_2.totalDuration = 1300L
-            aiResponseTextView_2.fadeDuration = 150L
+            // Use setter methods instead of direct property access
+            aiResponseTextView_2.setTotalDuration(1300L)
+            aiResponseTextView_2.setFadeDuration(150L)
             aiResponseTextView_2.startTyping("Okay $username, we're almost there, but before that one last final process. Please I kindly request you to look at Synapse terms and conditions before using their services")
             section2Layout.visibility = View.VISIBLE
 
-            ruleTextView1.totalDuration = 3000L
-            ruleTextView1.fadeDuration = 150L
+            // Use setter methods instead of direct property access
+            ruleTextView1.setTotalDuration(3000L)
+            ruleTextView1.setFadeDuration(150L)
             ruleTextView1.startTyping("By using Synapse, you agree to follow our rules. You must be at least 13 years old to create an account. You are responsible for keeping your login information private and secure. Misuse of the platform may result in your account being restricted or removed.")
         }, 1000)
 
@@ -225,12 +229,14 @@ class AuthActivity : AppCompatActivity() {
         mainHiddenLayout.visibility = View.GONE
         section3Layout.visibility = View.VISIBLE
 
-        aiNameTextView.totalDuration = 500L
-        aiNameTextView.fadeDuration = 150L
+        // Use setter methods instead of direct property access
+        aiNameTextView.setTotalDuration(500L)
+        aiNameTextView.setFadeDuration(150L)
         aiNameTextView.startTyping("We are almost done!")
 
-        aiResponseTextView_1.totalDuration = 1300L
-        aiResponseTextView_1.fadeDuration = 150L
+        // Use setter methods instead of direct property access
+        aiResponseTextView_1.setTotalDuration(1300L)
+        aiResponseTextView_1.setFadeDuration(150L)
         aiResponseTextView_1.startTyping("Okay brother, believe me... We are going to finish this boring process within a few seconds. Just like instant noodles. First, you have to...")
     }
 
@@ -276,8 +282,9 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun handleSuccessfulRegistration() {
-        aiNameTextView.totalDuration = 300L
-        aiNameTextView.fadeDuration = 150L
+        // Use setter methods instead of direct property access
+        aiNameTextView.setTotalDuration(300L)
+        aiNameTextView.setFadeDuration(150L)
         aiNameTextView.startTyping("Creating your account...")
 
         val intent = Intent(this@AuthActivity, CompleteProfileActivity::class.java)
@@ -296,8 +303,9 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun handleExistingAccount() {
-        aiNameTextView.totalDuration = 500L
-        aiNameTextView.fadeDuration = 150L
+        // Use setter methods instead of direct property access
+        aiNameTextView.setTotalDuration(500L)
+        aiNameTextView.setFadeDuration(150L)
         aiNameTextView.startTyping("Hey, I know you!")
 
         val email = email_et.text.toString()
@@ -342,8 +350,9 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun showWelcomeMessage(message: String) {
-        aiResponseTextView_1.totalDuration = 1300L
-        aiResponseTextView_1.fadeDuration = 150L
+        // Use setter methods instead of direct property access
+        aiResponseTextView_1.setTotalDuration(1300L)
+        aiResponseTextView_1.setFadeDuration(150L)
         aiResponseTextView_1.startTyping(message)
     }
 
@@ -356,8 +365,9 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun showSignInError() {
-        aiResponseTextView_1.totalDuration = 1300L
-        aiResponseTextView_1.fadeDuration = 150L
+        // Use setter methods instead of direct property access
+        aiResponseTextView_1.setTotalDuration(1300L)
+        aiResponseTextView_1.setFadeDuration(150L)
         aiResponseTextView_1.startTyping("Hmm, that password doesn't match. Try again?")
     }
 
@@ -386,4 +396,4 @@ class AuthActivity : AppCompatActivity() {
         super.onDestroy()
         sfx.release()
     }
-        }
+}
